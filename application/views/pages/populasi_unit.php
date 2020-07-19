@@ -58,7 +58,7 @@
                 <?php $no = 0; foreach ($table as $value) : $no++;?>
                   <tr>
                     <td><?= $no;?></td>
-                    <td><?= $value ['set_trailler'];?>Trailer</td>
+                    <td><?= $value ['set_trailler'];?></td>
                     <td><?= $value ['unit_id'];?></td>
                     <td><?= $value ['model'];?></td>
                     <td><?= $value ['chassis_number'];?></td>

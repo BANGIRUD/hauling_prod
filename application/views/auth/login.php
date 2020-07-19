@@ -9,7 +9,7 @@
 <body class="hold-transition login-page" >
 	<div class="login-box" style="background-color: #dfe6e9">
 		<div class="login-logo">
-			<a href="#"><b>Hauling</b> V2</a>
+			<a href="#"><b>Hauling</b></a>
 		</div>
 		<!-- /.login-logo -->
 		<div class="login-box-body"  style="background-color: #dfe6e9" >

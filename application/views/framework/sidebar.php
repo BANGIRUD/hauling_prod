@@ -24,7 +24,7 @@
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <img src="<?php echo base_url('___/dist/img/user2-160x160.jpg');?>" class="user-image" alt="User Image">
-              <span class="hidden-xs"><?php echo ucfirst(strtolower(explode(' ', $full_name)[0]));?></span>
+              <span class="hidden-xs"><?php echo ucfirst($full_name);?></span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
@@ -80,7 +80,7 @@
           <img src="<?php echo base_url('___/dist/img/user2-160x160.jpg');?>" class="img-circle" alt="User Image">
         </div>
         <div class="pull-left info">
-          <p><?php echo ucfirst(strtolower(explode(' ', $full_name)[0]));?></p>
+          <p><?php echo ucfirst($full_name);?></p>
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
       </div>
@@ -110,7 +110,7 @@
             <li <?php if($this->uri->segment(2) == 'daily_monitoring_muatan') { echo' class="active"';} ?>><a href="<?php echo base_url('dash/daily_monitoring_muatan');?>"><i class="fa fa-desktop"></i>Monitoring Muatan</a></li>
             <li <?php if($this->uri->segment(2) == 'daily_control_passing') { echo' class="active"';} ?>><a href="<?php echo base_url('dash/daily_control_passing');?>"><i class="fa fa-desktop"></i>Quality Control Passing</a></li>
            
-            <li <?php if($this->uri->segment(2) == 'dashboard_ach_passingunit') { echo' class="active"';} ?>><a href="<?php echo base_url('dash/dashboard_ach_passingunit');?>"><i class="fa fa-desktop"></i>Pencapaian Passing</a></li>
+            <li <?php if($this->uri->segment(2) == 'dashboard_ach_passingunit') { echo' class="active"';} ?>><a href="<?php echo base_url('dash/dashboard_ach_passingunit');?>"><i class="fa fa-desktop"></i>Achievement Passing</a></li>
           </ul>
         </li>
         <li class="header">ADMINISTRATOR</li>

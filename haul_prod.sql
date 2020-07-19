@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Waktu pembuatan: 25 Jun 2020 pada 12.06
--- Versi server: 5.7.18
--- Versi PHP: 7.2.11
+-- Generation Time: Jul 19, 2020 at 08:37 AM
+-- Server version: 10.3.10-MariaDB-log
+-- PHP Version: 7.2.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -25,7 +25,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `enum`
+-- Table structure for table `enum`
 --
 
 CREATE TABLE `enum` (
@@ -36,13 +36,13 @@ CREATE TABLE `enum` (
   `code` varchar(50) DEFAULT NULL,
   `name` text NOT NULL,
   `category` varchar(50) DEFAULT NULL,
-  `category_description` text,
+  `category_description` text DEFAULT NULL,
   `type` varchar(25) NOT NULL,
   `by_user` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `enum`
+-- Dumping data for table `enum`
 --
 
 INSERT INTO `enum` (`id`, `created_at`, `updated_at`, `deleted_at`, `code`, `name`, `category`, `category_description`, `type`, `by_user`) VALUES
@@ -242,7 +242,7 @@ INSERT INTO `enum` (`id`, `created_at`, `updated_at`, `deleted_at`, `code`, `nam
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `table_enum`
+-- Table structure for table `table_enum`
 --
 
 CREATE TABLE `table_enum` (
@@ -252,13 +252,13 @@ CREATE TABLE `table_enum` (
   `deleted_at` datetime DEFAULT NULL,
   `code` varchar(50) DEFAULT NULL,
   `name` text NOT NULL,
-  `description` text,
+  `description` text DEFAULT NULL,
   `type` varchar(25) NOT NULL,
   `by_user` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `table_enum`
+-- Dumping data for table `table_enum`
 --
 
 INSERT INTO `table_enum` (`id`, `created_at`, `updated_at`, `deleted_at`, `code`, `name`, `description`, `type`, `by_user`) VALUES
@@ -372,7 +372,7 @@ INSERT INTO `table_enum` (`id`, `created_at`, `updated_at`, `deleted_at`, `code`
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `table_equipment`
+-- Table structure for table `table_equipment`
 --
 
 CREATE TABLE `table_equipment` (
@@ -402,7 +402,7 @@ CREATE TABLE `table_equipment` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `table_equipment`
+-- Dumping data for table `table_equipment`
 --
 
 INSERT INTO `table_equipment` (`id`, `created_at`, `updated_at`, `deleted_at`, `date`, `set_trailler`, `unit_id`, `no_unit`, `model`, `chassis_number`, `brand_state`, `product`, `engine_model`, `delivery`, `engine_number`, `kw_hp_rpm`, `type`, `capacity`, `doc_ellipse`, `owner_unit`, `status_unit`, `status_to_use`, `by_user`) VALUES
@@ -761,7 +761,7 @@ INSERT INTO `table_equipment` (`id`, `created_at`, `updated_at`, `deleted_at`, `
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `table_quality`
+-- Table structure for table `table_quality`
 --
 
 CREATE TABLE `table_quality` (
@@ -781,7 +781,7 @@ CREATE TABLE `table_quality` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `table_quality`
+-- Dumping data for table `table_quality`
 --
 
 INSERT INTO `table_quality` (`id`, `created_at`, `updated_at`, `deleted_at`, `date`, `series`, `tm`, `im`, `ash_ar`, `ts_ar`, `cv_ar`, `hgi`, `by_user`) VALUES
@@ -804,12 +804,13 @@ INSERT INTO `table_quality` (`id`, `created_at`, `updated_at`, `deleted_at`, `da
 (17, '2020-03-22 10:42:45', '2020-03-22 10:57:28', NULL, '2020-03-21', 'HTS PRG', 0, 0, 0, 0, 4.68, 47, 1),
 (18, '2020-03-22 10:42:45', '2020-03-22 10:57:28', NULL, '2020-03-21', 'LCV HTS PRG', 0, 0, 0, 0, 4.457, 46, 1),
 (19, '2020-03-22 10:42:45', '2020-03-22 10:57:28', NULL, '2020-03-21', 'LCA PRG', 0, 0, 0, 0, 4.379, 44, 1),
-(20, '2020-03-22 14:00:36', '2020-03-22 14:00:36', NULL, '2020-03-22', 'LCV ST', 0, 0, 0, 0, 4.555, 55, 2);
+(20, '2020-03-22 14:00:36', '2020-03-22 14:00:36', NULL, '2020-03-22', 'LCV ST', 0, 0, 0, 0, 4.555, 55, 2),
+(21, '2020-07-19 08:36:05', '2020-07-19 08:36:05', NULL, '2020-07-19', 'HCV PRG', 0, 0, 0, 0, 0, 0, 6);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `table_settingunit`
+-- Table structure for table `table_settingunit`
 --
 
 CREATE TABLE `table_settingunit` (
@@ -829,7 +830,7 @@ CREATE TABLE `table_settingunit` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `table_shiftoperations`
+-- Table structure for table `table_shiftoperations`
 --
 
 CREATE TABLE `table_shiftoperations` (
@@ -855,7 +856,7 @@ CREATE TABLE `table_shiftoperations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `table_shiftoperations`
+-- Dumping data for table `table_shiftoperations`
 --
 
 INSERT INTO `table_shiftoperations` (`id`, `created_at`, `updated_at`, `deleted_at`, `date`, `shift`, `time_in`, `time_out`, `location`, `cn_unit`, `position`, `cargo`, `code_stby`, `time_passing`, `remark`, `operation`, `by_ordered`, `by_area`, `by_user`) VALUES
@@ -876,12 +877,16 @@ INSERT INTO `table_shiftoperations` (`id`, `created_at`, `updated_at`, `deleted_
 (15, '2020-06-24 10:25:09', '2020-06-24 10:25:09', NULL, '2020-06-24', 1, '2020-06-24 10:24:00', '2020-06-24 10:24:00', '10', '101', 'M', 'T100 NT', 'L', '10:00:00', '', 1, 2, 10, 2),
 (16, '2020-06-24 10:25:28', '2020-06-24 10:25:28', NULL, '2020-06-24', 1, '2020-06-24 10:25:00', '2020-06-24 10:25:00', '10', '102', 'M', 'T200 CT1', 'L', '10:00:00', '', 1, 3, 10, 2),
 (17, '2020-06-24 10:25:45', '2020-06-24 10:25:45', NULL, '2020-06-24', 1, '2020-06-24 10:25:00', '2020-06-24 10:25:00', '10', '103', 'M', 'T200 CT2', 'L', '10:00:00', '', 1, 4, 10, 2),
-(18, '2020-06-24 10:47:34', '2020-06-24 10:47:34', NULL, '2020-06-24', 1, '2020-06-24 10:47:00', '2020-06-24 10:47:00', '10', '105', 'M', 'HCV NT', 'S02', '10:00:00', '', 0, 5, 10, 2);
+(18, '2020-06-24 10:47:34', '2020-06-24 10:47:34', NULL, '2020-06-24', 1, '2020-06-24 10:47:00', '2020-06-24 10:47:00', '10', '105', 'M', 'HCV NT', 'S02', '10:00:00', '', 0, 5, 10, 2),
+(19, '2020-07-17 07:04:06', '2020-07-17 07:04:06', NULL, '2020-07-17', 1, '2020-07-17 15:03:00', '2020-07-17 15:03:00', '10', '100', 'M', 'HCV PRG', 'L', '15:00:00', 'lanjut ges', 1, 1, 10, 2),
+(20, '2020-07-19 07:21:04', '2020-07-19 07:21:04', NULL, '2020-07-19', 1, '2020-07-19 15:21:00', '2020-07-19 15:21:00', '10', '100', 'M', 'HCV PRG', 'S01', '15:00:00', '', 0, 1, 10, 2),
+(21, '2020-07-19 07:21:28', '2020-07-19 07:21:28', NULL, '2020-07-19', 1, '2020-07-19 15:21:00', '2020-07-19 15:21:00', '11', '101', 'M', 'HCV PRG', 'S01', '15:00:00', '', 0, 1, 11, 2),
+(22, '2020-07-19 07:21:47', '2020-07-19 07:21:47', NULL, '2020-07-19', 1, '2020-07-19 15:21:00', '2020-07-19 15:21:00', '12', '102', 'M', 'HCV PRG', 'S01', '15:00:00', '', 0, 1, 12, 2);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `table_shiftos`
+-- Table structure for table `table_shiftos`
 --
 
 CREATE TABLE `table_shiftos` (
@@ -899,7 +904,7 @@ CREATE TABLE `table_shiftos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `table_shiftos`
+-- Dumping data for table `table_shiftos`
 --
 
 INSERT INTO `table_shiftos` (`id`, `created_at`, `updated_at`, `deleted_at`, `date`, `code_number`, `no_unit`, `no_id`, `time`, `csa`, `by_user`) VALUES
@@ -1187,7 +1192,7 @@ INSERT INTO `table_shiftos` (`id`, `created_at`, `updated_at`, `deleted_at`, `da
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `table_statuspassing`
+-- Table structure for table `table_statuspassing`
 --
 
 CREATE TABLE `table_statuspassing` (
@@ -1210,7 +1215,7 @@ CREATE TABLE `table_statuspassing` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `table_supplaypassing`
+-- Table structure for table `table_supplaypassing`
 --
 
 CREATE TABLE `table_supplaypassing` (
@@ -1237,7 +1242,7 @@ CREATE TABLE `table_supplaypassing` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `table_supplaypassing`
+-- Dumping data for table `table_supplaypassing`
 --
 
 INSERT INTO `table_supplaypassing` (`id`, `created_at`, `updated_at`, `deleted_at`, `date`, `shift`, `material`, `jam_1`, `jam_2`, `jam_3`, `jam_4`, `jam_5`, `jam_6`, `jam_7`, `jam_8`, `jam_9`, `jam_10`, `jam_11`, `jam_12`, `by_user`) VALUES
@@ -1270,12 +1275,20 @@ INSERT INTO `table_supplaypassing` (`id`, `created_at`, `updated_at`, `deleted_a
 (27, '2020-06-24 10:19:33', '2020-06-24 10:19:33', NULL, '2020-06-24', 1, 'T300 CT1', 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 2),
 (28, '2020-06-24 10:19:34', '2020-06-24 10:19:34', NULL, '2020-06-24', 1, 'T200 CT2', 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 2),
 (29, '2020-06-24 10:19:34', '2020-06-24 10:19:34', NULL, '2020-06-24', 1, 'T300 CT2', 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 2),
-(30, '2020-06-24 10:19:34', '2020-06-24 10:19:34', NULL, '2020-06-24', 1, 'T100 NT', 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 2);
+(30, '2020-06-24 10:19:34', '2020-06-24 10:19:34', NULL, '2020-06-24', 1, 'T100 NT', 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 2),
+(31, '2020-07-17 07:06:42', '2020-07-17 07:06:42', NULL, '2020-07-17', 1, 'BCLSA', 0, 0, 0, 0, 0, 11, 11, 11, 0, 0, 0, 0, 1),
+(32, '2020-07-17 07:06:42', '2020-07-17 07:06:42', NULL, '2020-07-17', 1, 'HCV PRG', 0, 3, 3, 3, 3, 0, 0, 0, 3, 3, 3, 3, 1),
+(33, '2020-07-17 07:06:42', '2020-07-17 07:06:42', NULL, '2020-07-17', 1, 'T200 CT1', 7, 7, 7, 7, 7, 4, 4, 4, 7, 7, 7, 7, 1),
+(34, '2020-07-17 07:06:42', '2020-07-17 07:06:42', NULL, '2020-07-17', 1, 'T300 CT1', 10, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 1),
+(35, '2020-07-17 07:06:42', '2020-07-17 07:06:42', NULL, '2020-07-17', 1, 'T200 CT2', 8, 10, 10, 10, 10, 4, 4, 4, 10, 10, 10, 10, 1),
+(36, '2020-07-17 07:06:42', '2020-07-17 07:06:42', NULL, '2020-07-17', 1, 'T300 CT2', 5, 5, 5, 5, 5, 4, 4, 4, 5, 5, 5, 5, 1),
+(37, '2020-07-17 07:06:42', '2020-07-17 07:06:42', NULL, '2020-07-17', 1, 'T100 NT', 4, 4, 4, 4, 4, 0, 0, 0, 4, 4, 4, 4, 1),
+(38, '2020-07-17 07:06:42', '2020-07-17 07:06:42', NULL, '2020-07-17', 1, 'HCV WARA', 0, 0, 0, 0, 0, 6, 6, 6, 0, 0, 0, 0, 1);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `table_users`
+-- Table structure for table `table_users`
 --
 
 CREATE TABLE `table_users` (
@@ -1296,140 +1309,146 @@ CREATE TABLE `table_users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
 --
--- Dumping data untuk tabel `table_users`
+-- Dumping data for table `table_users`
 --
 
 INSERT INTO `table_users` (`id`, `created_at`, `updated_at`, `deleted_at`, `username`, `password`, `full_name`, `description`, `email`, `phone`, `activation_key`, `last_login`, `area`, `level`) VALUES
 (1, '2019-05-03 00:00:00', '2019-05-03 00:00:00', NULL, 'Administrator', '$2y$10$ES0vpcOg1NVE3wCAGXI2dOljZSq1UuHFpdS0f/7/.4jW6ch2URYpy', 'Administrator', 'Authorized Personnel Only', 'administrator@saptaindra.co.id', '051-0000001', '', '2020-02-18 11:33:03', 0, 13),
-(2, '2019-05-03 00:00:00', '2019-05-03 00:00:00', NULL, 'tes', '$2y$10$ES0vpcOg1NVE3wCAGXI2dOljZSq1UuHFpdS0f/7/.4jW6ch2URYpy', 'Tukang Tester', 'Authorized Personnel Only', 'administrator@saptaindra.co.id', '051-0000001', '', '2020-02-18 11:33:03', 0, 14);
+(2, '2019-05-03 00:00:00', '2019-05-03 00:00:00', NULL, 'tes', '$2y$10$ES0vpcOg1NVE3wCAGXI2dOljZSq1UuHFpdS0f/7/.4jW6ch2URYpy', 'Tester', 'Authorized Personnel Only', 'administrator@saptaindra.co.id', '051-0000001', '', '2020-02-18 11:33:03', 0, 14),
+(3, '2019-05-03 00:00:00', '2019-05-03 00:00:00', NULL, '34', '$2y$10$ES0vpcOg1NVE3wCAGXI2dOljZSq1UuHFpdS0f/7/.4jW6ch2URYpy', 'KM 34', 'Personalized Input Km 34', '34@saptaindra.co.id', '051-0000001', '', '2020-02-18 11:33:03', 0, 14),
+(4, '2019-05-03 00:00:00', '2019-05-03 00:00:00', NULL, '65', '$2y$10$ES0vpcOg1NVE3wCAGXI2dOljZSq1UuHFpdS0f/7/.4jW6ch2URYpy', 'KM 65', 'Personalized Input Km 65', '65@saptaindra.co.id', '051-0000001', '', '2020-02-18 11:33:03', 0, 14),
+(5, '2019-05-03 00:00:00', '2019-05-03 00:00:00', NULL, '69', '$2y$10$ES0vpcOg1NVE3wCAGXI2dOljZSq1UuHFpdS0f/7/.4jW6ch2URYpy', 'KM 69', 'Personalized Input Km 69', '69@saptaindra.co.id', '051-0000001', '', '2020-02-18 11:33:03', 0, 14),
+(6, '2019-05-03 00:00:00', '2019-05-03 00:00:00', NULL, 'jigsaw', '$2y$10$ES0vpcOg1NVE3wCAGXI2dOljZSq1UuHFpdS0f/7/.4jW6ch2URYpy', 'tester input', 'Authorized Personnel Only', 'tester@saptaindra.co.id', '051-0000001', '', '2020-02-18 11:33:03', 0, 14),
+(7, '2019-05-03 00:00:00', '2019-05-03 00:00:00', NULL, 'jigsaw2', '$2y$10$ES0vpcOg1NVE3wCAGXI2dOljZSq1UuHFpdS0f/7/.4jW6ch2URYpy', 'tester input', 'Authorized Personnel Only', 'tester@saptaindra.co.id', '051-0000001', '', '2020-02-18 11:33:03', 0, 14),
+(8, '2019-05-03 00:00:00', '2019-05-03 00:00:00', NULL, 'jigsaw3', '$2y$10$ES0vpcOg1NVE3wCAGXI2dOljZSq1UuHFpdS0f/7/.4jW6ch2URYpy', 'tester input', 'Authorized Personnel Only', 'tester@saptaindra.co.id', '051-0000001', '', '2020-02-18 11:33:03', 0, 14);
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indeks untuk tabel `enum`
+-- Indexes for table `enum`
 --
 ALTER TABLE `enum`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `table_enum`
+-- Indexes for table `table_enum`
 --
 ALTER TABLE `table_enum`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `table_equipment`
+-- Indexes for table `table_equipment`
 --
 ALTER TABLE `table_equipment`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `table_quality`
+-- Indexes for table `table_quality`
 --
 ALTER TABLE `table_quality`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `table_settingunit`
+-- Indexes for table `table_settingunit`
 --
 ALTER TABLE `table_settingunit`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `table_shiftoperations`
+-- Indexes for table `table_shiftoperations`
 --
 ALTER TABLE `table_shiftoperations`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `table_shiftos`
+-- Indexes for table `table_shiftos`
 --
 ALTER TABLE `table_shiftos`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `table_statuspassing`
+-- Indexes for table `table_statuspassing`
 --
 ALTER TABLE `table_statuspassing`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `table_supplaypassing`
+-- Indexes for table `table_supplaypassing`
 --
 ALTER TABLE `table_supplaypassing`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `table_users`
+-- Indexes for table `table_users`
 --
 ALTER TABLE `table_users`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT untuk tabel yang dibuang
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT untuk tabel `enum`
+-- AUTO_INCREMENT for table `enum`
 --
 ALTER TABLE `enum`
   MODIFY `id` bigint(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=196;
 
 --
--- AUTO_INCREMENT untuk tabel `table_enum`
+-- AUTO_INCREMENT for table `table_enum`
 --
 ALTER TABLE `table_enum`
   MODIFY `id` bigint(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
 
 --
--- AUTO_INCREMENT untuk tabel `table_equipment`
+-- AUTO_INCREMENT for table `table_equipment`
 --
 ALTER TABLE `table_equipment`
   MODIFY `id` bigint(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=351;
 
 --
--- AUTO_INCREMENT untuk tabel `table_quality`
+-- AUTO_INCREMENT for table `table_quality`
 --
 ALTER TABLE `table_quality`
-  MODIFY `id` bigint(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` bigint(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
--- AUTO_INCREMENT untuk tabel `table_settingunit`
+-- AUTO_INCREMENT for table `table_settingunit`
 --
 ALTER TABLE `table_settingunit`
   MODIFY `id` bigint(255) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT untuk tabel `table_shiftoperations`
+-- AUTO_INCREMENT for table `table_shiftoperations`
 --
 ALTER TABLE `table_shiftoperations`
-  MODIFY `id` bigint(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` bigint(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
--- AUTO_INCREMENT untuk tabel `table_shiftos`
+-- AUTO_INCREMENT for table `table_shiftos`
 --
 ALTER TABLE `table_shiftos`
   MODIFY `id` bigint(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=281;
 
 --
--- AUTO_INCREMENT untuk tabel `table_statuspassing`
+-- AUTO_INCREMENT for table `table_statuspassing`
 --
 ALTER TABLE `table_statuspassing`
   MODIFY `id` bigint(255) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT untuk tabel `table_supplaypassing`
+-- AUTO_INCREMENT for table `table_supplaypassing`
 --
 ALTER TABLE `table_supplaypassing`
-  MODIFY `id` bigint(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` bigint(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
--- AUTO_INCREMENT untuk tabel `table_users`
+-- AUTO_INCREMENT for table `table_users`
 --
 ALTER TABLE `table_users`
-  MODIFY `id` bigint(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

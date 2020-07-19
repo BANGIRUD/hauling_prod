@@ -8,7 +8,7 @@
     <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>Quality Control Passing
-      <small>Shift </small>
+      <small>Shift <?=$shift?></small>
     </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
@@ -31,7 +31,7 @@
                 <table class="table table-bordered table-striped passing" id="" >
                   <thead class="text-center border" style="background-color: #2e86de ; color: #ffffff "> 
                     <tr>
-                      <th rowspan="2" nowrap>Raw Material</th>
+                      <th rowspan="2" nowrap style="text-align: center; vertical-align: middle;">Raw Material</th>
                       <?php
                           $jam = 6;
                           if ($shift == 2) {
@@ -47,15 +47,15 @@
                             }else{
                               $b = $a . ':00';
                             }
-                            echo '<th colspan="3" width="120"> ' .$b. ' </th>' ; 
+                            echo '<th colspan="3" width="120" style="text-align: center;"> ' .$b. ' </th>' ; 
 
                         }?>
                     </tr>
                     <tr>
                     <?php for ($a=$jam, $i = 1; $i <= 12; $i++, $a++):?>
-                      <th width="500">Plan</th>
-                      <th nowrap>Actual</th>
-                      <th>%</th>
+                      <th width="500" style="text-align: center;">Plan</th>
+                      <th nowrap style="text-align: center;">Actual</th>
+                      <th style="text-align: center;">%</th>
                     <?php endfor;?>
                     </tr>
                   </thead>

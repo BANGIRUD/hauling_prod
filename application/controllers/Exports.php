@@ -114,9 +114,9 @@ class exports extends CI_Controller {
 			$objPHPExcel->getActiveSheet()->getStyle('A5:' . $objPHPExcel->getActiveSheet()->getHighestColumn() . $objPHPExcel->getActiveSheet()->getHighestRow())->applyFromArray($styleArray);
 
 			$alphas = range('A', 'Z');
-				$objPHPExcel->getActiveSheet()->getStyle('A5:I5')->applyFromArray($bordering);
-				$td = array('#', 'ID Unit', 'Ellipse', 'Model', 'Capacity', 'Owner Unit', 'Status Unit', 'Status To Use', 'Remark');
-				$forv = 9;
+				$objPHPExcel->getActiveSheet()->getStyle('A5:H5')->applyFromArray($bordering);
+				$td = array('#', 'ID Unit', 'Set Trailer', 'Model', 'Capacity', 'Owner Unit', 'Status Unit', 'Status To Use');
+				$forv = 8;
 			for ($i=0; $i < $forv ; $i++) { 
 				$objPHPExcel->setActiveSheetIndex(0)->setCellValue($alphas[$i] . '5', $td[$i]);
 				$objPHPExcel->getActiveSheet()->getStyle($alphas[$i] . '5')->getAlignment()->setWrapText(true); 
@@ -129,12 +129,11 @@ class exports extends CI_Controller {
 				$objPHPExcel->getActiveSheet()->getColumnDimension('F')->setWidth(30);
 				$objPHPExcel->getActiveSheet()->getColumnDimension('G')->setWidth(30);
 				$objPHPExcel->getActiveSheet()->getColumnDimension('H')->setWidth(30);
-				$objPHPExcel->getActiveSheet()->getColumnDimension('I')->setWidth(30);
 			
 			$objPHPExcel->getActiveSheet()->getRowDimension('5')->setRowHeight(40);
 
 
-			$this->db->select('table_equipment.unit_id, table_equipment.ellipse, table_equipment.model, table_equipment.capacity, table_equipment.owner_unit, table_equipment.status_unit, table_equipment.status_to_use, table_equipment.remark');
+			$this->db->select('table_equipment.unit_id, table_equipment.set_trailler, table_equipment.model, table_equipment.capacity, table_equipment.owner_unit, table_equipment.status_unit, table_equipment.status_to_use');
 			$this->db->from('table_equipment');
 			$this->db->where('`table_equipment`.`deleted_at` IS NULL');
 			$table = $this->db->get()->result_array();
@@ -146,13 +145,12 @@ class exports extends CI_Controller {
 					$hitung++;
 					$objPHPExcel->setActiveSheetIndex(0)->setCellValue($alphas[0] . $hitung, $no);
 					$objPHPExcel->setActiveSheetIndex(0)->setCellValue($alphas[1] . $hitung, $data['unit_id']);
-					$objPHPExcel->setActiveSheetIndex(0)->setCellValue($alphas[2] . $hitung, $data['ellipse']);
+					$objPHPExcel->setActiveSheetIndex(0)->setCellValue($alphas[2] . $hitung, $data['set_trailler']);
 					$objPHPExcel->setActiveSheetIndex(0)->setCellValue($alphas[3] . $hitung, $data['model']);
 					$objPHPExcel->setActiveSheetIndex(0)->setCellValue($alphas[4] . $hitung, $data['capacity']);
 					$objPHPExcel->setActiveSheetIndex(0)->setCellValue($alphas[5] . $hitung, $data['owner_unit']);
 					$objPHPExcel->setActiveSheetIndex(0)->setCellValue($alphas[6] . $hitung, $data['status_unit']);
 					$objPHPExcel->setActiveSheetIndex(0)->setCellValue($alphas[7] . $hitung, $data['status_to_use']);
-					$objPHPExcel->setActiveSheetIndex(0)->setCellValue($alphas[8] . $hitung, $data['remark']);
 					
 
 					for ($i=1, $a = 0; $i < $forv; $i++, $a++) { 
