@@ -292,6 +292,128 @@ class Dash extends CI_Controller {
 		$this->load->view('framework/footer');
 	}
 
+	public function daily_record_production_scale($code = '')
+	{
+		$result 			= get_date_shift();	
+		$by_area			= $this->session->userdata('area');
+		$date  				= $result['date'];
+		$cargo_muatan		= $this->Crud->search('table_enum', array('type' => 'cargo_muatan'))->result_array();
+		$rom	  			= $this->Crud->search('table_enum', array('type' => 'rom'))->result_array();
+
+		$this->load->model('Shift_operations', 'operations');
+		$data = $this->operations->daily_record_production($by_area, $code)->result_array();
+
+		$data 		= array (
+			'dateid' 			=> $result['date'],
+			'cargo_muatan'		=> $cargo_muatan,
+			'rom'				=> $rom,
+			'data'				=> $data,
+		);
+
+		$this->load->view('framework/header', array('title' => 'Record Production'));
+		$this->load->view('framework/sidebar');
+		$this->load->view('pages/daily_record_production_scale', $data);
+		$this->load->view('framework/footer');	
+	}
+
+	public function daily_monitoring_post()
+	{
+
+
+		$this->load->view('framework/header', array('title' => 'Monitoring Post'));
+		$this->load->view('framework/sidebar');
+		$this->load->view('pages/daily_monitoring_post');
+		$this->load->view('framework/footer');	
+	}
+
+	public function daily_monitoring_rom($by_rom = '')
+	{
+		$result 			= get_date_shift();	
+		$by_area			= $this->session->userdata('area');
+		$by_rom				= $by_rom == '' ?$this->session->userdata('rom') : $by_rom;
+		$date  				= $result['date'];
+		$cargo_muatan		= $this->Crud->search('table_enum', array('type' => 'cargo_muatan'))->result_array();
+		$rom	  			= $this->Crud->search('table_enum', array('type' => 'rom'))->result_array();
+
+		$this->load->model('Shift_operations', 'operations');
+		$data = $this->operations->monitoring_pos_rom($by_rom, "K")->result_array();
+
+		$data 		= array (
+			'dateid' 			=> $result['date'],
+			'cargo_muatan'		=> $cargo_muatan,
+			'rom'				=> $rom,
+			'data'				=> $data,
+		);
+
+		$this->load->view('framework/header', array('title' => 'Monitoring ROM'));
+		$this->load->view('framework/sidebar');
+		$this->load->view('pages/daily_monitoring_rom',$data);
+		$this->load->view('framework/footer');	
+	}
+
+	public function daily_monitoring_post_muatan($code = '',$by_area = '')
+	{
+		$by_level  = $this->session->userdata('level');
+		$result 			= get_date_shift();	
+		// $by_area			= $by_area == '' ? $this->session->userdata('area') : $by_area;
+		$code				= $code == '' ? "L" : $code;
+		$date  				= $result['date'];
+		$cargo_muatan		= $this->Crud->search('table_enum', array('type' => 'cargo_muatan'))->result_array();
+		$rom	  			= $this->Crud->search('table_enum', array('type' => 'rom'))->result_array();		
+		$area 				= $this->Crud->search('table_enum', array('type' => 'area'))->result_array();
+
+		$this->load->model('Shift_operations', 'operations');
+		if ($by_level == 'dispatcher' || $by_level == 'administrator' ) {
+			$data = $this->operations->monitoring_pos_timbangan($by_area, "M", $code)->result_array();
+		}else{
+			$data = $this->operations->monitoring_pos_pantau($by_area, "M", $code)->result_array();
+		}
+		
+
+		$data 		= array (
+			'dateid' 			=> $result['date'],
+			'cargo_muatan'		=> $cargo_muatan,
+			'rom'				=> $rom,
+			'data'				=> $data,			
+			'area'				=> $area,
+			'code'				=> $code,
+			'by_area'			=> $by_area
+		);
+
+		$this->load->view('framework/header', array('title' => 'Monitoring Post'));
+		$this->load->view('framework/sidebar');
+		$this->load->view('pages/blank_muatan',$data);
+		$this->load->view('framework/footer');	
+	}
+
+	public function daily_monitoring_post_kosongan($code = '', $by_area = '')
+	{
+		$result 			= get_date_shift();	
+
+		$by_area			= $by_area == '' ? $this->session->userdata('area') : $by_area;
+		$code				= $code == '' ? "L" : $code;
+		$cargo_muatan		= $this->Crud->search('table_enum', array('type' => 'cargo_muatan'))->result_array();
+		$rom	  			= $this->Crud->search('table_enum', array('type' => 'rom'))->result_array();
+		$area 				= $this->Crud->search('table_enum', array('type' => 'area'))->result_array();
+
+		$this->load->model('Shift_operations', 'operations');
+		$data = $this->operations->monitoring_pos_pantau ($by_area, "K",$code)->result_array();
+
+		$data 		= array (
+			'dateid' 			=> $result['date'],
+			'cargo_muatan'		=> $cargo_muatan,
+			'rom'				=> $rom,
+			'data'				=> $data,
+			'area'				=> $area,
+			'code'				=> $code,
+			'by_area'			=> $by_area
+		);
+		
+		$this->load->view('framework/header', array('title' => 'Monitoring Post'));
+		$this->load->view('framework/sidebar');
+		$this->load->view('pages/blank_kosongan',$data);
+		$this->load->view('framework/footer');	
+	}
 
 }
 

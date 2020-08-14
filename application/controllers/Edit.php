@@ -11,40 +11,6 @@ class Edit extends CI_Controller {
 		// }
 	}
 
-	// public function shift_operations()
-	// {
-	// 	print_r($_POST);
-	// 	$result		= get_date_shift();
-	// 	$this->db->where('id', $id);
-	// 	$this->db->update('table_shiftoperations', 
-	// 		array(
-	// 			'operation' => $val, 
-	// 			'time_out' => $time_out
-	// 		)
-	// 	);
-	// 	$this->Crud->update('atable_shiftoperations', array('id' => $this->input->post('id')), array(
-	// 					'updated_at' 		=> date('Y-m-d H:i:s'),
-	// 					'unit_id'			=> $this->input->post('unit_id'),
-	// 					'ellipse'			=> $this->input->post('ellipse'),
-	// 					'model'				=> $this->input->post('model'),
-	// 					'chassis_number'	=> $this->input->post('chassis_number'),
-	// 					'brand'				=> $this->input->post('brand'),
-	// 					'product'			=> $this->input->post('product'),
-	// 					'engine_model'		=> $this->input->post('engine'),
-	// 					'engine_number'		=> $this->input->post('engine_number'),
-	// 					'delivery'			=> $this->input->post('delivery'),
-	// 					'rpm'				=> $this->input->post('rpm'),
-	// 					'responsibility'	=> $this->input->post('responsibility'),
-	// 					'fix_trailer'		=> $this->input->post('fix_trailer'),
-	// 					'status'			=> $this->input->post('status'),
-	// 					'rfid'				=> $this->input->post('rfid'),
-	// 					'gpsid'				=> $this->input->post('gpsid'),
-	// 					'section'			=> $this->input->post('section'),
-	// 					'by_user'			=> $by_user
-	// 				));
-		
-	// }
-
 	public function ready_to_operation($id, $val)
 	{
 		$time_out = $val == 0 ? '' : date('Y-m-d H:i:s');
@@ -148,7 +114,7 @@ class Edit extends CI_Controller {
 			$data = array(
 				'updated_at'		=> date('Y-m-d H:i:s'),
 				'deleted_at'		=> NULL,
-				'date'				=> $date,
+				'date'				=> $date ,
 				'shift'				=> $shift,
 				'time_in'			=> $date_in,
 				'time_out'			=> $date_out,
@@ -198,6 +164,292 @@ class Edit extends CI_Controller {
 		$this->Crud->update('table_shiftoperations', array('by_ordered' => $position),$second_data);
 		$this->Crud->update('table_shiftoperations', array('id' => $id),$data);
 		redirect($_SERVER['HTTP_REFERER']);
+	}
+
+	public function edit_shift_operation_scale()
+	{
+		// print_r($_POST);
+		$by_user				= $this->session->userdata('id');
+		$by_area				= $this->session->userdata('area') != '' ? $this->session->userdata('area') : trim($this->input->post('area'));
+		
+		$id 					= trim($this->input->post('id'));
+		$date 					= trim( date('Y-m-d', strtotime($this->input->post('date'))) );
+		$shift 					= $result['shift'];
+		$unit 					= trim($this->input->post('unit'));
+		$posisi 				= "K";
+		$cargo 					= trim($this->input->post('cargo_muatan'));
+		$code_stby				= "L";
+		$date_in	 			= date('Y-m-d H:i');
+		$date_out	 			= date('Y-m-d H:i');
+		$time_passing			= date('H:i');
+		$remark 				= "";
+
+		$src 	= $this->Crud->search('table_shiftoperations', array('id' => $id))->num_rows();
+		if ($src > 0) {
+			$data = array(
+				'updated_at' 		=> date('Y-m-d H:i:s'),
+				'deleted_at' 		=> NULL,
+				'date' 				=> $date,
+				'shift' 			=> $shift,
+				'time_in' 			=> $date_in,					
+				'time_out' 			=> $date_out,
+				'location'			=> $by_area,					
+				'cn_unit' 			=> $id_unit,
+				'position' 			=> $position,
+				'cargo' 			=> $cargo_muatan,
+				'code_stby' 		=> $code_standby,
+				'time_passing'		=> $time_passing,
+				'remark'			=> $remark,
+				'by_rom'			=> $by_rom,
+				'by_area'			=> $by_area,
+				'by_user'			=> $by_user
+			);
+			$this->Crud->update('table_shiftoperations', array('id' => $id),$data);
+			$this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissible">
+		        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+		        <h4><i class="icon fa fa-check"></i> Sukses!</h4>
+		        Data telah berhasil di edit!.
+		      </div>');
+		}else{
+			$this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissible">
+		        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+		        <h4><i class="icon fa fa-check"></i> Error!</h4>
+		        Check kembali data anda!.
+		      </div>');
+		}
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
+	public function edit_in_csa()
+	{
+		// print_r($_POST);
+		$by_user				= $this->session->userdata('id');
+		$by_area				= $this->session->userdata('area') != '' ? $this->session->userdata('area') : trim($this->input->post('area'));
+		$result 				= get_date_shift();	
+		
+		$id 					= trim($this->input->post('id'));
+		$date 					= date('Y-m-d', strtotime($result['date']));
+		$shift 					= $result['shift'];
+		$position 				= "K";
+		$unit 					= trim($this->input->post('unit'));
+		$cargo 					= trim($this->input->post('cargo_muatan'));
+		$code_stby				= trim($this->input->post('code_standby'));
+		$date_in	 			= date('Y-m-d H:i');
+		$date_out	 			= date('Y-m-d H:i');
+		$time_passing			= date('H:i');
+		$remark 				= "";
+		$operation 				= strtolower($code_standby) == 'l' ? 1 : 0;
+
+		$src 	= $this->Crud->search('table_shiftoperations', array('id' => $id))->num_rows();
+		if ($src > 0) {
+			$data = array(
+				'updated_at'		=> date('Y-m-d H:i:s'),
+				'deleted_at'		=> NULL,
+				'date'				=> $date,
+				'shift'				=> $shift,
+				'time_in'			=> $date_in,
+				'time_out'			=> $date_out,
+				'location'			=> $by_area,
+				'cn_unit'			=> $unit,
+				'position'			=> $posisi,
+				'cargo'				=> $cargo,
+				'code_stby'			=> $code_stby,
+				'time_passing'		=> $time_passing,
+				'remark'			=> $remark,
+				'by_area'			=> $by_area,
+				'by_user'			=> $by_user
+			);
+			$this->Crud->update('table_shiftoperations', array('id' => $id),$data);
+			$this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissible">
+		        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+		        <h4><i class="icon fa fa-check"></i> Sukses!</h4>
+		        Data telah berhasil di edit!.
+		      </div>');
+		}else{
+			$this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissible">
+		        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+		        <h4><i class="icon fa fa-check"></i> Error!</h4>
+		        Check kembali data anda!.
+		      </div>');
+		}
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
+	public function edit_in_csa_muatan()
+	{
+		// print_r($_POST);
+		$by_user				= $this->session->userdata('id');
+		$by_area				= $this->session->userdata('area') != '' ? $this->session->userdata('area') : trim($this->input->post('area'));
+		$result 				= get_date_shift();	
+		
+		$id 					= trim($this->input->post('id'));
+		$date 					= date('Y-m-d', strtotime($result['date']));
+		$shift 					= $result['shift'];
+		$unit 					= trim($this->input->post('unit'));
+		$position 				= "M"
+		$cargo 					= trim($this->input->post('cargo_muatan'));
+		$code_stby				= trim($this->input->post('code_standby'));
+		$date_in	 			= date('Y-m-d H:i');
+		$date_out	 			= date('Y-m-d H:i');
+		$time_passing			= date('H:i');
+		$remark 				= "";
+		$operation 				= strtolower($code_standby) == 'l' ? 1 : 0;
+
+		$src 	= $this->Crud->search('table_shiftoperations', array('id' => $id))->num_rows();
+		if ($src > 0) {
+			$data = array(
+				'updated_at'		=> date('Y-m-d H:i:s'),
+				'deleted_at'		=> NULL,
+				'date'				=> $date,
+				'shift'				=> $shift,
+				'time_in'			=> $date_in,
+				'time_out'			=> $date_out,
+				'location'			=> $by_area,
+				'cn_unit'			=> $unit,
+				'position'			=> $position,
+				'cargo'				=> $cargo,
+				'code_stby'			=> $code_stby,
+				'time_passing'		=> $time_passing,
+				'remark'			=> $remark,
+				'operation'			=> $operation,
+				'by_area'			=> $by_area,
+				'by_user'			=> $by_user
+			);
+			$this->Crud->update('table_shiftoperations', array('id' => $id),$data);
+			$this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissible">
+		        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+		        <h4><i class="icon fa fa-check"></i> Sukses!</h4>
+		        Data telah berhasil di edit!.
+		      </div>');
+		}else{
+			$this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissible">
+		        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+		        <h4><i class="icon fa fa-check"></i> Error!</h4>
+		        Check kembali data anda!.
+		      </div>');
+		}
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
+
+	public function edit_in_rom($id)
+	{
+		$result 				= get_date_shift();	
+
+		$by_user				= $this->session->userdata('id');
+		$by_area				= $this->session->userdata('area') != '' ? $this->session->userdata('area') : trim($this->input->post('area'));
+		$rom_in 				= date('Y-m-d H:i:s');
+
+		$data = array(
+			'updated_at'		=> date('Y-m-d H:i:s'),
+			'rom_in' 			=> $rom_in,
+			'by_area'			=> $by_area,
+			'by_user'			=> $by_user	
+		);
+
+		$this->Crud->update('table_shiftoperations', array('id' => $id),$data);
+
+		$row = $this->Crud->search('table_shiftoperations', array('id' => $id))->row_array();
+		// print_r($row['date']);
+		if ($row > 0) {
+		$data = array(
+			'created_at' 		=> $row['created_at'],
+			'updated_at' 		=> $row['updated_at'],
+			'deleted_at' 		=> $row['deleted_at'],
+			'date' 				=> $row['date'],
+			'shift' 			=> $row['shift'],
+			'time_in' 			=> $row['time_in'],					
+			'time_out' 			=> $row['time_out'],
+			'location'			=> $row['location'],					
+			'cn_unit' 			=> $row['cn_unit'],
+			'position' 			=> $row['position'],
+			'cargo' 			=> $row['cargo'],
+			'code_stby' 		=> $row['code_stby'],
+			'time_passing'		=> $row['time_passing'],
+			'remark'			=> $row['remark'],
+			'operation'			=> $row['operation'],
+			'rom_in'			=> $row['rom_in'],
+			'rom_out'			=> $row['rom_out'],
+			'by_ordered'		=> $row['by_ordered'],
+			'by_rom'			=> $row['by_rom'],
+			'by_area'			=> $row['by_area'],
+			'by_user'			=> $row['by_user'],
+			'refid'				=> $row['id'],
+		);
+		// print_r($data);
+		$this->Crud->insert('table_history_shiftoperations',$data);
+		$this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissible">
+		        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+		        <h4><i class="icon fa fa-check"></i> Sukses!</h4>
+		        Unit telah berhasil memasuki ROM!.
+		      </div>');
+		}else{
+			$this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissible">
+		        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+		        <h4><i class="icon fa fa-check"></i> Error!</h4>
+		        Check kembali data anda!.
+		      </div>');
+		}
+
+	}
+
+	public function edit_out_rom($id)
+	{
+		$by_user			= $this->session->userdata('id');
+		$by_area			= $this->session->userdata('area') != '' ? $this->session->userdata('area') : trim($this->input->post('area'));
+		$rom_out 			= date('Y-m-d H:i:s');
+		$position 			= "M";
+
+		$data = array(
+			'updated_at'		=> date('Y-m-d H:i:s'),
+			'position'			=> $position,
+			'rom_out' 			=> $rom_out,
+			'by_area'			=> $by_area,
+			'by_user'			=> $by_user	
+		);
+
+		$this->Crud->update('table_shiftoperations', array('id' => $id),$data);
+		$row = $this->Crud->search('table_shiftoperations', array('id' => $id))->row_array();
+		// print_r($row['date']);
+		if ($row > 0) {
+		$data = array(
+			'created_at' 		=> $row['created_at'],
+			'updated_at' 		=> $row['updated_at'],
+			'deleted_at' 		=> $row['deleted_at'],
+			'date' 				=> $row['date'],
+			'shift' 			=> $row['shift'],
+			'time_in' 			=> $row['time_in'],					
+			'time_out' 			=> $row['time_out'],
+			'location'			=> $row['location'],					
+			'cn_unit' 			=> $row['cn_unit'],
+			'position' 			=> $row['position'],
+			'cargo' 			=> $row['cargo'],
+			'code_stby' 		=> $row['code_stby'],
+			'time_passing'		=> $row['time_passing'],
+			'remark'			=> $row['remark'],
+			'operation'			=> $row['operation'],
+			'rom_in'			=> $row['rom_in'],
+			'rom_out'			=> $row['rom_out'],
+			'by_ordered'		=> $row['by_ordered'],
+			'by_rom'			=> $row['by_rom'],
+			'by_area'			=> $row['by_area'],
+			'by_user'			=> $row['by_user'],
+			'refid'				=> $row['id'],
+		);
+		// print_r($data);
+		$this->Crud->insert('table_history_shiftoperations',$data);
+		$this->session->set_flashdata('msg2', '<div class="alert alert-success alert-dismissible">
+		        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+		        <h4><i class="icon fa fa-check"></i> Sukses!</h4>
+		        Unit telah keluar dari ROM!.
+		      </div>');
+		}else{
+			$this->session->set_flashdata('msg2', '<div class="alert alert-danger alert-dismissible">
+		        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+		        <h4><i class="icon fa fa-check"></i> Error!</h4>
+		        Check kembali data anda!.
+		      </div>');
+		}
 	}
 
 }

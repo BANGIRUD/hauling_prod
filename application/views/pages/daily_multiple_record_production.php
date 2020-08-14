@@ -136,9 +136,9 @@
 
    $(document).on('change','#position', function() {
     var val = $(this).val();
-    if(val == 6) {
+    if(val == "K") {
       $(this).closest("tr").find('#cargo').select2();
-      $(this).closest("tr").find('#cargo').val("194").trigger("change");
+      $(this).closest("tr").find('#cargo').val("Kosongan").trigger("change");
     } else {
       $(this).closest("tr").find('#cargo').select2();
     }

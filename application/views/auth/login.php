@@ -31,7 +31,7 @@
 	</div>
 	<label>Area</label>
 	<div class="form-group has-feedback">
-		<select type="Area" class="form-control" placeholder="Area" name="area" autocomplete="off" > 
+		<select id="area" class="form-control" placeholder="Area" name="area" autocomplete="off" > 
 			 <?php
                 foreach ($area as $value) {
                   $selected = $area == $value['id'] ? ' selected' : '';
@@ -40,6 +40,20 @@
               ?>
               <option value="">ALL</option>
 		</select> 
+	</div>
+	<label>Rom</label>
+	<div class="form-group has-feedback">
+		<!-- <select class="form-control" name="analysis" disabled="disabled"> -->
+			<select class="form-control" name="rom" disabled="disabled">
+	    	
+          <option value="0"></option>
+	    	<?php
+                foreach ($rom as $value) {
+                  $selected = $area == $value['id'] ? ' selected' : '';
+                  echo '<option value="' . $value['id'] . '"' . $selected . '>' . $value['name'] . '</option>';
+                }
+          ?>
+	    </select>
 	</div>
 	<div class="row">
 		<div class="col-xs-4 col-xs-offset-8">
@@ -59,13 +73,23 @@
 <script src="<?php echo base_url('___/bower_components/bootstrap/dist/js/bootstrap.min.js');?>"></script>
 <!-- iCheck -->
 <script src="<?php echo base_url('___/plugins/iCheck/icheck.min.js');?>"></script>
-<script>
+<script type="text/javascript">
 	$(function () {
 		$('input').iCheck({
 			checkboxClass: 'icheckbox_square-blue',
 			radioClass: 'iradio_square-blue',
 			increaseArea: '20%' /* optional */
 		});
+	});
+
+	$(document).on('change','#area',function(){
+		var id = $(this).val();
+		if(id == '108') {
+			$("select[name=rom]").attr('disabled', false);
+		} else {
+			$("select[name=rom]").attr('disabled', true);
+			$("select[name=rom]").val(0);
+		}
 	});
 </script>
 </body>

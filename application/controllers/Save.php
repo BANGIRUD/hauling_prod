@@ -97,6 +97,8 @@ class Save extends CI_Controller {
 		 }
 		 redirect($_SERVER['HTTP_REFERER']);
 	}
+
+
 	public function bulk_shift_operation()
 	{
 		$result 	= get_date_shift();	
@@ -248,6 +250,97 @@ class Save extends CI_Controller {
 	        </div>');
 		} else {
 			$this->session->set_flashdata('msg', '<div class="alert  alert-danger alert-dismissible fade show" role="alert">
+            <span class="badge badge-pill badge-danger">Error</span> ' . validation_errors() . '
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>');
+		 }
+		 redirect($_SERVER['HTTP_REFERER']);
+	}
+
+	public function add_unit_scale()
+	{
+
+		$by_area			= $this->session->userdata('area');
+		$by_user			= $this->session->userdata('id');
+
+		$result 			= get_date_shift();	
+			print_r($_POST);
+		// Variable
+		$date 				= date('Y-m-d', strtotime($result['date']));
+		$shift 				= $result['shift'];
+		$id_unit 			= $this->input->post('id_unit');
+		$position 			= "K";
+		$cargo_muatan 		= $this->input->post('cargo_muatan');
+		$code_standby 		= "L";
+		$by_rom				= $this->input->post('rom');
+		$date_in	 		= date('Y-m-d H:i');
+		$date_out	 		= date('Y-m-d H:i');
+		$time_passing		= date('H:i');
+		$remark 			= "";
+		$operation 			= strtolower($code_standby) == 'l' ? 1 : 0;
+
+		$this->form_validation->set_rules('id_unit','id_unit','required');
+		$this->form_validation->set_rules('cargo_muatan','cargo_muatan','required');
+		$this->form_validation->set_rules('rom','by rom','required');
+
+		if( $this->form_validation->run() != false ) {
+
+
+			$this->db->where('table_shiftoperations.deleted_at IS NULL AND table_shiftoperations.date = \''.$result['date'].'\'');
+			$this->db->where('table_shiftoperations.deleted_at IS NULL ');
+				if ($by_area) {
+					$this->db->where('table_shiftoperations.by_area', $by_area);
+				}
+			if (strtolower($code_standby) == 'l') {
+				$this->db->group_start();
+	 			$this->db->where('code_stby', 'L');
+				$this->db->or_where('operation !=', '0');
+				$this->db->group_end();
+			} elseif (strtolower($code_standby) != '') {
+				$this->db->group_start();
+				$this->db->where('code_stby !=', 'L');
+				$this->db->where('operation', '0');
+				$this->db->group_end();
+			}
+			$check_order = $this->db->get('table_shiftoperations');
+
+			$data = array(
+					'created_at' 		=> date('Y-m-d H:i:s'),
+					'updated_at' 		=> date('Y-m-d H:i:s'),
+					'deleted_at' 		=> NULL,
+					'date' 				=> $date,
+					'shift' 			=> $shift,
+					'time_in' 			=> $date_in,					
+					'time_out' 			=> $date_out,
+					'location'			=> $by_area,					
+					'cn_unit' 			=> $id_unit,
+					'position' 			=> $position,
+					'cargo' 			=> $cargo_muatan,
+					'code_stby' 		=> $code_standby,
+					'time_passing'		=> $time_passing,
+					'remark'			=> $remark,
+					'operation'			=> $operation,
+					'by_ordered'		=> ($check_order->num_rows()+1),
+					'by_rom'			=> $by_rom,
+					'by_area'			=> $by_area,
+					'by_user'			=> $by_user
+				);
+
+				$this->Crud->insert('table_shiftoperations', $data);
+				$this->Crud->insert('table_history_shiftoperations', $data);
+
+				$this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissible fade show" role="alert">
+	            <span class="badge badge-pill badge-success">Success</span> <b>Data</b> has been added.
+	            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	                <span aria-hidden="true">&times;</span>
+	            </button>
+	        </div>');
+
+
+		} else {
+			$this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissible fade show" role="alert">
             <span class="badge badge-pill badge-danger">Error</span> ' . validation_errors() . '
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>

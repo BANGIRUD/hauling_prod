@@ -10,6 +10,7 @@ class Auth extends CI_Controller {
 	public function index($err='')
 	{
 		$area 		= $this->Crud->search('table_enum', array('type' => 'area', 'deleted_at' => NULL))->result_array();
+		$rom 		= $this->Crud->search('table_enum', array('type' => 'rom', 'deleted_at' => NULL))->result_array();
 
 		if ($err == 'session') {
 			$this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissible">
@@ -23,8 +24,9 @@ class Auth extends CI_Controller {
 			redirect(base_url('Auth'));
 	    }
 	    $data 		= array(
-				'title' => 'Login',
-			'area' 		=> $area,
+				'title' 	=> 'Login',
+				'area' 		=> $area,
+				'rom'		=> $rom,
 		);
 		$this->load->view('framework/head_login', $data);
 		$this->load->view('Auth/login');
@@ -34,6 +36,7 @@ class Auth extends CI_Controller {
 		$username 		= htmlspecialchars( trim($this->input->post('username')) );
 		$password 		= htmlspecialchars( trim($this->input->post('password')) );
 		$area 			= htmlspecialchars( trim($this->input->post('area')) );
+		$rom 			= htmlspecialchars( trim($this->input->post('rom')) );
 		
 		$this->db->select('table_users.*, table_enum.name as level_description');
 		$this->db->from('table_users');
@@ -56,6 +59,7 @@ class Auth extends CI_Controller {
 					'phone' 			=> $data['phone'],
 					'activation_key' 	=> $data['activation_key'],
 					'area' 				=> $area,
+					'rom' 				=> $rom,
 					'level' 			=> $data['level_description']
 				);
 				$this->session->set_userdata($session_data);

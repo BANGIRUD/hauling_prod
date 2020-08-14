@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jul 19, 2020 at 08:37 AM
--- Server version: 10.3.10-MariaDB-log
--- PHP Version: 7.2.11
+-- Waktu pembuatan: 14 Agu 2020 pada 08.50
+-- Versi server: 10.3.10-MariaDB-log
+-- Versi PHP: 7.2.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -25,7 +25,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `enum`
+-- Struktur dari tabel `enum`
 --
 
 CREATE TABLE `enum` (
@@ -42,7 +42,7 @@ CREATE TABLE `enum` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `enum`
+-- Dumping data untuk tabel `enum`
 --
 
 INSERT INTO `enum` (`id`, `created_at`, `updated_at`, `deleted_at`, `code`, `name`, `category`, `category_description`, `type`, `by_user`) VALUES
@@ -242,7 +242,28 @@ INSERT INTO `enum` (`id`, `created_at`, `updated_at`, `deleted_at`, `code`, `nam
 -- --------------------------------------------------------
 
 --
--- Table structure for table `table_enum`
+-- Struktur dari tabel `table_control_passing`
+--
+
+CREATE TABLE `table_control_passing` (
+  `id` bigint(255) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `date` date NOT NULL,
+  `shift` int(2) NOT NULL,
+  `time` time NOT NULL,
+  `plan` int(5) NOT NULL,
+  `act` int(5) NOT NULL,
+  `ach` float NOT NULL,
+  `by_area` int(25) NOT NULL,
+  `by_user` int(25) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `table_enum`
 --
 
 CREATE TABLE `table_enum` (
@@ -258,7 +279,7 @@ CREATE TABLE `table_enum` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `table_enum`
+-- Dumping data untuk tabel `table_enum`
 --
 
 INSERT INTO `table_enum` (`id`, `created_at`, `updated_at`, `deleted_at`, `code`, `name`, `description`, `type`, `by_user`) VALUES
@@ -274,8 +295,8 @@ INSERT INTO `table_enum` (`id`, `created_at`, `updated_at`, `deleted_at`, `code`
 (10, '2020-04-01 00:00:00', '2020-04-01 00:00:00', NULL, '34', 'KM 34', NULL, 'area', 1),
 (11, '2020-04-01 00:00:00', '2020-04-01 00:00:00', NULL, '65', 'KM 65', NULL, 'area', 1),
 (12, '2020-04-01 00:00:00', '2020-04-01 00:00:00', NULL, '69', 'KM 69', NULL, 'area', 1),
-(13, '2020-04-01 00:00:00', '2020-04-01 00:00:00', NULL, '', 'Administrator', 'Login Sebagai Admin', 'level', 1),
-(14, '2020-04-01 00:00:00', '2020-04-01 00:00:00', NULL, '', 'dispatcher', 'Login Sebagai user pengguna', 'level', 1),
+(13, '2020-04-01 00:00:00', '2020-04-01 00:00:00', NULL, '', 'administrator', 'Login Sebagai Admin', 'level', 1),
+(14, '2020-04-01 00:00:00', '2020-04-01 00:00:00', NULL, '', 'dispatcher', 'Login Sebagai user pos timbangan', 'level', 1),
 (15, '2020-04-01 00:00:00', '2020-04-01 00:00:00', NULL, '', 'HCV PRG', '#62CCFF,black', 'cargo_muatan', 1),
 (16, '2020-04-01 00:00:00', '2020-04-01 00:00:00', NULL, '', 'HCV HI ASH PRG', '#6E32A3,white', 'cargo_muatan', 1),
 (17, '2020-04-01 00:00:00', '2020-04-01 00:00:00', NULL, '', 'HCV HTS PRG', '#FBFDFF,black', 'cargo_muatan', 1),
@@ -367,12 +388,26 @@ INSERT INTO `table_enum` (`id`, `created_at`, `updated_at`, `deleted_at`, `code`
 (103, '2020-04-01 00:00:00', '2020-04-01 00:00:00', NULL, '', 'Quality Issue', '', 'status_passing', 1),
 (104, '2020-04-01 00:00:00', '2020-04-01 00:00:00', NULL, '', 'Low Supply', '', 'status_passing', 1),
 (105, '2020-04-01 00:00:00', '2020-04-01 00:00:00', NULL, '', 'Others', '', 'status_passing', 1),
-(106, '2020-04-01 00:00:00', '2020-04-01 00:00:00', NULL, '', 'Barging Mundur', '', 'status_passing', 1);
+(106, '2020-04-01 00:00:00', '2020-04-01 00:00:00', NULL, '', 'Barging Mundur', '', 'status_passing', 1),
+(107, '2020-04-01 00:00:00', '2020-04-01 00:00:00', NULL, '67', 'KM 67', NULL, 'area', 1),
+(108, '2020-04-01 00:00:00', '2020-04-01 00:00:00', NULL, 'rom', 'ROM', NULL, 'area', 1),
+(109, '2020-04-01 00:00:00', '2020-04-01 00:00:00', NULL, 'rom_17', 'ROM 17', NULL, 'rom', 1),
+(110, '2020-04-01 00:00:00', '2020-04-01 00:00:00', NULL, 'rom_19', 'ROM 19', NULL, 'rom', 1),
+(111, '2020-04-01 00:00:00', '2020-04-01 00:00:00', NULL, 'rom_31a', 'ROM 13A', NULL, 'rom', 1),
+(112, '2020-04-01 00:00:00', '2020-04-01 00:00:00', NULL, 'rom_13b', 'ROM 13B', NULL, 'rom', 1),
+(113, '2020-04-01 00:00:00', '2020-04-01 00:00:00', NULL, 'rom_20', 'ROM 20', NULL, 'rom', 1),
+(114, '2020-04-01 00:00:00', '2020-04-01 00:00:00', NULL, 'rom_wara_1', 'ROM WARA1', NULL, 'rom', 1),
+(115, '2020-04-01 00:00:00', '2020-04-01 00:00:00', NULL, 'rom_wara_2', 'ROM WARA2', NULL, 'rom', 1),
+(116, '2020-04-01 00:00:00', '2020-04-01 00:00:00', NULL, 'rom_wara_3', 'ROM WARA3', NULL, 'rom', 1),
+(117, '2020-04-01 00:00:00', '2020-04-01 00:00:00', NULL, 'rom_paringin', 'ROM PARINGIN', NULL, 'rom', 1),
+(118, '2020-04-01 00:00:00', '2020-04-01 00:00:00', NULL, 'rom_balangan', 'ROM BALANGAN', NULL, 'rom', 1),
+(119, '2020-04-01 00:00:00', '2020-04-01 00:00:00', NULL, '', 'checker', 'Login Sebagai user pos pantau', 'level', 1),
+(120, '2020-04-01 00:00:00', '2020-04-01 00:00:00', NULL, '', 'rom', 'Login Sebagai user rom pantau', 'level', 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `table_equipment`
+-- Struktur dari tabel `table_equipment`
 --
 
 CREATE TABLE `table_equipment` (
@@ -402,7 +437,7 @@ CREATE TABLE `table_equipment` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `table_equipment`
+-- Dumping data untuk tabel `table_equipment`
 --
 
 INSERT INTO `table_equipment` (`id`, `created_at`, `updated_at`, `deleted_at`, `date`, `set_trailler`, `unit_id`, `no_unit`, `model`, `chassis_number`, `brand_state`, `product`, `engine_model`, `delivery`, `engine_number`, `kw_hp_rpm`, `type`, `capacity`, `doc_ellipse`, `owner_unit`, `status_unit`, `status_to_use`, `by_user`) VALUES
@@ -761,7 +796,64 @@ INSERT INTO `table_equipment` (`id`, `created_at`, `updated_at`, `deleted_at`, `
 -- --------------------------------------------------------
 
 --
--- Table structure for table `table_quality`
+-- Struktur dari tabel `table_history_shiftoperations`
+--
+
+CREATE TABLE `table_history_shiftoperations` (
+  `id` bigint(255) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `date` date NOT NULL,
+  `shift` int(2) NOT NULL,
+  `time_in` datetime NOT NULL,
+  `time_out` datetime NOT NULL,
+  `location` varchar(25) NOT NULL,
+  `cn_unit` varchar(25) NOT NULL,
+  `position` varchar(25) NOT NULL,
+  `cargo` varchar(50) NOT NULL,
+  `code_stby` varchar(25) NOT NULL,
+  `time_passing` time NOT NULL,
+  `remark` varchar(50) DEFAULT NULL,
+  `operation` tinyint(1) NOT NULL,
+  `rom_in` datetime NOT NULL,
+  `rom_out` datetime NOT NULL,
+  `by_ordered` int(25) NOT NULL,
+  `by_rom` int(25) NOT NULL,
+  `by_area` int(25) NOT NULL,
+  `by_user` int(25) NOT NULL,
+  `refid` bigint(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `table_history_shiftoperations`
+--
+
+INSERT INTO `table_history_shiftoperations` (`id`, `created_at`, `updated_at`, `deleted_at`, `date`, `shift`, `time_in`, `time_out`, `location`, `cn_unit`, `position`, `cargo`, `code_stby`, `time_passing`, `remark`, `operation`, `rom_in`, `rom_out`, `by_ordered`, `by_rom`, `by_area`, `by_user`, `refid`) VALUES
+(1, '2020-08-11 15:04:39', '2020-08-11 15:04:39', NULL, '2020-08-11', 1, '2020-08-11 15:04:00', '2020-08-11 15:04:00', '107', '100', 'K', 'T100 ST', 'L', '15:04:00', '', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 109, 107, 2, 0),
+(2, '2020-08-11 15:05:15', '2020-08-11 15:05:15', NULL, '2020-08-11', 1, '2020-08-11 15:05:00', '2020-08-11 15:05:00', '107', '101', 'K', 'T200 ST', 'L', '15:05:00', '', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 2, 109, 107, 2, 0),
+(3, '2020-08-11 15:04:39', '2020-08-11 16:36:04', NULL, '2020-08-11', 1, '2020-08-11 15:04:00', '2020-08-11 15:04:00', '107', '100', 'K', 'T100 ST', 'L', '15:04:00', '', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 109, 0, 1, 19),
+(4, '2020-08-11 15:04:39', '2020-08-11 16:36:04', NULL, '2020-08-11', 1, '2020-08-11 15:04:00', '2020-08-11 15:04:00', '107', '100', 'K', 'T100 ST', 'L', '15:04:00', '', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 109, 0, 1, 19),
+(5, '2020-08-12 11:17:34', '2020-08-12 11:17:34', NULL, '2020-08-12', 1, '2020-08-12 11:17:00', '2020-08-12 11:17:00', '107', '150', 'K', 'T200 CT1', 'L', '11:17:00', '', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 109, 107, 1, 0),
+(6, '2020-08-12 11:17:44', '2020-08-12 11:17:44', NULL, '2020-08-12', 1, '2020-08-12 11:17:00', '2020-08-12 11:17:00', '107', '151', 'K', 'T200 CT2', 'L', '11:17:00', '', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 2, 109, 107, 1, 0),
+(7, '2020-08-12 11:18:39', '2020-08-12 11:18:39', NULL, '2020-08-12', 1, '2020-08-12 11:18:00', '2020-08-12 11:18:00', '107', '152', 'K', 'P600', 'L', '11:18:00', '', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 3, 110, 107, 1, 0),
+(8, '2020-08-12 11:19:02', '2020-08-12 11:19:02', NULL, '2020-08-12', 1, '2020-08-12 11:19:00', '2020-08-12 11:19:00', '107', '153', 'K', 'P700', 'L', '11:19:00', '', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 4, 110, 107, 1, 0),
+(9, '2020-08-12 11:19:21', '2020-08-12 11:19:21', NULL, '2020-08-12', 1, '2020-08-12 11:19:00', '2020-08-12 11:19:00', '107', '154', 'K', 'P800', 'L', '11:19:00', '', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 5, 116, 107, 1, 0),
+(10, '2020-08-12 11:17:34', '2020-08-12 11:28:10', NULL, '2020-08-12', 1, '2020-08-12 11:17:00', '2020-08-12 11:17:00', '107', '150', 'K', 'T200 CT1', 'L', '11:17:00', '', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 109, 108, 4, 21),
+(11, '2020-08-12 11:17:34', '2020-08-12 11:28:10', NULL, '2020-08-12', 1, '2020-08-12 11:17:00', '2020-08-12 11:17:00', '107', '150', 'K', 'T200 CT1', 'L', '11:17:00', '', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 109, 108, 4, 21),
+(12, '2020-08-12 11:17:34', '2020-08-12 14:51:07', NULL, '2020-08-12', 1, '2020-08-12 11:17:00', '2020-08-12 11:17:00', '107', '150', 'K', 'T200 CT1', 'L', '11:17:00', '', 1, '2020-08-12 14:51:07', '0000-00-00 00:00:00', 1, 109, 108, 4, 21),
+(13, '2020-08-12 11:17:34', '2020-08-12 14:54:24', NULL, '2020-08-12', 1, '2020-08-12 11:17:00', '2020-08-12 11:17:00', '107', '150', 'M', 'T200 CT1', 'L', '11:17:00', '', 1, '2020-08-12 14:51:07', '2020-08-12 14:54:24', 1, 109, 108, 4, 21),
+(14, '2020-08-13 15:08:32', '2020-08-13 15:08:32', NULL, '2020-08-13', 1, '2020-08-13 15:08:00', '2020-08-13 15:08:00', '107', '300', 'K', 'HCV PRG', 'L', '15:08:00', '', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 109, 107, 1, 0),
+(15, '2020-08-13 15:12:03', '2020-08-13 15:12:03', NULL, '2020-08-13', 1, '2020-08-13 15:12:00', '2020-08-13 15:12:00', '107', '301', 'K', 'HCV WARA', 'L', '15:12:00', '', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 2, 116, 107, 2, 0),
+(16, '2020-08-13 15:08:32', '2020-08-13 15:22:29', NULL, '2020-08-13', 1, '2020-08-13 15:08:00', '2020-08-13 15:08:00', '107', '300', 'K', 'HCV PRG', 'L', '15:08:00', '', 1, '2020-08-13 15:22:29', '0000-00-00 00:00:00', 1, 109, 108, 4, 26),
+(17, '2020-08-13 15:08:32', '2020-08-13 15:25:16', NULL, '2020-08-13', 1, '2020-08-13 15:08:00', '2020-08-13 15:08:00', '107', '300', 'M', 'HCV PRG', 'L', '15:08:00', '', 1, '2020-08-13 15:22:29', '2020-08-13 15:25:16', 1, 109, 108, 4, 26),
+(18, '2020-08-13 15:12:03', '2020-08-13 15:29:26', NULL, '2020-08-13', 1, '2020-08-13 15:12:00', '2020-08-13 15:12:00', '107', '301', 'K', 'HCV WARA', 'L', '15:12:00', '', 1, '2020-08-13 15:29:26', '0000-00-00 00:00:00', 2, 116, 108, 4, 27),
+(19, '2020-08-13 15:12:03', '2020-08-13 15:30:15', NULL, '2020-08-13', 1, '2020-08-13 15:12:00', '2020-08-13 15:12:00', '107', '301', 'M', 'HCV WARA', 'L', '15:12:00', '', 1, '2020-08-13 15:29:26', '2020-08-13 15:30:15', 2, 116, 108, 4, 27);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `table_quality`
 --
 
 CREATE TABLE `table_quality` (
@@ -781,7 +873,7 @@ CREATE TABLE `table_quality` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `table_quality`
+-- Dumping data untuk tabel `table_quality`
 --
 
 INSERT INTO `table_quality` (`id`, `created_at`, `updated_at`, `deleted_at`, `date`, `series`, `tm`, `im`, `ash_ar`, `ts_ar`, `cv_ar`, `hgi`, `by_user`) VALUES
@@ -810,7 +902,7 @@ INSERT INTO `table_quality` (`id`, `created_at`, `updated_at`, `deleted_at`, `da
 -- --------------------------------------------------------
 
 --
--- Table structure for table `table_settingunit`
+-- Struktur dari tabel `table_settingunit`
 --
 
 CREATE TABLE `table_settingunit` (
@@ -830,7 +922,7 @@ CREATE TABLE `table_settingunit` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `table_shiftoperations`
+-- Struktur dari tabel `table_shiftoperations`
 --
 
 CREATE TABLE `table_shiftoperations` (
@@ -850,43 +942,51 @@ CREATE TABLE `table_shiftoperations` (
   `time_passing` time NOT NULL,
   `remark` varchar(50) DEFAULT NULL,
   `operation` tinyint(1) NOT NULL,
+  `rom_in` datetime NOT NULL,
+  `rom_out` datetime NOT NULL,
   `by_ordered` int(25) NOT NULL,
+  `by_rom` int(25) NOT NULL,
   `by_area` int(25) NOT NULL,
   `by_user` int(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `table_shiftoperations`
+-- Dumping data untuk tabel `table_shiftoperations`
 --
 
-INSERT INTO `table_shiftoperations` (`id`, `created_at`, `updated_at`, `deleted_at`, `date`, `shift`, `time_in`, `time_out`, `location`, `cn_unit`, `position`, `cargo`, `code_stby`, `time_passing`, `remark`, `operation`, `by_ordered`, `by_area`, `by_user`) VALUES
-(1, '2020-06-17 09:08:09', '2020-06-17 09:08:09', NULL, '2020-06-17', 1, '2020-06-17 09:07:00', '2020-06-17 09:07:00', '10', '212', 'M', 'T300 CT1', 'L', '09:00:00', '', 1, 1, 10, 2),
-(2, '2020-06-17 09:09:08', '2020-06-17 09:09:08', NULL, '2020-06-17', 1, '2020-06-17 09:08:00', '2020-06-17 09:08:00', '10', '298', 'M', 'W200', 'S06C', '09:00:00', '', 0, 2, 10, 2),
-(3, '2020-06-17 09:09:25', '2020-06-17 09:09:25', NULL, '2020-06-17', 1, '2020-06-17 09:09:00', '2020-06-17 09:09:00', '10', '300', 'M', 'P600', 'S06C', '09:00:00', '', 0, 3, 10, 2),
-(4, '2020-06-17 09:09:45', '2020-06-17 09:09:45', NULL, '2020-06-17', 1, '2020-06-17 09:09:00', '2020-06-17 09:09:00', '10', '315', 'K', 'Kosongan', 'S02', '09:00:00', 'PARKIR', 0, 4, 10, 2),
-(5, '2020-06-17 13:35:49', '2020-06-17 13:35:49', NULL, '2020-06-17', 1, '2020-06-17 13:35:49', '2020-06-17 13:35:49', '10', '111', 'M', 'T100 CT1', 'L', '13:35:49', '', 1, 5, 10, 2),
-(6, '2020-06-17 13:35:49', '2020-06-17 13:35:49', NULL, '2020-06-17', 1, '2020-06-17 13:35:49', '2020-06-17 13:35:49', '10', '112', 'M', 'HCV PRG', 'S01', '13:35:49', 'masuk csa', 0, 6, 10, 2),
-(7, '2020-06-17 13:44:00', '2020-06-17 13:44:00', NULL, '2020-06-17', 1, '2020-06-17 13:44:00', '2020-06-17 13:44:00', '10', '100', 'M', 'HCV PRG', 'S02', '13:44:00', '', 0, 7, 10, 2),
-(8, '2020-06-17 13:44:00', '2020-06-17 13:44:00', NULL, '2020-06-17', 1, '2020-06-17 13:44:00', '2020-06-17 13:44:00', '10', '101', 'M', 'HCV PRG', 'S02', '13:44:00', '', 0, 8, 10, 2),
-(9, '2020-06-17 13:46:07', '2020-06-17 13:46:07', NULL, '2020-06-17', 1, '2020-06-17 13:46:07', '2020-06-17 13:46:07', '10', '92', 'M', 'LCA PRG', 'L', '13:46:07', '', 1, 10, 10, 2),
-(10, '2020-06-17 13:46:08', '2020-06-17 13:46:08', NULL, '2020-06-17', 1, '2020-06-17 13:46:08', '2020-06-17 13:46:08', '10', '93', 'M', 'W100', 'L', '13:46:08', '', 1, 9, 10, 2),
-(11, '2020-06-22 13:21:46', '2020-06-22 13:21:46', NULL, '2020-06-22', 1, '2020-06-22 13:21:00', '2020-06-22 13:21:00', '10', '100', 'M', 'HCV PRG', 'L', '13:00:00', 'lanjut gas', 1, 1, 10, 2),
-(12, '2020-06-22 13:22:04', '2020-06-22 13:22:04', NULL, '2020-06-22', 1, '2020-06-22 13:21:00', '2020-06-22 13:21:00', '10', '101', 'M', 'T100 CT1', 'L', '13:00:00', 'lanjut lage', 1, 2, 10, 2),
-(13, '2020-06-22 13:22:20', '2020-06-22 13:22:20', NULL, '2020-06-22', 1, '2020-06-22 13:22:00', '2020-06-22 13:22:00', '10', '102', 'M', 'T300 CT1', 'L', '13:00:00', '', 1, 3, 10, 2),
-(14, '2020-06-24 10:23:12', '2020-06-24 10:23:12', NULL, '2020-06-24', 1, '2020-06-24 10:22:00', '2020-06-24 10:22:00', '10', '100', 'M', 'HCV PRG', 'L', '10:00:00', '', 1, 1, 10, 2),
-(15, '2020-06-24 10:25:09', '2020-06-24 10:25:09', NULL, '2020-06-24', 1, '2020-06-24 10:24:00', '2020-06-24 10:24:00', '10', '101', 'M', 'T100 NT', 'L', '10:00:00', '', 1, 2, 10, 2),
-(16, '2020-06-24 10:25:28', '2020-06-24 10:25:28', NULL, '2020-06-24', 1, '2020-06-24 10:25:00', '2020-06-24 10:25:00', '10', '102', 'M', 'T200 CT1', 'L', '10:00:00', '', 1, 3, 10, 2),
-(17, '2020-06-24 10:25:45', '2020-06-24 10:25:45', NULL, '2020-06-24', 1, '2020-06-24 10:25:00', '2020-06-24 10:25:00', '10', '103', 'M', 'T200 CT2', 'L', '10:00:00', '', 1, 4, 10, 2),
-(18, '2020-06-24 10:47:34', '2020-06-24 10:47:34', NULL, '2020-06-24', 1, '2020-06-24 10:47:00', '2020-06-24 10:47:00', '10', '105', 'M', 'HCV NT', 'S02', '10:00:00', '', 0, 5, 10, 2),
-(19, '2020-07-17 07:04:06', '2020-07-17 07:04:06', NULL, '2020-07-17', 1, '2020-07-17 15:03:00', '2020-07-17 15:03:00', '10', '100', 'M', 'HCV PRG', 'L', '15:00:00', 'lanjut ges', 1, 1, 10, 2),
-(20, '2020-07-19 07:21:04', '2020-07-19 07:21:04', NULL, '2020-07-19', 1, '2020-07-19 15:21:00', '2020-07-19 15:21:00', '10', '100', 'M', 'HCV PRG', 'S01', '15:00:00', '', 0, 1, 10, 2),
-(21, '2020-07-19 07:21:28', '2020-07-19 07:21:28', NULL, '2020-07-19', 1, '2020-07-19 15:21:00', '2020-07-19 15:21:00', '11', '101', 'M', 'HCV PRG', 'S01', '15:00:00', '', 0, 1, 11, 2),
-(22, '2020-07-19 07:21:47', '2020-07-19 07:21:47', NULL, '2020-07-19', 1, '2020-07-19 15:21:00', '2020-07-19 15:21:00', '12', '102', 'M', 'HCV PRG', 'S01', '15:00:00', '', 0, 1, 12, 2);
+INSERT INTO `table_shiftoperations` (`id`, `created_at`, `updated_at`, `deleted_at`, `date`, `shift`, `time_in`, `time_out`, `location`, `cn_unit`, `position`, `cargo`, `code_stby`, `time_passing`, `remark`, `operation`, `rom_in`, `rom_out`, `by_ordered`, `by_rom`, `by_area`, `by_user`) VALUES
+(1, '2020-08-04 08:39:35', '2020-08-04 08:39:35', NULL, '2020-08-04', 1, '2020-08-04 08:39:00', '2020-08-04 08:39:00', '107', '100', 'K', 'T100 CT2', 'L', '08:39:00', '', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 109, 107, 6),
+(2, '2020-08-04 09:13:31', '2020-08-04 09:13:31', NULL, '2020-08-04', 1, '2020-08-04 09:13:00', '2020-08-04 09:13:00', '107', '101', 'K', 'W100', 'L', '09:13:00', '', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 2, 110, 107, 6),
+(3, '2020-08-04 09:16:48', '2020-08-04 09:16:48', NULL, '2020-08-04', 1, '2020-08-04 09:16:00', '2020-08-04 09:16:00', '107', '102', 'M', 'HCV PRG', 'L', '09:16:00', '', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 3, 109, 107, 6),
+(4, '2020-08-05 13:21:20', '2020-08-05 13:21:20', NULL, '2020-08-05', 1, '2020-08-05 13:21:00', '2020-08-05 13:21:00', '107', '100', 'K', 'HCV PRG', 'L', '13:21:00', '', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 109, 107, 2),
+(5, '2020-08-05 13:21:50', '2020-08-05 13:21:50', NULL, '2020-08-05', 1, '2020-08-05 13:21:00', '2020-08-05 13:21:00', '107', '101', 'K', 'HCV HI ASH PRG', 'L', '13:21:00', '', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 2, 109, 107, 2),
+(6, '2020-08-05 13:21:59', '2020-08-05 13:21:59', NULL, '2020-08-05', 1, '2020-08-05 13:21:00', '2020-08-05 13:21:00', '107', '102', 'K', 'HCV HTS PRG', 'L', '13:21:00', '', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 3, 110, 107, 2),
+(7, '2020-08-05 13:22:13', '2020-08-05 13:22:13', NULL, '2020-08-05', 1, '2020-08-05 13:22:00', '2020-08-05 13:22:00', '107', '103', 'K', 'LCV HTS PRG', 'L', '13:22:00', '', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 4, 110, 107, 2),
+(8, '2020-08-05 13:22:28', '2020-08-05 13:22:28', NULL, '2020-08-05', 1, '2020-08-05 13:22:00', '2020-08-05 13:22:00', '107', '104', 'K', 'P600', 'L', '13:22:00', '', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 5, 111, 107, 2),
+(9, '2020-08-05 13:22:41', '2020-08-05 13:22:41', NULL, '2020-08-05', 1, '2020-08-05 13:22:00', '2020-08-05 13:22:00', '107', '105', 'K', 'P700', 'L', '13:22:00', '', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 6, 111, 107, 2),
+(10, '2020-08-05 13:22:56', '2020-08-05 13:22:56', NULL, '2020-08-05', 1, '2020-08-05 13:22:00', '2020-08-05 13:22:00', '107', '106', 'K', 'HI ASH PRG', 'L', '13:22:00', '', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 7, 113, 107, 2),
+(11, '2020-08-05 13:23:04', '2020-08-05 13:23:04', NULL, '2020-08-05', 1, '2020-08-05 13:23:00', '2020-08-05 13:23:00', '107', '107', 'K', 'HTS PRG', 'L', '13:23:00', '', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 8, 113, 107, 2),
+(12, '2020-08-05 13:37:25', '2020-08-05 13:37:25', NULL, '2020-08-05', 1, '2020-08-05 13:37:00', '2020-08-05 13:37:00', '107', '108', 'K', 'T100 CT2', 'L', '13:37:00', '', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 9, 116, 107, 2),
+(13, '2020-08-05 13:37:37', '2020-08-05 13:37:37', NULL, '2020-08-05', 1, '2020-08-05 13:37:00', '2020-08-05 13:37:00', '107', '109', 'K', 'T100 CT1', 'L', '13:37:00', '', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 10, 116, 107, 2),
+(14, '2020-08-06 09:21:08', '2020-08-11 14:52:13', NULL, '2020-08-06', 1, '2020-08-07 09:21:00', '2020-08-07 09:21:00', '107', '200', 'K', 'HCV PRG', 'L', '09:21:00', '', 1, '2020-08-11 14:52:13', '0000-00-00 00:00:00', 1, 109, 108, 4),
+(15, '2020-08-06 09:21:15', '2020-08-06 09:21:15', NULL, '2020-08-06', 1, '2020-08-07 09:21:00', '2020-08-07 00:00:00', '107', '201', 'K', 'HCV HI ASH PRG', 'L', '09:21:00', '', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 2, 110, 107, 2),
+(16, '2020-08-06 09:21:22', '2020-08-06 09:21:22', NULL, '2020-08-06', 1, '2020-08-07 09:21:00', '2020-08-07 09:21:00', '107', '202', 'K', 'HCV HTS PRG', 'L', '09:21:00', '', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 3, 111, 107, 2),
+(17, '2020-08-06 09:21:38', '2020-08-06 09:21:38', NULL, '2020-08-06', 1, '2020-08-07 09:21:00', '2020-08-07 09:21:00', '107', '203', 'K', 'LCV HTS PRG', 'L', '09:21:00', '', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 4, 112, 107, 2),
+(18, '2020-08-06 09:21:53', '2020-08-06 09:21:53', NULL, '2020-08-06', 1, '2020-08-07 09:21:00', '2020-08-07 09:21:00', '107', '204', 'K', 'P600', 'L', '09:21:00', '', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 5, 113, 107, 2),
+(19, '2020-08-11 15:04:39', '2020-08-11 16:36:04', NULL, '2020-08-11', 1, '2020-08-11 15:04:00', '2020-08-11 15:04:00', '107', '100', 'K', 'T100 ST', 'L', '15:04:00', '', 1, '2020-08-11 16:36:04', '0000-00-00 00:00:00', 1, 109, 0, 1),
+(20, '2020-08-11 15:05:15', '2020-08-11 15:05:15', NULL, '2020-08-11', 1, '2020-08-11 15:05:00', '2020-08-11 15:05:00', '107', '101', 'K', 'T200 ST', 'L', '15:05:00', '', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 2, 109, 107, 2),
+(21, '2020-08-12 11:17:34', '2020-08-12 14:54:24', NULL, '2020-08-12', 1, '2020-08-12 11:17:00', '2020-08-12 11:17:00', '107', '150', 'M', 'T200 CT1', 'L', '11:17:00', '', 1, '2020-08-12 14:51:07', '2020-08-12 14:54:24', 1, 109, 108, 4),
+(22, '2020-08-12 11:17:44', '2020-08-12 11:17:44', NULL, '2020-08-12', 1, '2020-08-12 11:17:00', '2020-08-12 11:17:00', '107', '151', 'K', 'T200 CT2', 'L', '11:17:00', '', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 2, 109, 107, 1),
+(23, '2020-08-12 11:18:39', '2020-08-12 11:18:39', NULL, '2020-08-12', 1, '2020-08-12 11:18:00', '2020-08-12 11:18:00', '107', '152', 'K', 'P600', 'L', '11:18:00', '', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 3, 110, 107, 1),
+(24, '2020-08-12 11:19:02', '2020-08-12 11:19:02', NULL, '2020-08-12', 1, '2020-08-12 11:19:00', '2020-08-12 11:19:00', '107', '153', 'K', 'P700', 'L', '11:19:00', '', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 4, 110, 107, 1),
+(25, '2020-08-12 11:19:21', '2020-08-12 11:19:21', NULL, '2020-08-12', 1, '2020-08-12 11:19:00', '2020-08-12 11:19:00', '107', '200', 'K', 'P800', 'L', '11:19:00', '', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 5, 116, 107, 1),
+(26, '2020-08-13 15:08:32', '2020-08-13 15:57:33', NULL, '2020-08-13', 1, '2020-08-13 15:57:00', '2020-08-13 15:57:00', '12', '300', 'M', 'HCV PRG', 'S12A', '15:57:00', '', 0, '2020-08-13 15:22:29', '2020-08-13 15:25:16', 1, 109, 12, 3),
+(27, '2020-08-13 15:12:03', '2020-08-13 15:30:15', NULL, '2020-08-13', 1, '2020-08-13 15:12:00', '2020-08-13 15:12:00', '107', '301', 'M', 'HCV WARA', 'L', '15:12:00', '', 1, '2020-08-13 15:29:26', '2020-08-13 15:30:15', 2, 116, 108, 4);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `table_shiftos`
+-- Struktur dari tabel `table_shiftos`
 --
 
 CREATE TABLE `table_shiftos` (
@@ -904,7 +1004,7 @@ CREATE TABLE `table_shiftos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `table_shiftos`
+-- Dumping data untuk tabel `table_shiftos`
 --
 
 INSERT INTO `table_shiftos` (`id`, `created_at`, `updated_at`, `deleted_at`, `date`, `code_number`, `no_unit`, `no_id`, `time`, `csa`, `by_user`) VALUES
@@ -1192,7 +1292,7 @@ INSERT INTO `table_shiftos` (`id`, `created_at`, `updated_at`, `deleted_at`, `da
 -- --------------------------------------------------------
 
 --
--- Table structure for table `table_statuspassing`
+-- Struktur dari tabel `table_statuspassing`
 --
 
 CREATE TABLE `table_statuspassing` (
@@ -1212,10 +1312,18 @@ CREATE TABLE `table_statuspassing` (
   `by_user` int(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data untuk tabel `table_statuspassing`
+--
+
+INSERT INTO `table_statuspassing` (`id`, `created_at`, `updated_at`, `deleted_at`, `date`, `time`, `shift`, `passing_plan`, `passing_actual`, `passing_ach`, `status`, `keterangan`, `by_area`, `by_user`) VALUES
+(1, '2020-07-24 14:55:20', '2020-07-24 14:55:28', NULL, '2020-07-24', '14:00:00', 1, 0, 0, 0, 'Antri Klanis', 'dia ngantri', 0, 1),
+(2, '2020-07-24 15:19:44', '2020-07-24 15:19:51', NULL, '2020-07-24', '15:00:00', 1, 0, 0, 0, 'Hopper BD', 'bd', 10, 6);
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `table_supplaypassing`
+-- Struktur dari tabel `table_supplaypassing`
 --
 
 CREATE TABLE `table_supplaypassing` (
@@ -1242,7 +1350,7 @@ CREATE TABLE `table_supplaypassing` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `table_supplaypassing`
+-- Dumping data untuk tabel `table_supplaypassing`
 --
 
 INSERT INTO `table_supplaypassing` (`id`, `created_at`, `updated_at`, `deleted_at`, `date`, `shift`, `material`, `jam_1`, `jam_2`, `jam_3`, `jam_4`, `jam_5`, `jam_6`, `jam_7`, `jam_8`, `jam_9`, `jam_10`, `jam_11`, `jam_12`, `by_user`) VALUES
@@ -1283,12 +1391,20 @@ INSERT INTO `table_supplaypassing` (`id`, `created_at`, `updated_at`, `deleted_a
 (35, '2020-07-17 07:06:42', '2020-07-17 07:06:42', NULL, '2020-07-17', 1, 'T200 CT2', 8, 10, 10, 10, 10, 4, 4, 4, 10, 10, 10, 10, 1),
 (36, '2020-07-17 07:06:42', '2020-07-17 07:06:42', NULL, '2020-07-17', 1, 'T300 CT2', 5, 5, 5, 5, 5, 4, 4, 4, 5, 5, 5, 5, 1),
 (37, '2020-07-17 07:06:42', '2020-07-17 07:06:42', NULL, '2020-07-17', 1, 'T100 NT', 4, 4, 4, 4, 4, 0, 0, 0, 4, 4, 4, 4, 1),
-(38, '2020-07-17 07:06:42', '2020-07-17 07:06:42', NULL, '2020-07-17', 1, 'HCV WARA', 0, 0, 0, 0, 0, 6, 6, 6, 0, 0, 0, 0, 1);
+(38, '2020-07-17 07:06:42', '2020-07-17 07:06:42', NULL, '2020-07-17', 1, 'HCV WARA', 0, 0, 0, 0, 0, 6, 6, 6, 0, 0, 0, 0, 1),
+(39, '2020-07-24 14:53:00', '2020-07-24 14:53:00', NULL, '2020-07-24', 1, 'BCLSA', 0, 0, 0, 0, 0, 11, 11, 11, 0, 0, 0, 0, 6),
+(40, '2020-07-24 14:53:01', '2020-07-24 14:53:01', NULL, '2020-07-24', 1, 'HCV PRG', 0, 3, 3, 3, 3, 0, 0, 0, 3, 3, 3, 3, 6),
+(41, '2020-07-24 14:53:01', '2020-07-24 14:53:01', NULL, '2020-07-24', 1, 'T200 CT1', 7, 7, 7, 7, 7, 4, 4, 4, 7, 7, 7, 7, 6),
+(42, '2020-07-24 14:53:01', '2020-07-24 14:53:01', NULL, '2020-07-24', 1, 'T300 CT1', 10, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6),
+(43, '2020-07-24 14:53:01', '2020-07-24 14:53:01', NULL, '2020-07-24', 1, 'T200 CT2', 8, 10, 10, 10, 10, 4, 4, 4, 10, 10, 10, 10, 6),
+(44, '2020-07-24 14:53:01', '2020-07-24 14:53:01', NULL, '2020-07-24', 1, 'T300 CT2', 5, 5, 5, 5, 5, 4, 4, 4, 5, 5, 5, 5, 6),
+(45, '2020-07-24 14:53:01', '2020-07-24 14:53:01', NULL, '2020-07-24', 1, 'T100 NT', 4, 4, 4, 4, 4, 0, 0, 0, 4, 4, 4, 4, 6),
+(46, '2020-07-24 14:53:01', '2020-07-24 14:53:01', NULL, '2020-07-24', 1, 'HCV WARA', 0, 0, 0, 0, 0, 6, 6, 6, 0, 0, 0, 0, 6);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `table_users`
+-- Struktur dari tabel `table_users`
 --
 
 CREATE TABLE `table_users` (
@@ -1309,146 +1425,166 @@ CREATE TABLE `table_users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
 --
--- Dumping data for table `table_users`
+-- Dumping data untuk tabel `table_users`
 --
 
 INSERT INTO `table_users` (`id`, `created_at`, `updated_at`, `deleted_at`, `username`, `password`, `full_name`, `description`, `email`, `phone`, `activation_key`, `last_login`, `area`, `level`) VALUES
-(1, '2019-05-03 00:00:00', '2019-05-03 00:00:00', NULL, 'Administrator', '$2y$10$ES0vpcOg1NVE3wCAGXI2dOljZSq1UuHFpdS0f/7/.4jW6ch2URYpy', 'Administrator', 'Authorized Personnel Only', 'administrator@saptaindra.co.id', '051-0000001', '', '2020-02-18 11:33:03', 0, 13),
-(2, '2019-05-03 00:00:00', '2019-05-03 00:00:00', NULL, 'tes', '$2y$10$ES0vpcOg1NVE3wCAGXI2dOljZSq1UuHFpdS0f/7/.4jW6ch2URYpy', 'Tester', 'Authorized Personnel Only', 'administrator@saptaindra.co.id', '051-0000001', '', '2020-02-18 11:33:03', 0, 14),
-(3, '2019-05-03 00:00:00', '2019-05-03 00:00:00', NULL, '34', '$2y$10$ES0vpcOg1NVE3wCAGXI2dOljZSq1UuHFpdS0f/7/.4jW6ch2URYpy', 'KM 34', 'Personalized Input Km 34', '34@saptaindra.co.id', '051-0000001', '', '2020-02-18 11:33:03', 0, 14),
-(4, '2019-05-03 00:00:00', '2019-05-03 00:00:00', NULL, '65', '$2y$10$ES0vpcOg1NVE3wCAGXI2dOljZSq1UuHFpdS0f/7/.4jW6ch2URYpy', 'KM 65', 'Personalized Input Km 65', '65@saptaindra.co.id', '051-0000001', '', '2020-02-18 11:33:03', 0, 14),
-(5, '2019-05-03 00:00:00', '2019-05-03 00:00:00', NULL, '69', '$2y$10$ES0vpcOg1NVE3wCAGXI2dOljZSq1UuHFpdS0f/7/.4jW6ch2URYpy', 'KM 69', 'Personalized Input Km 69', '69@saptaindra.co.id', '051-0000001', '', '2020-02-18 11:33:03', 0, 14),
-(6, '2019-05-03 00:00:00', '2019-05-03 00:00:00', NULL, 'jigsaw', '$2y$10$ES0vpcOg1NVE3wCAGXI2dOljZSq1UuHFpdS0f/7/.4jW6ch2URYpy', 'tester input', 'Authorized Personnel Only', 'tester@saptaindra.co.id', '051-0000001', '', '2020-02-18 11:33:03', 0, 14),
-(7, '2019-05-03 00:00:00', '2019-05-03 00:00:00', NULL, 'jigsaw2', '$2y$10$ES0vpcOg1NVE3wCAGXI2dOljZSq1UuHFpdS0f/7/.4jW6ch2URYpy', 'tester input', 'Authorized Personnel Only', 'tester@saptaindra.co.id', '051-0000001', '', '2020-02-18 11:33:03', 0, 14),
-(8, '2019-05-03 00:00:00', '2019-05-03 00:00:00', NULL, 'jigsaw3', '$2y$10$ES0vpcOg1NVE3wCAGXI2dOljZSq1UuHFpdS0f/7/.4jW6ch2URYpy', 'tester input', 'Authorized Personnel Only', 'tester@saptaindra.co.id', '051-0000001', '', '2020-02-18 11:33:03', 0, 14);
+(1, '2020-08-05 00:00:00', '2020-08-05 00:00:00', NULL, 'administrator', '$2y$10$ES0vpcOg1NVE3wCAGXI2dOljZSq1UuHFpdS0f/7/.4jW6ch2URYpy', 'Administrator', 'Authorize Personal Only', 'administrator@web.id', '051-010101', NULL, '2020-08-05 00:00:00', 0, 13),
+(2, '2020-08-05 00:00:00', '2020-08-05 00:00:00', NULL, 'dispatcher', '$2y$10$ES0vpcOg1NVE3wCAGXI2dOljZSq1UuHFpdS0f/7/.4jW6ch2URYpy', 'Dispatcher', 'Authorize Personal Only', 'dispatcher@web.id', '051-020202', NULL, '2020-08-05 00:00:00', 0, 14),
+(3, '2020-08-05 00:00:00', '2020-08-05 00:00:00', NULL, 'pos', '$2y$10$ES0vpcOg1NVE3wCAGXI2dOljZSq1UuHFpdS0f/7/.4jW6ch2URYpy', 'Checker', 'Authorize Personal Only', 'checker@web.id', '051-030303', NULL, '2020-08-05 00:00:00', 0, 119),
+(4, '2020-08-05 00:00:00', '2020-08-05 00:00:00', NULL, 'rom', '$2y$10$ES0vpcOg1NVE3wCAGXI2dOljZSq1UuHFpdS0f/7/.4jW6ch2URYpy', 'Rom', 'Authorize Personal Only', 'rom@web.id', '051-030303', NULL, '2020-08-05 00:00:00', 0, 120);
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `enum`
+-- Indeks untuk tabel `enum`
 --
 ALTER TABLE `enum`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `table_enum`
+-- Indeks untuk tabel `table_control_passing`
+--
+ALTER TABLE `table_control_passing`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `table_enum`
 --
 ALTER TABLE `table_enum`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `table_equipment`
+-- Indeks untuk tabel `table_equipment`
 --
 ALTER TABLE `table_equipment`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `table_quality`
+-- Indeks untuk tabel `table_history_shiftoperations`
+--
+ALTER TABLE `table_history_shiftoperations`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `table_quality`
 --
 ALTER TABLE `table_quality`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `table_settingunit`
+-- Indeks untuk tabel `table_settingunit`
 --
 ALTER TABLE `table_settingunit`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `table_shiftoperations`
+-- Indeks untuk tabel `table_shiftoperations`
 --
 ALTER TABLE `table_shiftoperations`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `table_shiftos`
+-- Indeks untuk tabel `table_shiftos`
 --
 ALTER TABLE `table_shiftos`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `table_statuspassing`
+-- Indeks untuk tabel `table_statuspassing`
 --
 ALTER TABLE `table_statuspassing`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `table_supplaypassing`
+-- Indeks untuk tabel `table_supplaypassing`
 --
 ALTER TABLE `table_supplaypassing`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `table_users`
+-- Indeks untuk tabel `table_users`
 --
 ALTER TABLE `table_users`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `enum`
+-- AUTO_INCREMENT untuk tabel `enum`
 --
 ALTER TABLE `enum`
   MODIFY `id` bigint(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=196;
 
 --
--- AUTO_INCREMENT for table `table_enum`
+-- AUTO_INCREMENT untuk tabel `table_control_passing`
 --
-ALTER TABLE `table_enum`
-  MODIFY `id` bigint(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
+ALTER TABLE `table_control_passing`
+  MODIFY `id` bigint(255) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `table_equipment`
+-- AUTO_INCREMENT untuk tabel `table_enum`
+--
+ALTER TABLE `table_enum`
+  MODIFY `id` bigint(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=121;
+
+--
+-- AUTO_INCREMENT untuk tabel `table_equipment`
 --
 ALTER TABLE `table_equipment`
   MODIFY `id` bigint(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=351;
 
 --
--- AUTO_INCREMENT for table `table_quality`
+-- AUTO_INCREMENT untuk tabel `table_history_shiftoperations`
+--
+ALTER TABLE `table_history_shiftoperations`
+  MODIFY `id` bigint(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
+-- AUTO_INCREMENT untuk tabel `table_quality`
 --
 ALTER TABLE `table_quality`
   MODIFY `id` bigint(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
--- AUTO_INCREMENT for table `table_settingunit`
+-- AUTO_INCREMENT untuk tabel `table_settingunit`
 --
 ALTER TABLE `table_settingunit`
   MODIFY `id` bigint(255) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `table_shiftoperations`
+-- AUTO_INCREMENT untuk tabel `table_shiftoperations`
 --
 ALTER TABLE `table_shiftoperations`
-  MODIFY `id` bigint(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` bigint(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
--- AUTO_INCREMENT for table `table_shiftos`
+-- AUTO_INCREMENT untuk tabel `table_shiftos`
 --
 ALTER TABLE `table_shiftos`
   MODIFY `id` bigint(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=281;
 
 --
--- AUTO_INCREMENT for table `table_statuspassing`
+-- AUTO_INCREMENT untuk tabel `table_statuspassing`
 --
 ALTER TABLE `table_statuspassing`
-  MODIFY `id` bigint(255) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `table_supplaypassing`
+-- AUTO_INCREMENT untuk tabel `table_supplaypassing`
 --
 ALTER TABLE `table_supplaypassing`
-  MODIFY `id` bigint(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` bigint(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
--- AUTO_INCREMENT for table `table_users`
+-- AUTO_INCREMENT untuk tabel `table_users`
 --
 ALTER TABLE `table_users`
-  MODIFY `id` bigint(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
