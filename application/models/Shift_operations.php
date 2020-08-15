@@ -149,7 +149,7 @@ class Shift_operations extends CI_Model
 		if ($by_rom) {
 			$this->db->where('table_shiftoperations.by_rom', $by_rom);
 		}
-		$this->db->where('table_shiftoperations.position', $code);
+		// $this->db->where('table_shiftoperations.position', $code);
 		$this->db->order_by('table_shiftoperations.by_ordered asc');
 		$this->db->group_by('table_shiftoperations.id');
 		return $this->db->get();

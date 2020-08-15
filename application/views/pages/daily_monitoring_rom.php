@@ -63,11 +63,18 @@
                               <td style="background-color:'. $color[0] . ';color:'.@$color[1].'" >'.$value['cargo'].'</td>';
                         echo '<td nowrap>';
                         if($by_level != 'dispatcher') :
-                          echo '<a href="#" class="btn btn-sm btn-success"  id="edit_in_rom" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit masuk ROM" data-toggle="tooltip"><i class="fa  fa-reply"> In</i>
-                                </a>';
+                          $rom_in = date('Y', strtotime($value['rom_in']));
+                          $rom_out = date('Y', strtotime($value['rom_out']));
+                          if($rom_in == '-0001' && $rom_out == '-0001') {
+                          echo '<a href="#" class="btn btn-sm btn-success"  id="edit_in_rom" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit masuk ROM" data-toggle="tooltip" ><i class="fa  fa-reply"> In</i></a>';
+                          echo ' <a href="#" class="btn btn-sm btn-danger disabled"  id="edit_out_rom" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit keluar ROM" data-toggle="tooltip"><i class="fa  fa-share"> Out</i><a>';
+                          }
 
+                          if($rom_in != '-0001' && $rom_out == '-0001') {
+                          echo '<a href="#" class="btn btn-sm btn-success disabled"  id="edit_in_rom" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit masuk ROM" data-toggle="tooltip" ><i class="fa  fa-reply"> In</i></a>';
                           echo ' <a href="#" class="btn btn-sm btn-danger"  id="edit_out_rom" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit keluar ROM" data-toggle="tooltip"><i class="fa  fa-share"> Out</i>
                               </a>';
+                          }
                         endif;
                         echo '</td>';
                       echo '</tr>';

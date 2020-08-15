@@ -338,8 +338,8 @@ class Edit extends CI_Controller {
 		$data = array(
 			'updated_at'		=> date('Y-m-d H:i:s'),
 			'rom_in' 			=> $rom_in,
-			'by_area'			=> $by_area,
-			// 'by_user'			=> $by_user	
+			// 'by_area'			=> $by_area,
+			'by_user'			=> $by_user	
 		);
 
 		$this->Crud->update('table_shiftoperations', array('id' => $id),$data);
@@ -399,8 +399,8 @@ class Edit extends CI_Controller {
 			'updated_at'		=> date('Y-m-d H:i:s'),
 			'position'			=> $position,
 			'rom_out' 			=> $rom_out,
-			'by_area'			=> $by_area,
-			// 'by_user'			=> $by_user	
+			// 'by_area'			=> $by_area,
+			'by_user'			=> $by_user	
 		);
 
 		$this->Crud->update('table_shiftoperations', array('id' => $id),$data);
