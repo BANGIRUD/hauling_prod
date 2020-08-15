@@ -65,6 +65,17 @@
                         if($by_level != 'dispatcher') :
                           $rom_in = date('Y', strtotime($value['rom_in']));
                           $rom_out = date('Y', strtotime($value['rom_out']));
+<<<<<<< HEAD
+                          if($rom_in == '-0001' && $rom_out == '-0001') {
+                          echo '<a href="#" class="btn btn-sm btn-success"  id="edit_in_rom" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit masuk ROM" data-toggle="tooltip" ><i class="fa  fa-reply"> In</i></a>';
+                          echo ' <a href="#" class="btn btn-sm btn-danger disabled"  id="edit_out_rom" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit keluar ROM" data-toggle="tooltip"><i class="fa  fa-share"> Out</i><a>';
+                          }
+
+                          if($rom_in != '-0001' && $rom_out == '-0001') {
+                          echo '<a href="#" class="btn btn-sm btn-success disabled"  id="edit_in_rom" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit masuk ROM" data-toggle="tooltip" ><i class="fa  fa-reply"> In</i></a>';
+                          echo ' <a href="#" class="btn btn-sm btn-danger"  id="edit_out_rom" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit keluar ROM" data-toggle="tooltip"><i class="fa  fa-share"> Out</i>
+=======
+
                           $btn_in = " disabled";
                           if($rom_in == '-0001' && $rom_out == '-0001') 
                             $btn_in = "";
@@ -74,8 +85,10 @@
                           $btn_out = " disabled";
                           if($rom_in != '-0001' && $rom_out == '-0001')
                             $btn_out = "";
-                          echo ' <a href="#" class="btn btn-sm btn-danger'.$btn_out.'"  id="edit_out_rom" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit keluar ROM" data-toggle="tooltip"><i class="fa  fa-share"> Out</i>  
+                          echo ' <a href="#" class="btn btn-sm btn-danger'.$btn_out.'"  id="edit_out_rom" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit keluar ROM" data-toggle="tooltip"><i class="fa  fa-share"> Out</i>
+>>>>>>> a9b2c5a789cc59b6f081339f2b634914e1caf029
                               </a>';
+                          }
                         endif;
                         echo '</td>';
                       echo '</tr>';
