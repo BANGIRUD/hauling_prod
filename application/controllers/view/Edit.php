@@ -426,7 +426,7 @@ class Edit extends CI_Controller {
 		$area			= $this->Crud->search('table_enum', array('type' => 'area'))->result_array();
 		$cargo_muatan	= $this->Crud->search('table_enum', array('type' => 'cargo_muatan'))->result_array();
 		$code_standby	= $this->Crud->search('table_enum', array('type' => 'code_standby'))->result_array();
-		$rom	= $this->Crud->search('table_enum', array('type' => 'rom'))->result_array();
+		$rom			= $this->Crud->search('table_enum', array('type' => 'rom'))->result_array();
 		$position		= $this->db->from('table_enum')->where('type', 'position')->order_by('name', 'desc')->get()->result_array();
 
 		$this->load->model('Shift_operations', 'operation');
@@ -470,9 +470,9 @@ class Edit extends CI_Controller {
 	              	</div>
           			<div class="col-xs-6">
 	                	<label>Rom</label> 
-		              	<select class="form-control" name="code_standby" id="code_standby">
+		              	<select class="form-control" name="rom" id="rom">
 							<?php foreach ($rom as $value) {
-								$selected = $data->rom == $value['id'] ? ' selected' : '';
+								$selected = $data->by_rom == $value['id'] ? ' selected' : '';
 								echo '<option'.$selected.' value="'.$value['id'].'">'.$value['name'].'</option>';
 							}
 							?>

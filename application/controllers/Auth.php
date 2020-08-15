@@ -63,7 +63,12 @@ class Auth extends CI_Controller {
 					'level' 			=> $data['level_description']
 				);
 				$this->session->set_userdata($session_data);
-               redirect(base_url('Dash'));
+				if ($data['level_description'] == 'rom') {
+					redirect(base_url('Dash/daily_monitoring_rom'));
+				}else{
+					 redirect(base_url('Dash'));
+				}
+              
 
 				
 			} else {

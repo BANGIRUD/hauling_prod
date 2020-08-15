@@ -171,18 +171,18 @@ class Edit extends CI_Controller {
 		// print_r($_POST);
 		$by_user				= $this->session->userdata('id');
 		$by_area				= $this->session->userdata('area') != '' ? $this->session->userdata('area') : trim($this->input->post('area'));
+
+		$result 				= get_date_shift();	
 		
 		$id 					= trim($this->input->post('id'));
-		$date 					= trim( date('Y-m-d', strtotime($this->input->post('date'))) );
+		$date   				= date('Y-m-d');
 		$shift 					= $result['shift'];
 		$unit 					= trim($this->input->post('unit'));
-		$posisi 				= "K";
 		$cargo 					= trim($this->input->post('cargo_muatan'));
-		$code_stby				= "L";
+		$rom 					= trim($this->input->post('rom'));
 		$date_in	 			= date('Y-m-d H:i');
 		$date_out	 			= date('Y-m-d H:i');
-		$time_passing			= date('H:i');
-		$remark 				= "";
+		$time_passing			= date('H:'.'00');
 
 		$src 	= $this->Crud->search('table_shiftoperations', array('id' => $id))->num_rows();
 		if ($src > 0) {
@@ -194,13 +194,10 @@ class Edit extends CI_Controller {
 				'time_in' 			=> $date_in,					
 				'time_out' 			=> $date_out,
 				'location'			=> $by_area,					
-				'cn_unit' 			=> $id_unit,
-				'position' 			=> $position,
-				'cargo' 			=> $cargo_muatan,
-				'code_stby' 		=> $code_standby,
+				'cn_unit' 			=> $unit,
+				'cargo' 			=> $cargo,
 				'time_passing'		=> $time_passing,
-				'remark'			=> $remark,
-				'by_rom'			=> $by_rom,
+				'by_rom'			=> $rom,
 				'by_area'			=> $by_area,
 				'by_user'			=> $by_user
 			);
@@ -286,14 +283,13 @@ class Edit extends CI_Controller {
 		$date 					= date('Y-m-d', strtotime($result['date']));
 		$shift 					= $result['shift'];
 		$unit 					= trim($this->input->post('unit'));
-		$position 				= "M"
 		$cargo 					= trim($this->input->post('cargo_muatan'));
 		$code_stby				= trim($this->input->post('code_standby'));
 		$date_in	 			= date('Y-m-d H:i');
 		$date_out	 			= date('Y-m-d H:i');
 		$time_passing			= date('H:i');
 		$remark 				= "";
-		$operation 				= strtolower($code_standby) == 'l' ? 1 : 0;
+		$operation 				= strtolower($code_stby) == 'l' ? 1 : 0;
 
 		$src 	= $this->Crud->search('table_shiftoperations', array('id' => $id))->num_rows();
 		if ($src > 0) {
@@ -306,7 +302,6 @@ class Edit extends CI_Controller {
 				'time_out'			=> $date_out,
 				'location'			=> $by_area,
 				'cn_unit'			=> $unit,
-				'position'			=> $position,
 				'cargo'				=> $cargo,
 				'code_stby'			=> $code_stby,
 				'time_passing'		=> $time_passing,

@@ -122,23 +122,6 @@ function get_options($name, $keys) {
 	
 }
 
-function get_enum($id, $tp = '', $type = 'id')
-{
-	$CI =& get_instance();
-	$CI->load->database();
-	$query=$CI->db->select('*')->from('enum')->where(array($type => $id, 'deleted_at' => NULL))->get();
-	//option not found
-	if($query->num_rows() < 1) return false;
-	
-	$option=$query->row();
-	$value=$option->name;
-	if ($tp != '') {
-		$value=$option->$tp;
-	}	
-	
-	return $value;
-}
-
 function colors_bd_code($value='') {
 	switch ( strtolower($value) ) {
 		case 'b14':
@@ -199,4 +182,21 @@ function section_type($value='') {
 	}
 	
 	return $result;
+}
+
+function get_enum($id, $tp = '', $type = 'id')
+{
+    $CI =& get_instance();
+    $CI->load->database();
+    $query=$CI->db->select('*')->from('table_enum')->where(array($type => $id, 'deleted_at' => NULL))->get();
+    //option not found
+    if($query->num_rows() < 1) return false;
+    
+    $option=$query->row();
+    $value=$option->name;
+    if ($tp != '') {
+        $value=$option->$tp;
+    }    
+    
+    return $value;
 }

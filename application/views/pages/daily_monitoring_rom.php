@@ -6,11 +6,11 @@
   <section class="content-header">
     <h1>
       Monitoring 
-      <small><?=$by_rom?></small>
+      <small><?=get_enum($by_rom)?></small>
     </h1>
     <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-      <li class="active">Monitoring <?=$by_rom?></li>
+      <li class="active">Monitoring <?=get_enum($by_rom)?></li>
     </ol>
   </section>
   <section class="content">
