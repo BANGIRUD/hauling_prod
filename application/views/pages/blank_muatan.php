@@ -26,9 +26,9 @@
                     foreach ($area as $value):$no++;
                       if ($value['name'] != 'KM 67' && $value['name'] != 'ROM') {
                         if ($no % 2 == 0) {
-                          echo '<a class="btn btn-app bg-olive" href="'.base_url('dash/daily_monitoring_post_muatan/'.$code.'/'.$value['id']).'"><i class="fa fa-inbox"></i>'.$value['name'].'</a>';
+                          echo '<a class="btn btn-app bg-olive" href="'.base_url('dash/daily_monitoring_post_muatan/'.$value['id'].'/'.$code).'"><i class="fa fa-inbox"></i>'.$value['name'].'</a>';
                         }else{
-                          echo '<a class="btn btn-app bg-orange" href="'.base_url('dash/daily_monitoring_post_muatan/'.$code.'/'.$value['id']).'"><i class="fa fa-inbox"></i>'.$value['name'].'</a>';
+                          echo '<a class="btn btn-app bg-orange" href="'.base_url('dash/daily_monitoring_post_muatan/'.$value['id'].'/'.$code).'"><i class="fa fa-inbox"></i>'.$value['name'].'</a>';
                         }
                       }                    
                   ?>

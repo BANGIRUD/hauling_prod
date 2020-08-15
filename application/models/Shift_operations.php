@@ -125,7 +125,9 @@ class Shift_operations extends CI_Model
 			$this->db->where('table_shiftoperations.by_area', $by_area);
 		}
 		$this->db->where('table_shiftoperations.position', $position);
-		$this->db->where('table_shiftoperations.code_stby', $code);
+		if ($code) {
+			$this->db->where('table_shiftoperations.code_stby', $code);
+		}
 		$this->db->order_by('table_shiftoperations.by_ordered asc');
 		$this->db->group_by('table_shiftoperations.id');
 		return $this->db->get();

@@ -351,12 +351,12 @@ class Dash extends CI_Controller {
 		$this->load->view('framework/footer');	
 	}
 
-	public function daily_monitoring_post_muatan($code = '',$by_area = '')
+	public function daily_monitoring_post_muatan($by_area = '',$code = '')
 	{
 		$by_level  = $this->session->userdata('level');
 		$result 			= get_date_shift();	
 		// $by_area			= $by_area == '' ? $this->session->userdata('area') : $by_area;
-		$code				= $code == '' ? "L" : $code;
+		// $code				= $code == '' ? "L" : $code;
 		$date  				= $result['date'];
 		$cargo_muatan		= $this->Crud->search('table_enum', array('type' => 'cargo_muatan'))->result_array();
 		$rom	  			= $this->Crud->search('table_enum', array('type' => 'rom'))->result_array();		
