@@ -277,7 +277,7 @@ class Save extends CI_Controller {
 		$by_rom				= $this->input->post('rom');
 		$date_in	 		= date('Y-m-d H:i');
 		$date_out	 		= date('Y-m-d H:i');
-		$time_passing		= date('H:i');
+		$time_passing		= date('H:'.'00');
 		$remark 			= "";
 		$operation 			= strtolower($code_standby) == 'l' ? 1 : 0;
 

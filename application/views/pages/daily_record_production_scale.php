@@ -1,12 +1,15 @@
+<?php
+  $by_area   = $this->session->userdata('area');
+?>
 <div class="content-wrapper">
   <section class="content-header">
     <h1>
       Record Production
-      <small>KM</small>
+      <small><?=get_enum($by_area)?></small>
     </h1>
     <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-      <li class="active">Record Production KM </li>
+      <li class="active">Record Production <?=get_enum($by_area)?></li>
     </ol>
   </section>
   <section class="content">

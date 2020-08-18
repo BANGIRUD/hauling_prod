@@ -287,7 +287,7 @@ class Edit extends CI_Controller {
 		$code_stby				= trim($this->input->post('code_standby'));
 		$date_in	 			= date('Y-m-d H:i');
 		$date_out	 			= date('Y-m-d H:i');
-		$time_passing			= date('H:i');
+		$time_passing			= date('H:'.'00');
 		$remark 				= "";
 		$operation 				= strtolower($code_stby) == 'l' ? 1 : 0;
 

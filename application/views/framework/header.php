@@ -84,4 +84,12 @@
 <script src="<?php echo base_url('___/dist/js/demo.js');?>"></script>
 <!-- Select2 -->
 <script src="<?php echo base_url('___/bower_components/select2/dist/js/select2.full.min.js');?>"></script>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+      $(".alert-dismissible").fadeTo(3000, 500).slideUp(800, function(){
+        $(".alert-dismissible").slideUp(800);
+      });
+    });
+</script>
 </head>

@@ -6,11 +6,11 @@
   <section class="content-header">
     <h1>
       Record Production Muatan
-      <small><?=$by_area?></small>
+      <small><?=get_enum($by_area)?></small>
     </h1>
     <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-      <li class="active">Record Production <?=$by_area?> </li>
+      <li class="active">Record Production <?=get_enum($by_area)?> </li>
     </ol>
   </section>
   <section class="content">
@@ -37,7 +37,7 @@
               </div>
               <div class="col-xs-6 text-right">
                 <a href="<?php echo base_url('Dash/daily_monitoring_post_muatan/standby');?>" class="btn btn-primary">Standby</a>
-                <a href="<?php echo base_url('Dash/daily_monitoring_post_muatan/l');?>" class="btn btn-warning">Operation</a>
+                <a href="<?php echo base_url('Dash/daily_monitoring_post_muatan/L');?>" class="btn btn-warning">Operation</a>
                 <a href="<?php echo base_url('Dash/daily_monitoring_post_muatan/');?>" class="btn btn-info">All</a>
               </div>
             </div>

@@ -6,11 +6,11 @@
   <section class="content-header">
     <h1>
       Record Production Kosongan
-      <small><?=$by_area?></small>
+      <small><?=get_enum($by_area)?></small>
     </h1>
     <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-      <li class="active">Record Production <?=$by_area?> </li>
+      <li class="active">Record Production <?=get_enum($by_area)?></li>
     </ol>
   </section>
   <section class="content">
@@ -55,9 +55,7 @@
                     <th style="text-align: center;">No</th>
                     <th style="text-align: center;">C/N</th>
                     <th style="text-align: center;">Cargo Muatan</th>
-                    <?php if($by_level != 'dispatcher') :?>
                     <th style="text-align: center;">Activity</th>
-                    <?php endif;?>
                   </tr>                  
                 </thead>
                 <tbody>
@@ -69,16 +67,22 @@
                       echo '<tr style="text-align: center;">';
                         echo '<td>'.$no.'</td>
                               <td>'.$value['cn_unit'].'</td>
-                              <td>'.$value['cargo'].'</td>';
-                        if($by_level != 'dispatcher') :
+                              <td style="background-color:'. $color[0] . ';color:'.@$color[1].'" >'.$value['cargo'].'</td>';                       
                         echo '<td nowrap>';
-                          echo '<a href="#" class="btn btn-sm btn-success" data-target="#editincsadata" id="editincsa" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit masuk CSA" data-toggle="tooltip"><i class="fa  fa-reply"> In</i>
+                         if($by_level != 'dispatcher' && $by_level != 'administrator') :
+                          echo '<a href="#" class="btn btn-sm btn-success " data-target="#editincsadata" id="editincsa" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit masuk CSA" data-toggle="tooltip"><i class="fa  fa-reply"> In</i>
                                 </a>';
 
-                          echo ' <a href="#" class="btn btn-sm btn-danger" data-target="#editoutcsa" id="editoutcsa" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit keluar CSA" data-toggle="tooltip"><i class="fa  fa-share"> Out</i>
+                          echo ' <a href="#" class="btn btn-sm btn-danger " data-target="#editoutcsa" id="editoutcsa" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit keluar CSA" data-toggle="tooltip"><i class="fa  fa-share"> Out</i>
                               </a>';
+                        else :
+                            echo '<a href="#" class="btn btn-sm btn-success disabled" data-target="#editincsadata" id="editincsa" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit masuk CSA" data-toggle="tooltip"><i class="fa  fa-reply"> In</i>
+                                </a>';
+
+                          echo ' <a href="#" class="btn btn-sm btn-danger disabled" data-target="#editoutcsa" id="editoutcsa" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit keluar CSA" data-toggle="tooltip"><i class="fa  fa-share"> Out</i>
+                              </a>';
+                          endif;
                         echo '</td>';
-                        endif;
                       echo '</tr>';
                     }
                   ?>
