@@ -399,7 +399,7 @@ class Edit extends CI_Controller {
 			'updated_at'		=> date('Y-m-d H:i:s'),
 			'position'			=> $position,
 			'rom_out' 			=> $rom_out,
-			// 'by_area'			=> $by_area,
+			// 'by_area'			=> '12',
 			'by_user'			=> $by_user	
 		);
 

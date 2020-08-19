@@ -19,6 +19,8 @@
         <div class="box box-primary">
           <div class="box-header with-border">
             <div class="row">
+              <?=$this->session->flashdata('msg');?>
+              <?=$this->session->flashdata('msg2');?>
               <?php if ($this->session->userdata('level') == 'administrator' || $this->session->userdata('level') == 'dispatcher'):?>
                <p style="padding: 0 15px">Click tombol untuk filter ROM:</p>
                 <?php $no=0;
@@ -37,8 +39,6 @@
         </div>
       </div>
       <div class="col-md-12">
-        <?=$this->session->flashdata('msg');?>
-        <?=$this->session->flashdata('msg2');?>
         <div class="box">
           <div class="box-body">
             <div class="table-responsive">

@@ -69,13 +69,22 @@
                               <td>'.$value['cn_unit'].'</td>
                               <td style="background-color:'. $color[0] . ';color:'.@$color[1].'" >'.$value['cargo'].'</td>';
                         echo '<td nowrap>';
+                        if ($by_area == 12) {
+                          echo '<a href="#" class="btn btn-sm btn-success" data-target="#editindata" id="editincsa" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit masuk CSA" data-toggle="tooltip"><i class="fa  fa-reply"> In</i>
+                                </a>';
+
+                          echo ' <a href="#" class="btn btn-sm btn-danger" data-target="#editoutdata" id="editoutcsa" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit keluar CSA" data-toggle="tooltip"><i class="fa  fa-share"> Out</i>
+                              </a>';
+                        }else{
                           echo '<a href="#" class="btn btn-sm btn-success" data-target="#editindata" id="editincsa" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit masuk CSA" data-toggle="tooltip"><i class="fa  fa-reply"> In</i>
                                 </a>';
 
                           echo ' <a href="#" class="btn btn-sm btn-danger" data-target="#editoutdata" id="editoutcsa" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit keluar CSA" data-toggle="tooltip"><i class="fa  fa-share"> Out</i>
                               </a>';
                                echo ' <a href="#" class="btn btn-sm btn-primary" data-target="#editcontinuedata" id="continue" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit lanjut" data-toggle="tooltip"><i class="fa   fa-fighter-jet"> Pass Through</i>
-                              </a>';
+                              </a>'; 
+                        }
+                          
                         echo '</td>';
                       echo '</tr>';
                     }

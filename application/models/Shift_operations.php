@@ -53,9 +53,9 @@ class Shift_operations extends CI_Model
 		$this->db->join('table_equipment','table_shiftoperations.cn_unit = table_equipment.unit_id','LEFT');		
 		$this->db->where('table_shiftoperations.deleted_at IS NULL AND table_shiftoperations.date = \''.$result['date'].'\'');
 		// $this->db->where('table_shiftoperations.deleted_at IS NULL AND table_shiftoperations.date = "2020-05-18"');
-		if ($by_area) {
-			$this->db->where('table_shiftoperations.by_area', $by_area);
-		}
+		// if ($by_area) {
+		// 	$this->db->where('table_shiftoperations.by_area', $by_area);
+		// }
 		if (strtolower($code) == 'l') {
 			$this->db->group_start();
  			$this->db->where('code_stby', 'L');
