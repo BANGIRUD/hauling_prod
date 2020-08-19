@@ -298,7 +298,7 @@ class Edit extends CI_Controller {
 				'deleted_at'		=> NULL,
 				'date'				=> $date,
 				'shift'				=> $shift,
-				'time_in'			=> date('Y-m-d H:i:s'),
+				'time_in'			=> $date_in,
 				'time_out'			=> '0000-00-00',
 				'location'			=> $by_area,
 				'cn_unit'			=> $unit,
@@ -324,6 +324,32 @@ class Edit extends CI_Controller {
 		      </div>');
 		}
 		redirect($_SERVER['HTTP_REFERER']);
+	}
+
+	public function edit_out_csa_muatan($id)
+	{
+		$by_user			= $this->session->userdata('id');
+		$by_area			= $this->session->userdata('area') != '' ? $this->session->userdata('area') : trim($this->input->post('area'));
+		$date_out 			= date('Y-m-d H:i');
+		$code_standby  		= "L";
+		$operation 			= strtolower($code_stby) == 'l' ? 1 : 0;
+
+		$data = array(
+			'updated_at'		=> date('Y-m-d H:i:s'),
+			'time_out' 			=> $date_out,
+			'code_stby'			=> $code_standby,
+			'operation'			=> $operation,
+			'by_area'			=> '11',
+			'by_user'			=> $by_user	
+		);
+
+		$this->Crud->update('table_shiftoperations', array('id' => $id),$data);
+
+	}
+
+	public function edit_continue_muatan($id)
+	{
+		# code...
 	}
 
 

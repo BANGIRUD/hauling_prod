@@ -72,7 +72,7 @@
                         $time_in = date('Y', strtotime($value['time_in']));
                         $time_out = date('Y', strtotime($value['time_out']));
                         $btn = " disabled";
-                          if($time_in == '-0001' && $time_out == '-0001')
+                          if($time_in != '-0001' && $time_out != '-0001')
                             $btn = "";
                         
                           echo '<a href="#" class="btn btn-sm btn-success'.$btn.'" data-target="#editindata" id="editincsa" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit masuk CSA" data-toggle="tooltip"><i class="fa  fa-reply"> In</i>
@@ -144,5 +144,28 @@
   $("#modal-body-edit").load("<?= base_url('View/edit/csa_in_muatan/');?>" + id);
   $('#modal-edit').modal('toggle');
   });
+
+  $(document).on('click','#editoutcsa', function() {
+    var id = $(this).attr('data-id');
+      $.ajax({
+    type: "GET",
+    url: "<?php echo base_url('Edit/edit_out_csa_muatan/');?>" + id , 
+      success: function(response) {
+        window.location.reload();
+      } 
+    });
+  });
+
+  $(document).on('click','#continue', function() {
+    var id = $(this).attr('data-id');
+      $.ajax({
+    type: "GET",
+    url: "<?php echo base_url('Edit/edit_out_csa_muatan/');?>" + id , 
+      success: function(response) {
+        window.location.reload();
+      } 
+    });
+  });
+  
 
 </script>
