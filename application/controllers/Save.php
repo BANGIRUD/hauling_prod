@@ -160,14 +160,14 @@ class Save extends CI_Controller {
 
 			$this->db->insert('table_romoperations', $data);
 
-			$this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissible" role="alert">
+			$this->session->set_flashdata('msg2', '<div class="alert alert-info alert-dismissible" role="alert">
 	            <span class="badge badge-pill badge-success">Success</span> <b>Data</b> has been added.
 	            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
 	                <span aria-hidden="true">&times;</span>
 	            </button>
 	        </div>');
 		}else{
-			$this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissible">
+			$this->session->set_flashdata('msg2', '<div class="alert alert-danger alert-dismissible">
 		        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
 		        <h4><i class="icon fa fa-check"></i> Error!</h4>
 		        Check kembali data anda!.

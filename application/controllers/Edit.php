@@ -17,10 +17,12 @@ class Edit extends CI_Controller {
 		$unit 					= trim($this->input->post('unit'));
 		$cargo 					= trim($this->input->post('cargo_muatan'));
 		$rom 					= trim($this->input->post('rom'));
+		$datetime				= trim($this->input->post('datetime'));
 
 		$src 	= $this->Crud->search('table_shiftoperations', array('id' => $id))->num_rows();
 		if ($src > 0) {
 			$data = array(
+				'created_at'		=> $datetime,
 				'updated_at' 		=> date('Y-m-d H:i:s'),
 				'deleted_at' 		=> NULL,
 				'cn_unit' 			=> $unit,

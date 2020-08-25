@@ -22,13 +22,16 @@
                 <button type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="Add Unit" id="add-unit">
                   <i class="fa fa-plus"></i> Add Unit
                 </button>
-                <a href="" class="btn btn-success">
+                <!-- <a href="" class="btn btn-success">
                   <i class="fa fa-list-ul"> Add Multiple Unit</i>
-                </a>
+                </a> -->
               </div>
             </div>
           </div>
         </div>
+      </div>
+      <div class="col-md-12">
+      <?=$this->session->flashdata('msg');?>
       </div>
       <div class="col-md-12">
         <div class="box">
@@ -136,7 +139,7 @@
 </div>
 
 <div class="modal fade" id="modal-edit" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <form action="<?= base_url('Edit/shift_operation');?>" method="post" enctype="multipart/form-data" class="form-horizontal">
         <div class="modal-header">

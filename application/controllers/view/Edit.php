@@ -21,6 +21,10 @@ class Edit extends CI_Controller {
           <div class="form-group">
             <div class="form-body">
             	<div class="row">
+	              	<div class="col-xs-3">
+	              		<label>Datetime</label>
+	              		<input class="form-control" type="text" name="datetime" placeholder="Enter Datetime Here" id="datetime" value="<?= $data->created_at ;?>">
+	              	</div>
             		<div class="col-xs-3">
                 		<label>ID Unit</label> 
 		            	<input class="form-control" type="text" name="unit" placeholder="Enter Id Unit Here" id="id_unit" value="<?= $data->cn_unit ;?>" readonly>
@@ -44,9 +48,6 @@ class Edit extends CI_Controller {
 							}
 							?>
 						</select>
-	              	</div>
-	              	<div class="col-xs-3">
-	              		<label>Datetime</label>
 	              	</div>
           		</div>
           	</div>		
