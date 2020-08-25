@@ -49,6 +49,15 @@ class Auth extends CI_Controller {
 		$this->form_validation->set_rules('username', 'username', 'required');		
 		$this->form_validation->set_rules('password', 'password', 'required');
 		if( $this->form_validation->run() != false ) {
+			if ($data['level_description'] == 'rom' && !$rom) {
+				$this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h4><i class="icon fa fa-ban"></i> Error!</h4>
+                Pilih ROM terlebih dahulu!
+                </div>');
+				redirect(base_url('Auth'));
+				return false;
+			}
 			if (password_verify($password, $data['password'])) {
 				$session_data = array(
 					'id' 				=> $data['id'],
@@ -64,7 +73,7 @@ class Auth extends CI_Controller {
 				);
 				$this->session->set_userdata($session_data);
 				if ($data['level_description'] == 'rom') {
-					redirect(base_url('Dash/daily_monitoring_rom'));
+					redirect(base_url('Dash/daily_rom_operations'));
 				}else{
 					 redirect(base_url('Dash'));
 				}

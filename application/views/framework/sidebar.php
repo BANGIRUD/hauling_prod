@@ -114,27 +114,27 @@
         <?php endif;?>
 
         <?php if ($level != 'rom' && $level != 'checker'): ?>
-        <li <?php if($this->uri->segment(2) == 'daily_record_production_scale') { echo' class="active"';} ?>>
-          <a href="<?php echo base_url('Dash/daily_record_production_scale');?>"><i class="fa fa-edit"></i> <span>Record Production</span></a>
+        <li <?php if($this->uri->segment(2) == 'daily_record_production') { echo' class="active"';} ?>>
+          <a href="<?php echo base_url('Dash/daily_record_production');?>"><i class="fa fa-edit"></i> <span>Record Production</span></a>
         </li>
         <?php endif;?>
 
         <li class="header">VIEW</li>
 
         <?php if ($level != 'rom'): ?>
-        <li class="treeview <?php if($this->uri->segment(2) == 'daily_monitoring_post_muatan' || $this->uri->segment(2) == 'daily_monitoring_post_kosongan') { echo ' active';}?>">
+        <li class="treeview <?php if($this->uri->segment(2) == 'daily_monitoring_operations') { echo ' active';}?>">
           <a href="#"><i class="fa fa-video-camera"></i> <span>Monitoring Post</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
           </a>
           <ul class="treeview-menu">
-            <li <?php if($this->uri->segment(2) == 'daily_monitoring_post_muatan' || $this->uri->segment(2) == '') { echo' class="active"';} ?>><a href="<?php echo base_url('dash/daily_monitoring_post_muatan');?>"><i class="fa fa-circle-o"></i>Muatan </a></li>
-            <li <?php if($this->uri->segment(2) == 'daily_monitoring_post_kosongan') { echo' class="active"';} ?>><a href="<?php echo base_url('dash/daily_monitoring_post_kosongan');?>"><i class="fa fa-circle-o"></i>Kosongan</a></li>
+            <li <?php if($this->uri->segment(2) == 'daily_monitoring_operations' && $this->uri->segment(3) == 'M') { echo' class="active"';} ?>><a href="<?php echo base_url('dash/daily_monitoring_operations/M');?>"><i class="fa fa-circle-o"></i>Muatan </a></li>
+            <li <?php if($this->uri->segment(2) == 'daily_monitoring_operations' && $this->uri->segment(3) == 'K') { echo' class="active"';} ?>><a href="<?php echo base_url('dash/daily_monitoring_operations/K');?>"><i class="fa fa-circle-o"></i>Kosongan</a></li>
           </ul>
         </li>
         <?php endif;?>
 
         <?php if ($level != 'checker'): ?>
-        <li <?php if($this->uri->segment(2) == 'daily_monitoring_rom') { echo' class="active"';} ?>>
-          <a href="<?php echo base_url('Dash/daily_monitoring_rom');?>">
+        <li <?php if($this->uri->segment(2) == 'daily_rom_operations') { echo' class="active"';} ?>>
+          <a href="<?php echo base_url('Dash/daily_rom_operations');?>">
             <i class="fa fa-cubes "></i> <span>Monitoring ROM</span>
           </a>
         </li>

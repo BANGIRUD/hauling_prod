@@ -46,8 +46,7 @@
                 <tbody>
                   <?php
                   $no = 0;
-                  $sql = $this->Crud->search('table_enum', array('table_enum.type' => 'cargo_muatan', 'deleted_at' => NULL))->result_array();
-                  foreach ($sql as $data) {
+                  foreach ($rows as $data) {
                     $color = explode(',', $data['description']);
                     $no++;
                     echo 

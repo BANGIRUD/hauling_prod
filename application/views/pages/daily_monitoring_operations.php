@@ -22,13 +22,13 @@
               <div class="col-xs-6">
                 <?php if ($by_level == 'administrator' || $by_level == 'dispatcher'):?>
                   <?php $no=0;    
-                    echo '<a class="btn btn-app bg-maroon" href="'.base_url('dash/daily_monitoring_post_muatan/').'"><i class="fa fa-list"></i>ALL</a>';
+                    echo '<a class="btn btn-app bg-maroon" href="'.base_url('dash/daily_monitoring_operations/').'"><i class="fa fa-list"></i>ALL</a>';
                     foreach ($area as $value):$no++;
                       if ($value['name'] != 'KM 67' && $value['name'] != 'ROM') {
                         if ($no % 2 == 0) {
-                          echo '<a class="btn btn-app bg-olive" href="'.base_url('dash/daily_monitoring_post_muatan/'.$value['id'].'/'.$code).'"><i class="fa fa-inbox"></i>'.$value['name'].'</a>';
+                          echo '<a class="btn btn-app bg-olive" href="'.base_url('dash/daily_monitoring_operations/K').'")><i class="fa fa-inbox"></i>'.$value['name'].'</a>';
                         }else{
-                          echo '<a class="btn btn-app bg-orange" href="'.base_url('dash/daily_monitoring_post_muatan/'.$value['id'].'/'.$code).'"><i class="fa fa-inbox"></i>'.$value['name'].'</a>';
+                          echo '<a class="btn btn-app bg-orange" href="'.base_url('dash/daily_monitoring_operations/K').'")><i class="fa fa-inbox"></i>'.$value['name'].'</a>';
                         }
                       }                    
                   ?>
@@ -36,9 +36,9 @@
                 <?php endif;?>  
               </div>
               <div class="col-xs-6 text-right">
-                <a href="<?php echo base_url('Dash/daily_monitoring_post_muatan/standby');?>" class="btn btn-primary">Standby</a>
-                <a href="<?php echo base_url('Dash/daily_monitoring_post_muatan/L');?>" class="btn btn-warning">Operation</a>
-                <a href="<?php echo base_url('Dash/daily_monitoring_post_muatan/');?>" class="btn btn-info">All</a>
+                <a href="<?php echo base_url('dash/daily_monitoring_operations/standby');?>" class="btn btn-primary">Standby</a>
+                <a href="<?php echo base_url('dash/daily_monitoring_operations/L');?>" class="btn btn-warning">Operation</a>
+                <a href="<?php echo base_url('dash/daily_monitoring_operations/');?>" class="btn btn-info">All</a>
               </div>
             </div>
           </div>
@@ -69,21 +69,25 @@
                               <td>'.$value['cn_unit'].'</td>
                               <td style="background-color:'. $color[0] . ';color:'.@$color[1].'" >'.$value['cargo'].'</td>';
                         echo '<td nowrap>';
-                        $time_in = date('Y', strtotime($value['time_in']));
-                        $time_out = date('Y', strtotime($value['time_out']));
+                        $time_in = $value['time_in'];
+                        $time_out = $value['time_out'];
                         $btn = " disabled";
-                          if($time_in != '-0001' && $time_out != '-0001')
-                            $btn = "";
-                        
+                          if($time_in == NULL && $time_out == NULL)
+                            $btn = "";                        
                           echo '<a href="#" class="btn btn-sm btn-success'.$btn.'" data-target="#editindata" id="editincsa" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit masuk CSA" data-toggle="tooltip"><i class="fa  fa-reply"> In</i>
                                 </a>';
+
                           $btn = " disabled";
-                          if($time_in != '-0001' && $time_out == '-0001')
+                          if($time_in != NULL && $time_out == NULL)
                             $btn = "";
                           echo ' <a href="#" class="btn btn-sm btn-danger'.$btn.'" data-target="#editoutdata" id="editoutcsa" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit keluar CSA" data-toggle="tooltip"><i class="fa  fa-share"> Out</i>
                               </a>';
+
+                          $btn = " disabled";
+                          if($value['code_stby'] == NULL)
+                            $btn = "";
                         if ($by_area != 12) {
-                               echo ' <a href="#" class="btn btn-sm btn-primary" data-target="#editcontinuedata" id="continue" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit lanjut" data-toggle="tooltip"><i class="fa   fa-fighter-jet"> Pass Through</i>
+                               echo ' <a href="#" class="btn btn-sm btn-primary'.$btn.'" data-target="#editcontinuedata" id="continue" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit lanjut" data-toggle="tooltip"><i class="fa   fa-fighter-jet"> Pass Through</i>
                               </a>'; 
                         }
                           
@@ -105,12 +109,12 @@
 <div class="modal fade in" id="modal-edit" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <form action="<?= base_url('Edit/edit_in_csa_muatan');?>" method="post" enctype="multipart/form-data" class="form-horizontal">
+      <form action="<?= base_url('Save/monitoring_operations');?>" method="post" enctype="multipart/form-data" class="form-horizontal">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
-          <h4 class="modal-title" id="mediumModalLabel">Edit Data</h4>
+          <h4 class="modal-title" id="mediumModalLabel">Form In</h4>
         </div>
         <div class="modal-body" id="modal-body-edit">
         </div>
@@ -141,26 +145,26 @@
 
   $(document).on('click','#editincsa', function() {   
   var id = $(this).attr('data-id');
-  $("#modal-body-edit").load("<?= base_url('View/edit/csa_in_muatan/');?>" + id);
+  $("#modal-body-edit").load("<?= base_url('View/edit/monitoring_operations/');?>" + id);
   $('#modal-edit').modal('toggle');
   });
 
   $(document).on('click','#editoutcsa', function() {
     var id = $(this).attr('data-id');
       $.ajax({
-    type: "GET",
-    url: "<?php echo base_url('Edit/edit_out_csa_muatan/');?>" + id , 
-      success: function(response) {
-        window.location.reload();
-      } 
-    });
+      type: "GET",
+      url: "<?php echo base_url('Edit/monitoring_operations/');?>" + id , 
+        success: function(response) {
+          window.location.reload();
+        } 
+      });
   });
 
   $(document).on('click','#continue', function() {
     var id = $(this).attr('data-id');
       $.ajax({
     type: "GET",
-    url: "<?php echo base_url('Edit/edit_out_csa_muatan/');?>" + id , 
+    url: "<?php echo base_url('Edit/bypass_monitoring_operations/');?>" + id , 
       success: function(response) {
         window.location.reload();
       } 

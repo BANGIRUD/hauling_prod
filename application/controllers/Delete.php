@@ -7,7 +7,7 @@ class Delete extends CI_Controller {
 		$this->load->model('Crud');
 	}
 
-	public function add_unit()
+	public function shift_operations()
 	{
 		$id = $this->input->post('del');
 		$src = $this->Crud->search('table_shiftoperations', array('id' => $id))->num_rows();

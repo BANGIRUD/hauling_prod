@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Waktu pembuatan: 18 Agu 2020 pada 16.40
--- Versi server: 10.3.10-MariaDB-log
+-- Waktu pembuatan: 23 Agu 2020 pada 11.40
+-- Versi server: 5.7.18
 -- Versi PHP: 7.2.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -36,7 +36,7 @@ CREATE TABLE `enum` (
   `code` varchar(50) DEFAULT NULL,
   `name` text NOT NULL,
   `category` varchar(50) DEFAULT NULL,
-  `category_description` text DEFAULT NULL,
+  `category_description` text,
   `type` varchar(25) NOT NULL,
   `by_user` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -273,7 +273,7 @@ CREATE TABLE `table_enum` (
   `deleted_at` datetime DEFAULT NULL,
   `code` varchar(50) DEFAULT NULL,
   `name` text NOT NULL,
-  `description` text DEFAULT NULL,
+  `description` text,
   `type` varchar(25) NOT NULL,
   `by_user` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -877,7 +877,48 @@ INSERT INTO `table_history_shiftoperations` (`id`, `created_at`, `updated_at`, `
 (45, '2020-08-18 10:15:25', '2020-08-18 10:15:25', NULL, '2020-08-18', 1, '2020-08-18 10:15:00', '2020-08-18 10:15:00', '107', '200', 'K', 'HCV HI ASH PRG', 'L', '10:00:00', '', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 2, 110, 107, 2, 0),
 (46, '2020-08-18 10:15:34', '2020-08-18 10:15:34', NULL, '2020-08-18', 1, '2020-08-18 10:15:00', '2020-08-18 10:15:00', '107', '300', 'K', 'HCV HTS PRG', 'L', '10:00:00', '', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 3, 111, 107, 2, 0),
 (47, '2020-08-18 10:15:14', '2020-08-18 11:29:08', NULL, '2020-08-18', 1, '2020-08-18 10:15:00', '2020-08-18 10:15:00', '107', '100', 'K', 'HCV PRG', 'L', '10:00:00', '', 1, '2020-08-18 11:29:08', '0000-00-00 00:00:00', 1, 109, 107, 4, 38),
-(48, '2020-08-18 10:15:14', '2020-08-18 11:30:27', NULL, '2020-08-18', 1, '2020-08-18 10:15:00', '2020-08-18 10:15:00', '107', '100', 'M', 'HCV PRG', 'L', '10:00:00', '', 1, '2020-08-18 11:29:08', '2020-08-18 11:30:27', 1, 109, 107, 4, 38);
+(48, '2020-08-18 10:15:14', '2020-08-18 11:30:27', NULL, '2020-08-18', 1, '2020-08-18 10:15:00', '2020-08-18 10:15:00', '107', '100', 'M', 'HCV PRG', 'L', '10:00:00', '', 1, '2020-08-18 11:29:08', '2020-08-18 11:30:27', 1, 109, 107, 4, 38),
+(49, '2020-08-20 07:55:11', '2020-08-20 07:55:11', NULL, '2020-08-20', 1, '2020-08-20 07:55:00', '2020-08-20 07:55:00', '107', '100', 'K', 'HCV PRG', 'L', '07:00:00', '', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 109, 107, 2, 0),
+(50, '2020-08-20 07:55:23', '2020-08-20 07:55:23', NULL, '2020-08-20', 1, '2020-08-20 07:55:00', '2020-08-20 07:55:00', '107', '200', 'K', 'HCV HI ASH PRG', 'L', '07:00:00', '', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 2, 109, 107, 2, 0),
+(51, '2020-08-20 07:55:11', '2020-08-20 08:05:19', NULL, '2020-08-20', 1, '2020-08-20 07:55:00', '2020-08-20 07:55:00', '107', '100', 'K', 'HCV PRG', 'L', '07:00:00', '', 1, '2020-08-20 08:05:19', '0000-00-00 00:00:00', 1, 109, 107, 4, 41),
+(52, '2020-08-20 07:55:11', '2020-08-20 08:11:04', NULL, '2020-08-20', 1, '2020-08-20 07:55:00', '2020-08-20 07:55:00', '107', '100', 'M', 'HCV PRG', 'L', '07:00:00', '', 1, '2020-08-20 08:05:19', '2020-08-20 08:11:04', 1, 109, 12, 4, 41);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `table_monitoringoperations`
+--
+
+CREATE TABLE `table_monitoringoperations` (
+  `id` bigint(255) NOT NULL,
+  `ref_id` int(255) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `time_in` datetime DEFAULT NULL,
+  `time_out` datetime DEFAULT NULL,
+  `cn_unit` varchar(25) NOT NULL,
+  `position` varchar(25) NOT NULL,
+  `cargo` varchar(50) NOT NULL,
+  `code_stby` varchar(25) NOT NULL,
+  `time_passing` time DEFAULT NULL,
+  `remark` varchar(50) DEFAULT NULL,
+  `operation` tinyint(1) NOT NULL,
+  `by_ordered` int(25) NOT NULL,
+  `by_area` int(25) NOT NULL,
+  `by_user` int(25) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `table_monitoringoperations`
+--
+
+INSERT INTO `table_monitoringoperations` (`id`, `ref_id`, `created_at`, `updated_at`, `deleted_at`, `time_in`, `time_out`, `cn_unit`, `position`, `cargo`, `code_stby`, `time_passing`, `remark`, `operation`, `by_ordered`, `by_area`, `by_user`) VALUES
+(1, 2, '2020-08-20 11:12:30', '2020-08-20 14:12:08', NULL, '2020-08-20 11:12:30', '2020-08-20 14:12:08', '101', 'M', 'HCV PRG', 'S01', '14:00:00', NULL, 0, 0, 12, 3),
+(5, 2, '2020-08-20 11:23:36', '2020-08-20 14:12:08', NULL, '2020-08-20 11:23:36', '2020-08-20 14:12:08', '101', 'M', 'HCV PRG', 'L', '14:00:00', NULL, 0, 0, 11, 3),
+(6, 2, '2020-08-20 11:53:45', '2020-08-20 14:12:08', NULL, '2020-08-20 11:53:45', '2020-08-20 14:12:08', '101', 'M', 'HCV PRG', 'S01', '14:00:00', NULL, 0, 0, 10, 3),
+(7, 3, '2020-08-20 14:50:24', '2020-08-20 14:50:24', NULL, '2020-08-20 14:50:24', '2020-08-20 14:50:24', '200', 'M', 'HCV PRG', 'L', '14:00:00', NULL, 0, 0, 10, 3),
+(8, 5, '2020-08-23 09:35:50', '2020-08-23 11:10:46', NULL, '2020-08-23 09:35:50', '2020-08-23 11:10:46', '100', 'M', 'HCV PRG', 'S05', '11:00:00', NULL, 0, 0, 11, 3);
 
 -- --------------------------------------------------------
 
@@ -931,6 +972,36 @@ INSERT INTO `table_quality` (`id`, `created_at`, `updated_at`, `deleted_at`, `da
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `table_romoperations`
+--
+
+CREATE TABLE `table_romoperations` (
+  `id` bigint(255) NOT NULL,
+  `ref_id` bigint(255) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `time_in` datetime DEFAULT NULL,
+  `time_out` datetime DEFAULT NULL,
+  `cn_unit` varchar(25) NOT NULL,
+  `remark` varchar(50) DEFAULT NULL,
+  `by_rom` int(25) NOT NULL,
+  `by_user` int(25) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `table_romoperations`
+--
+
+INSERT INTO `table_romoperations` (`id`, `ref_id`, `created_at`, `updated_at`, `deleted_at`, `time_in`, `time_out`, `cn_unit`, `remark`, `by_rom`, `by_user`) VALUES
+(1, 2, '2020-08-20 11:11:18', '2020-08-20 11:11:21', NULL, '2020-08-20 11:11:18', '2020-08-20 11:11:21', '101', NULL, 109, 4),
+(2, 3, '2020-08-20 11:26:44', '2020-08-20 11:27:45', NULL, '2020-08-20 11:26:44', '2020-08-20 11:27:45', '200', NULL, 109, 4),
+(3, 5, '2020-08-23 08:55:36', '2020-08-23 08:57:11', NULL, '2020-08-23 08:55:36', '2020-08-23 08:57:11', '100', NULL, 109, 4),
+(4, 6, '2020-08-23 11:20:09', '2020-08-23 11:20:28', NULL, '2020-08-23 11:20:09', '2020-08-23 11:20:28', '200', NULL, 109, 4);
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `table_settingunit`
 --
 
@@ -961,6 +1032,41 @@ CREATE TABLE `table_shiftoperations` (
   `deleted_at` datetime DEFAULT NULL,
   `date` date NOT NULL,
   `shift` int(2) NOT NULL,
+  `cn_unit` varchar(25) NOT NULL,
+  `position` varchar(25) NOT NULL,
+  `cargo` varchar(50) NOT NULL,
+  `remark` varchar(50) DEFAULT NULL,
+  `by_ordered` int(25) NOT NULL,
+  `to_rom` int(10) NOT NULL,
+  `by_area` int(25) NOT NULL,
+  `by_user` int(25) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `table_shiftoperations`
+--
+
+INSERT INTO `table_shiftoperations` (`id`, `created_at`, `updated_at`, `deleted_at`, `date`, `shift`, `cn_unit`, `position`, `cargo`, `remark`, `by_ordered`, `to_rom`, `by_area`, `by_user`) VALUES
+(1, '2020-08-20 09:06:06', '2020-08-20 10:59:33', NULL, '2020-08-20', 1, '100', 'K', 'HCV PRG', '', 0, 109, 107, 2),
+(2, '2020-08-20 09:06:39', '2020-08-20 11:11:21', NULL, '2020-08-20', 1, '101', 'M', 'HCV PRG', '', 0, 113, 107, 2),
+(3, '2020-08-20 11:25:01', '2020-08-20 11:27:45', NULL, '2020-08-20', 1, '200', 'M', 'HCV PRG', '', 0, 109, 107, 2),
+(4, '2020-08-20 11:25:09', '2020-08-20 11:25:09', NULL, '2020-08-20', 1, '201', 'K', 'HCV HI ASH PRG', '', 0, 109, 107, 2),
+(5, '2020-08-23 08:40:07', '2020-08-23 08:57:11', NULL, '2020-08-23', 1, '100', 'M', 'HCV PRG', '', 0, 109, 107, 2),
+(6, '2020-08-23 11:17:44', '2020-08-23 11:23:46', NULL, '2020-08-23', 1, '200', 'M', 'P600', '', 0, 109, 107, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `table_shiftoperations_old`
+--
+
+CREATE TABLE `table_shiftoperations_old` (
+  `id` bigint(255) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `deleted_at` datetime DEFAULT NULL,
+  `date` date NOT NULL,
+  `shift` int(2) NOT NULL,
   `time_in` datetime NOT NULL,
   `time_out` datetime NOT NULL,
   `location` varchar(25) NOT NULL,
@@ -980,10 +1086,10 @@ CREATE TABLE `table_shiftoperations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `table_shiftoperations`
+-- Dumping data untuk tabel `table_shiftoperations_old`
 --
 
-INSERT INTO `table_shiftoperations` (`id`, `created_at`, `updated_at`, `deleted_at`, `date`, `shift`, `time_in`, `time_out`, `location`, `cn_unit`, `position`, `cargo`, `code_stby`, `time_passing`, `remark`, `operation`, `rom_in`, `rom_out`, `by_ordered`, `by_rom`, `by_area`, `by_user`) VALUES
+INSERT INTO `table_shiftoperations_old` (`id`, `created_at`, `updated_at`, `deleted_at`, `date`, `shift`, `time_in`, `time_out`, `location`, `cn_unit`, `position`, `cargo`, `code_stby`, `time_passing`, `remark`, `operation`, `rom_in`, `rom_out`, `by_ordered`, `by_rom`, `by_area`, `by_user`) VALUES
 (1, '2020-08-04 08:39:35', '2020-08-04 08:39:35', NULL, '2020-08-04', 1, '2020-08-04 08:39:00', '2020-08-04 08:39:00', '107', '100', 'K', 'T100 CT2', 'L', '08:39:00', '', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, 109, 107, 6),
 (2, '2020-08-04 09:13:31', '2020-08-04 09:13:31', NULL, '2020-08-04', 1, '2020-08-04 09:13:00', '2020-08-04 09:13:00', '107', '101', 'K', 'W100', 'L', '09:13:00', '', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 2, 110, 107, 6),
 (3, '2020-08-04 09:16:48', '2020-08-04 09:16:48', NULL, '2020-08-04', 1, '2020-08-04 09:16:00', '2020-08-04 09:16:00', '107', '102', 'M', 'HCV PRG', 'L', '09:16:00', '', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 3, 109, 107, 6),
@@ -1023,7 +1129,9 @@ INSERT INTO `table_shiftoperations` (`id`, `created_at`, `updated_at`, `deleted_
 (37, '2020-08-16 14:46:02', '2020-08-16 14:46:02', NULL, '2020-08-16', 1, '2020-08-16 14:46:00', '2020-08-16 14:46:00', '107', '102', 'K', 'HCV HTS PRG', 'L', '14:46:00', '', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 3, 111, 107, 2),
 (38, '2020-08-18 10:15:14', '2020-08-18 11:30:27', NULL, '2020-08-18', 1, '2020-08-18 10:15:00', '2020-08-18 10:15:00', '107', '100', 'M', 'HCV PRG', 'L', '10:00:00', '', 1, '2020-08-18 11:29:08', '2020-08-18 11:30:27', 1, 109, 107, 4),
 (39, '2020-08-18 10:15:25', '2020-08-18 10:15:25', NULL, '2020-08-18', 1, '2020-08-18 10:15:00', '2020-08-18 10:15:00', '107', '200', 'K', 'HCV HI ASH PRG', 'L', '10:00:00', '', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 2, 110, 107, 2),
-(40, '2020-08-18 10:15:34', '2020-08-18 10:15:34', NULL, '2020-08-18', 1, '2020-08-18 10:15:00', '2020-08-18 10:15:00', '107', '300', 'K', 'HCV HTS PRG', 'L', '10:00:00', '', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 3, 111, 107, 2);
+(40, '2020-08-18 10:15:34', '2020-08-18 10:15:34', NULL, '2020-08-18', 1, '2020-08-18 10:15:00', '2020-08-18 10:15:00', '107', '300', 'K', 'HCV HTS PRG', 'L', '10:00:00', '', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 3, 111, 107, 2),
+(41, '2020-08-20 07:55:11', '2020-08-20 08:11:04', NULL, '2020-08-20', 1, '2020-08-20 07:55:00', '2020-08-20 07:55:00', '107', '100', 'M', 'HCV PRG', 'L', '07:00:00', '', 1, '2020-08-20 08:05:19', '2020-08-20 08:11:04', 1, 109, 12, 4),
+(42, '2020-08-20 07:55:23', '2020-08-20 07:55:23', NULL, '2020-08-20', 1, '2020-08-20 07:55:00', '2020-08-20 07:55:00', '107', '200', 'K', 'HCV HI ASH PRG', 'L', '07:00:00', '', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 2, 109, 107, 2);
 
 -- --------------------------------------------------------
 
@@ -1359,7 +1467,7 @@ CREATE TABLE `table_statuspassing` (
 --
 
 INSERT INTO `table_statuspassing` (`id`, `created_at`, `updated_at`, `deleted_at`, `date`, `time`, `shift`, `passing_plan`, `passing_actual`, `passing_ach`, `status`, `keterangan`, `by_area`, `by_user`) VALUES
-(1, '2020-07-24 14:55:20', '2020-07-24 14:55:28', NULL, '2020-07-24', '14:00:00', 1, 0, 0, 0, 'Antri Klanis', 'dia ngantri', 0, 1),
+(1, '2020-07-24 14:55:20', '2020-07-24 14:55:28', NULL, '2020-08-20', '14:00:00', 1, 0, 0, 0, 'Antri Klanis', 'dia ngantri', 0, 1),
 (2, '2020-07-24 15:19:44', '2020-07-24 15:19:51', NULL, '2020-07-24', '15:00:00', 1, 0, 0, 0, 'Hopper BD', 'bd', 10, 6);
 
 -- --------------------------------------------------------
@@ -1434,14 +1542,14 @@ INSERT INTO `table_supplaypassing` (`id`, `created_at`, `updated_at`, `deleted_a
 (36, '2020-07-17 07:06:42', '2020-07-17 07:06:42', NULL, '2020-07-17', 1, 'T300 CT2', 5, 5, 5, 5, 5, 4, 4, 4, 5, 5, 5, 5, 1),
 (37, '2020-07-17 07:06:42', '2020-07-17 07:06:42', NULL, '2020-07-17', 1, 'T100 NT', 4, 4, 4, 4, 4, 0, 0, 0, 4, 4, 4, 4, 1),
 (38, '2020-07-17 07:06:42', '2020-07-17 07:06:42', NULL, '2020-07-17', 1, 'HCV WARA', 0, 0, 0, 0, 0, 6, 6, 6, 0, 0, 0, 0, 1),
-(39, '2020-07-24 14:53:00', '2020-07-24 14:53:00', NULL, '2020-07-24', 1, 'BCLSA', 0, 0, 0, 0, 0, 11, 11, 11, 0, 0, 0, 0, 6),
-(40, '2020-07-24 14:53:01', '2020-07-24 14:53:01', NULL, '2020-07-24', 1, 'HCV PRG', 0, 3, 3, 3, 3, 0, 0, 0, 3, 3, 3, 3, 6),
-(41, '2020-07-24 14:53:01', '2020-07-24 14:53:01', NULL, '2020-07-24', 1, 'T200 CT1', 7, 7, 7, 7, 7, 4, 4, 4, 7, 7, 7, 7, 6),
-(42, '2020-07-24 14:53:01', '2020-07-24 14:53:01', NULL, '2020-07-24', 1, 'T300 CT1', 10, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6),
-(43, '2020-07-24 14:53:01', '2020-07-24 14:53:01', NULL, '2020-07-24', 1, 'T200 CT2', 8, 10, 10, 10, 10, 4, 4, 4, 10, 10, 10, 10, 6),
-(44, '2020-07-24 14:53:01', '2020-07-24 14:53:01', NULL, '2020-07-24', 1, 'T300 CT2', 5, 5, 5, 5, 5, 4, 4, 4, 5, 5, 5, 5, 6),
-(45, '2020-07-24 14:53:01', '2020-07-24 14:53:01', NULL, '2020-07-24', 1, 'T100 NT', 4, 4, 4, 4, 4, 0, 0, 0, 4, 4, 4, 4, 6),
-(46, '2020-07-24 14:53:01', '2020-07-24 14:53:01', NULL, '2020-07-24', 1, 'HCV WARA', 0, 0, 0, 0, 0, 6, 6, 6, 0, 0, 0, 0, 6);
+(39, '2020-07-24 14:53:00', '2020-07-24 14:53:00', NULL, '2020-08-20', 1, 'BCLSA', 0, 0, 0, 0, 0, 11, 11, 11, 0, 0, 0, 0, 6),
+(40, '2020-07-24 14:53:01', '2020-07-24 14:53:01', NULL, '2020-08-20', 1, 'HCV PRG', 0, 3, 3, 3, 3, 0, 0, 0, 3, 3, 3, 3, 6),
+(41, '2020-07-24 14:53:01', '2020-07-24 14:53:01', NULL, '2020-08-20', 1, 'T200 CT1', 7, 7, 7, 7, 7, 4, 4, 4, 7, 7, 7, 7, 6),
+(42, '2020-07-24 14:53:01', '2020-07-24 14:53:01', NULL, '2020-08-20', 1, 'T300 CT1', 10, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6),
+(43, '2020-07-24 14:53:01', '2020-07-24 14:53:01', NULL, '2020-08-20', 1, 'T200 CT2', 8, 10, 10, 10, 10, 4, 4, 4, 10, 10, 10, 10, 6),
+(44, '2020-07-24 14:53:01', '2020-07-24 14:53:01', NULL, '2020-08-20', 1, 'T300 CT2', 5, 5, 5, 5, 5, 4, 4, 4, 5, 5, 5, 5, 6),
+(45, '2020-07-24 14:53:01', '2020-07-24 14:53:01', NULL, '2020-08-20', 1, 'T100 NT', 4, 4, 4, 4, 4, 0, 0, 0, 4, 4, 4, 4, 6),
+(46, '2020-07-24 14:53:01', '2020-07-24 14:53:01', NULL, '2020-08-20', 1, 'HCV WARA', 0, 0, 0, 0, 0, 6, 6, 6, 0, 0, 0, 0, 6);
 
 -- --------------------------------------------------------
 
@@ -1511,9 +1619,21 @@ ALTER TABLE `table_history_shiftoperations`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indeks untuk tabel `table_monitoringoperations`
+--
+ALTER TABLE `table_monitoringoperations`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indeks untuk tabel `table_quality`
 --
 ALTER TABLE `table_quality`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `table_romoperations`
+--
+ALTER TABLE `table_romoperations`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1526,6 +1646,12 @@ ALTER TABLE `table_settingunit`
 -- Indeks untuk tabel `table_shiftoperations`
 --
 ALTER TABLE `table_shiftoperations`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `table_shiftoperations_old`
+--
+ALTER TABLE `table_shiftoperations_old`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1584,13 +1710,25 @@ ALTER TABLE `table_equipment`
 -- AUTO_INCREMENT untuk tabel `table_history_shiftoperations`
 --
 ALTER TABLE `table_history_shiftoperations`
-  MODIFY `id` bigint(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `id` bigint(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+
+--
+-- AUTO_INCREMENT untuk tabel `table_monitoringoperations`
+--
+ALTER TABLE `table_monitoringoperations`
+  MODIFY `id` bigint(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT untuk tabel `table_quality`
 --
 ALTER TABLE `table_quality`
   MODIFY `id` bigint(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+
+--
+-- AUTO_INCREMENT untuk tabel `table_romoperations`
+--
+ALTER TABLE `table_romoperations`
+  MODIFY `id` bigint(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `table_settingunit`
@@ -1602,7 +1740,13 @@ ALTER TABLE `table_settingunit`
 -- AUTO_INCREMENT untuk tabel `table_shiftoperations`
 --
 ALTER TABLE `table_shiftoperations`
-  MODIFY `id` bigint(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id` bigint(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT untuk tabel `table_shiftoperations_old`
+--
+ALTER TABLE `table_shiftoperations_old`
+  MODIFY `id` bigint(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT untuk tabel `table_shiftos`

@@ -41,66 +41,35 @@
                 </thead>
                 <tbody>
                   <?php 
-                        $jam = 6;
 
-                        $label_js = '';
-                        $plan_jam = '';
-                        $actual_jam = '';
-                        $percent_jam = '';
+                  $no = 0;
+                  foreach ($rows as $row) {
+                    $no++;
+                    $a = $row['jam'];
+                    if ($a >= 24) $a = $a - 24;
 
-                        if ($shift == 2) {
-                          $jam = 18;
+                    $b = $a + 1;
+                    if ($b > 23) $b = ($b - 24);
+                    if ($a < 10) 
+                      $a = '0'.$a;
 
-                        }
+                    if ($b < 10) 
+                      $b = '0'.$b;
 
-                        $total_plan = array();
-                        $total_act = array();
-                        
-                        for ($a=$jam, $i = 1; $i <= 12; $i++, $a++) { 
-                          if ($a >= 24) {
-                            $a = $a - 24;
-                          }
-                          $b = $a + 1;
-                          if ($b > 23) {
-                            $b = ($b - 24);
-                          }
-                          if ($a < 10) {
-                            $a = '0'.$a;
-                          }
-                          if ($b < 10) {
-                            $b = '0'.$b;
-                          }
-                          if ($a == 7) {
-                            $c = $a . '-' . ($b) ;
-                          }else{
-                            $c = $a . '-' . ($b);
-                          }
+                    $c = $a . '-' . ($b) ;
 
-                          $total_plan[] = $data['jam_'.$i];
-                          $total_act[] = $data['actual_'.$i];
+                    $percent = $row['jam_'.$no] != 0 || $row['actual'] != 0? $row['actual']/$row['jam_'.$no]*100 : 0;
 
-                         
-
-                          $percent = $data['jam_'.$i] != 0 || $data['actual_'.$i] != 0? $data['actual_'.$i]/$data['jam_'.$i]*100 : 0;
-
-
-                          $label_js .= "'".$c ."'," ;
-                          $plan_jam .= $data['jam_'.$i]."," ;
-                          $actual_jam .= $data['actual_'.$i]."," ;
-                          $percent_jam .= number_format($percent,1)."," ;
-                  
-                  echo    '<tr>
-                              <td>'.$c.'</td>
-                              <td>'.$data['jam_'.$i].'</td>
-                              <td>'.$data['actual_'.$i].'</td>
-                              <td>'.number_format($percent, 1).' %</td>
-
-                              <td>
+                    echo '<tr>';
+                    echo '<td>'.$c.'</td>';
+                    echo '<td>'.$row['jam_'.$no].'</td>';
+                    echo '<td>'.$row['actual'] .'</td>';
+                    echo '<td>'.number_format($percent, 1).' %</td>';
+                     echo '<td>
                               <select class="form-control status-post" data-toggle="tooltip" data-placement="top" title="Click here to edit" data-shift="' . $shift . '" data-time="' . $a . '" data-date="' . $date . '">
                               <option value=""></option>';
-
                               foreach ($status_passing as $value) {
-                                if($value['name'] == $data['status_'.$i]) {
+                                if($value['name'] == $row['status']) {
                                   echo '<option value="'.$value['name'].'" selected>'.$value['name'].'</option>';
                                 } else {
                                   echo '<option value="'.$value['name'].'">'.$value['name'].'</option>';
@@ -108,25 +77,97 @@
                               }
 
                               echo '</select>
-                              </td>
-
-                              <td><input type="text" name="keterangan" class="form-control keterangan-post" data-shift="' . $shift . '" data-time="' . $a . '" data-date="' . $date . '" value="'.$data['keterangan_'.$i].'"/></td>
-                            </tr>';
+                              </td>';
+                              echo '<td><input type="text" name="keterangan" class="form-control keterangan-post" data-shift="' . $shift . '" data-time="' . $a . '" data-date="' . $date . '" value="'.$row['keterangan'].'"/></td>';
+                    echo '</tr>';
                   }
 
+                  //       $jam = 6;
 
-          $sum_plan = @array_sum($total_plan);
-          $sum_actual = @array_sum($total_act);
+                  //       $label_js = '';
+                  //       $plan_jam = '';
+                  //       $actual_jam = '';
+                  //       $percent_jam = '';
 
-          $sum_percent = $sum_plan != 0 || $sum_actual != 0? $sum_actual/$sum_plan*100 : 0;
+                  //       if ($shift == 2) {
+                  //         $jam = 18;
+
+                  //       }
+
+                  //       $total_plan = array();
+                  //       $total_act = array();
+                        
+                  //       for ($a=$jam, $i = 1; $i <= 12; $i++, $a++) { 
+                  //         if ($a >= 24) {
+                  //           $a = $a - 24;
+                  //         }
+                  //         $b = $a + 1;
+                  //         if ($b > 23) {
+                  //           $b = ($b - 24);
+                  //         }
+                  //         if ($a < 10) {
+                  //           $a = '0'.$a;
+                  //         }
+                  //         if ($b < 10) {
+                  //           $b = '0'.$b;
+                  //         }
+                  //         if ($a == 7) {
+                  //           $c = $a . '-' . ($b) ;
+                  //         }else{
+                  //           $c = $a . '-' . ($b);
+                  //         }
+
+                  //         $total_plan[] = $data['jam_'.$i];
+                  //         $total_act[] = $data['actual_'.$i];
+
+                         
+
+                  //         $percent = $data['jam_'.$i] != 0 || $data['actual_'.$i] != 0? $data['actual_'.$i]/$data['jam_'.$i]*100 : 0;
+
+
+                  //         $label_js .= "'".$c ."'," ;
+                  //         $plan_jam .= $data['jam_'.$i]."," ;
+                  //         $actual_jam .= $data['actual_'.$i]."," ;
+                  //         $percent_jam .= number_format($percent,1)."," ;
+                  
+                  //       echo    '<tr>
+                  //             <td>'.$c.'</td>
+                  //             <td>'.$data['jam_'.$i].'</td>
+                  //             <td>'.$data['actual_'.$i].'</td>
+                  //             <td>'.number_format($percent, 1).' %</td>
+
+                  //             <td>
+                  //             <select class="form-control status-post" data-toggle="tooltip" data-placement="top" title="Click here to edit" data-shift="' . $shift . '" data-time="' . $a . '" data-date="' . $date . '">
+                  //             <option value=""></option>';
+
+                  //             foreach ($status_passing as $value) {
+                  //               if($value['name'] == $data['status_'.$i]) {
+                  //                 echo '<option value="'.$value['name'].'" selected>'.$value['name'].'</option>';
+                  //               } else {
+                  //                 echo '<option value="'.$value['name'].'">'.$value['name'].'</option>';
+                  //               }
+                  //             }
+
+                  //             echo '</select>
+                  //             </td>
+
+                  //             <td><input type="text" name="keterangan" class="form-control keterangan-post" data-shift="' . $shift . '" data-time="' . $a . '" data-date="' . $date . '" value="'.$data['keterangan_'.$i].'"/></td>
+                  //           </tr>';
+                  // }
+
+
+          // $sum_plan = @array_sum($total_plan);
+          // $sum_actual = @array_sum($total_act);
+
+          // $sum_percent = $sum_plan != 0 || $sum_actual != 0? $sum_actual/$sum_plan*100 : 0;
 
                   ?>
                   <tr style="background-color: #74b9ff; font-weight: bolder;">
                     <td>Total</td>
-                    <td><?= $sum_plan;?></td>
-                    <td><?= $sum_actual;?></td>
+                    <td><?php //$sum_plan;?></td>
+                    <td><?php //$sum_actual;?></td>
                     <!-- <td> %</td> -->
-                    <td><?= number_format($sum_percent, 1);?> %</td>
+                    <td><?php //number_format($sum_percent, 1);?> %</td>
                   </tr>
                 </tbody>
               </table>
