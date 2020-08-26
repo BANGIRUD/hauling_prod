@@ -104,7 +104,7 @@
               <li <?php if($this->uri->segment(2) == 'index' || $this->uri->segment(2) == '') { echo' class="active"';} ?>><a href="<?php echo base_url('dash/index');?>"><i class="fa fa-desktop"></i>Monitoring Unit CSA </a></li>
               <li <?php if($this->uri->segment(2) == 'daily_monitoring_muatan') { echo' class="active"';} ?>><a href="<?php echo base_url('dash/daily_monitoring_muatan');?>"><i class="fa fa-desktop"></i>Monitoring Muatan</a></li>
               <li <?php if($this->uri->segment(2) == 'daily_control_passing') { echo' class="active"';} ?>><a href="<?php echo base_url('dash/daily_control_passing');?>"><i class="fa fa-desktop"></i>Quality Control Passing</a></li>           
-              <li <?php if($this->uri->segment(2) == 'dashboard_ach_passingunit') { echo' class="active"';} ?>><a href="<?php echo base_url('dash/dashboard_ach_passingunit');?>"><i class="fa fa-desktop"></i>Achievement Passing</a></li>
+              <li <?php if($this->uri->segment(2) == 'dashboard_ach_passingunit') { echo' class="active"';} ?>><a href="<?php echo base_url('dash/dashboard_ach_passingunit');?>"><i class="fa fa-pie-chart"></i>Achievement Passing</a></li>
             </ul>
         </li>
         <?php endif; ?>
@@ -138,8 +138,13 @@
             <i class="fa fa-cubes "></i> <span>Monitoring ROM</span>
           </a>
         </li>
+        <li class="header">REPORT</li>
+        <li <?php if($this->uri->segment(2) == 'report_rom') { echo' class="active"';} ?>>
+          <a href="<?php echo base_url('Dash/report_rom');?>">
+            <i class="fa fa-server"></i><span>Report ROM</span>
+          </a>
+        </li>
         <?php endif;?>
-        
         <?php if ($level != 'rom'): ?>
         <li class="header">EQUIPMENT</li>
         <?php endif;?>

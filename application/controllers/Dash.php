@@ -74,7 +74,7 @@ class Dash extends CI_Controller {
 		$this->load->view('framework/footer');	
 	}
 
-	public function daily_monitoring_operations($position = "K")
+	public function daily_monitoring_operations($position = "K", $by_area = "")
 	{
 		$by_level  = $this->session->userdata('level');
 		$result 			= get_date_shift();	
@@ -87,7 +87,7 @@ class Dash extends CI_Controller {
 
 		$this->load->model('Shift_operations', 'operations');
 		
-		$data = $this->operations->monitoring_shift_operations($position)->result_array();
+		$data = $this->operations->monitoring_shift_operations($position,$by_area)->result_array();
 		
 
 		$data 		= array (
@@ -96,7 +96,7 @@ class Dash extends CI_Controller {
 			'rom'				=> $rom,
 			'data'				=> $data,			
 			'area'				=> $area,
-			// 'by_area'			=> $by_area
+			'position'			=> $position
 		);
 
 		$this->load->view('framework/header', array('title' => 'Monitoring Post'));
@@ -325,5 +325,26 @@ class Dash extends CI_Controller {
 		$this->load->view('framework/sidebar');
 		$this->load->view('pages/dashboard_ach_passingunit',$data);
 		$this->load->view('framework/footer');
+	}
+
+	public function report_rom($by_rom='')
+	{
+		$result 			= get_date_shift();
+		$by_rom				= $by_rom == '' ?$this->session->userdata('rom') : $by_rom;
+		$rom	  			= $this->Crud->search('table_enum', array('type' => 'rom'))->result_array();
+
+		$this->load->model('Shift_operations', 'operations');
+		$data = $this->operations->report_rom_monitoring_shift_operations($by_rom)->result_array();
+
+		$data 		= array (
+			'rom'			=> $rom,
+			'data'			=> $data,
+		);
+
+		$this->load->view('framework/header', array('title' => 'Report Monitoring ROM'));
+		$this->load->view('framework/sidebar');
+		$this->load->view('pages/report_rom_monitoring',$data);
+		$this->load->view('framework/footer');
+
 	}
 }

@@ -19,17 +19,15 @@
         <div class="box box-primary">
           <div class="box-header with-border">
             <div class="row">
-              <?=$this->session->flashdata('msg');?>
-              <?=$this->session->flashdata('msg2');?>
               <?php if ($this->session->userdata('level') == 'administrator' || $this->session->userdata('level') == 'dispatcher'):?>
                <p style="padding: 0 15px">Click tombol untuk filter ROM:</p>
                 <?php $no=0;
-                echo '<a class="btn btn-app bg-maroon" href="'.base_url('dash/daily_monitoring_rom/').'"><i class="fa fa-list"></i>ALL</a>';
+                echo '<a class="btn btn-app bg-maroon" href="'.base_url('Dash/daily_rom_operations/').'"><i class="fa fa-list"></i>ALL</a>';
                 foreach ($rom as $value):$no++;
                   if ($no % 2 == 0) {
-                    echo '<a class="btn btn-app bg-olive" href="'.base_url('dash/daily_monitoring_rom/'.$value['id']).'"><i class="fa fa-inbox"></i>'.$value['name'].'</a>';
+                    echo '<a class="btn btn-app bg-olive" href="'.base_url('Dash/daily_rom_operations/'.$value['id']).'"><i class="fa fa-inbox"></i>'.$value['name'].'</a>';
                   }else{
-                    echo '<a class="btn btn-app bg-orange" href="'.base_url('dash/daily_monitoring_rom/'.$value['id']).'"><i class="fa fa-inbox"></i>'.$value['name'].'</a>';
+                    echo '<a class="btn btn-app bg-orange" href="'.base_url('Dash/daily_rom_operations/'.$value['id']).'"><i class="fa fa-inbox"></i>'.$value['name'].'</a>';
                   }
                 ?>
                 <?php endforeach;?>
