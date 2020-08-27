@@ -58,7 +58,7 @@ class Shift_operations extends CI_Model
 
 	public function rom_monitoring_shift_operations($by_rom)
 	{
-		$result 		= get_date_shift();	
+		$result 		= get_date_shift();
 		$this->db->select('table_shiftoperations.*, cargo.description as color, rom.name as rom_name, a.time_in, a.time_out');
 		$this->db->from('table_shiftoperations');
 		$this->db->join('table_enum as cargo','table_shiftoperations.cargo = cargo.name','LEFT');

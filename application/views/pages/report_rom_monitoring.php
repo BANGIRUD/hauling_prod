@@ -18,7 +18,7 @@
       <div class="col-md-12">
         <div class="box box-primary">
           <div class="box-header with-border"> 
-              <p style="padding: 0 15px">Click tombol untuk filter Report ROM:</p>
+              <h4><p style="padding: 0 15px">Report ROM:</p></h4>
               <?php $no=0;
                 echo '<a class="btn btn-app bg-maroon" href="'.base_url('Dash/report_rom/').'"><i class="fa fa-list"></i>ALL</a>';
                 echo '<a class="btn btn-app bg-green pull-right" href="'.base_url('Dash/daily_rom_operations/').'"><i class="fa fa-file-excel-o"></i>Export to Excel</a>';

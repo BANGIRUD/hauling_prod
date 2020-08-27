@@ -105,7 +105,7 @@ class Dash extends CI_Controller {
 		$this->load->view('framework/footer');
 	}
 
-	public function daily_rom_operations()
+	public function daily_rom_operations($by_rom = "")
 	{
 		$result 			= get_date_shift();
 		
@@ -114,7 +114,7 @@ class Dash extends CI_Controller {
 		$rom	  			= $this->Crud->search('table_enum', array('type' => 'rom'))->result_array();
 
 		$this->load->model('Shift_operations', 'operations');
-		$data = $this->operations->rom_monitoring_shift_operations($this->by_rom)->result_array();
+		$data = $this->operations->rom_monitoring_shift_operations($by_rom)->result_array();
 
 		$data 		= array (
 			'dateid' 			=> $result['date'],
@@ -327,7 +327,7 @@ class Dash extends CI_Controller {
 		$this->load->view('framework/footer');
 	}
 
-	public function report_rom($by_rom='')
+	public function report_rom($by_rom="")
 	{
 		$result 			= get_date_shift();
 		$by_rom				= $by_rom == '' ?$this->session->userdata('rom') : $by_rom;
