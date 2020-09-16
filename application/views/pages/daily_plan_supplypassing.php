@@ -29,6 +29,7 @@
                   <tr>
                     <th style="text-align:center;">No</th>
                     <th style="text-align:center;">Raw Material ROM</th>
+                    <th style="text-align:center;">ROM</th>
                     <?php
                       for ($a=$hour ,$i=0; $i < 12; $i++, $a++) { 
                         if ($a >= 24) {
@@ -51,6 +52,7 @@
                   <tr>
                     <td style="text-align:center;"><?= $no;?></td>
                     <td style="text-align:center;"><?= $data['material'];?></td>
+                     <td style="text-align:center;"><?= $data['rom_spp'];?></td>
                       <?php
                         for ($i=1; $i <= 12 ; $i++) { 
                           $total[$i][] = $data['jam_'.$i];
@@ -60,7 +62,7 @@
                   </tr>
                   <?php endforeach;?>
                   <tr style="background-color: #2e86de ; color: #ffffff ; font-weight: bolder">
-                    <td colspan="2" style="text-align: center;">Total</td>
+                    <td colspan="3" style="text-align: center;">Total</td>
                     <?php
                     // print_r($total);
                         for ($i=1; $i <= 12 ; $i++) { 

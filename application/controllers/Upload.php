@@ -306,26 +306,28 @@ class Upload extends CI_Controller {
 				$date 				= date("Y-m-d", strtotime( trim( $datas->val($i, 2) ) ));
 				$shift 				= trim( $datas->val($i, 3) );
 				$material 			= trim( $datas->val($i, 4) );
-				$jam_1 				= trim( $datas->val($i, 5) );
-				$jam_2 				= trim( $datas->val($i, 6) );
-				$jam_3 				= trim( $datas->val($i, 7) );
-				$jam_4 				= trim( $datas->val($i, 8) );
-				$jam_5 				= trim( $datas->val($i, 9) );
-				$jam_6 				= trim( $datas->val($i, 10) );
-				$jam_7 				= trim( $datas->val($i, 11) );
-				$jam_8 				= trim( $datas->val($i, 12) );
-				$jam_9 				= trim( $datas->val($i, 13) );
-				$jam_10				= trim( $datas->val($i, 14) );
-				$jam_11 			= trim( $datas->val($i, 15) );
-				$jam_12 			= trim( $datas->val($i, 16) );
+				$rom				= trim( $datas->val($i, 5) );
+				$jam_1 				= trim( $datas->val($i, 6) );
+				$jam_2 				= trim( $datas->val($i, 7) );
+				$jam_3 				= trim( $datas->val($i, 8) );
+				$jam_4 				= trim( $datas->val($i, 9) );
+				$jam_5 				= trim( $datas->val($i, 10) );
+				$jam_6 				= trim( $datas->val($i, 11) );
+				$jam_7 				= trim( $datas->val($i, 12) );
+				$jam_8 				= trim( $datas->val($i, 13) );
+				$jam_9 				= trim( $datas->val($i, 14) );
+				$jam_10				= trim( $datas->val($i, 15) );
+				$jam_11 			= trim( $datas->val($i, 16) );
+				$jam_12 			= trim( $datas->val($i, 17) );
 				
 
-				if ($material != '') {
+				if ($material != '' && $rom != '') {
 
 					$src  	= $this->Crud->search('table_supplaypassing', array(
 						'date'			=> $date, 
 						'shift'			=> $shift, 
-						'material'			=> $material,
+						'material'		=> $material,
+						'rom'			=> $rom,
 						'deleted_at' 	=> NULL));
 					if ($src->num_rows() > 0 ) {
 						$x 			= $src->row_array();
@@ -353,6 +355,7 @@ class Upload extends CI_Controller {
 										'date'			=> $date,
 										'shift'			=> $shift,
 										'material'		=> $material,
+										'rom'			=> $rom,
 										'jam_1'			=> $jam_1,
 										'jam_2'			=> $jam_2,
 										'jam_3'			=> $jam_3,
@@ -433,6 +436,85 @@ class Upload extends CI_Controller {
 				$unit 				= trim( $datas->val($i, 10) );
 				if ($unit) {
 					$this->import->import_setting_daily_register($date,$unit,'floating','',$by_user);
+				}
+			}
+
+			$this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissible fade show" role="alert">
+	            <span class="badge badge-pill badge-success">Excellent</span> Now you have new setting maintenance!
+	            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	                <span aria-hidden="true">&times;</span>
+	            </button>
+	        </div>');
+
+			// unlink($uploader['full_path']);
+		}
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
+
+	public function daily_shift_operations()
+	{
+		$by_user 	= $this->session->userdata('id');
+
+		require_once(APPPATH.'libraries/excel_reader.php');
+		$config['upload_path']          = './___/uploads';
+		$config['allowed_types']        = 'xls';
+
+		$this->load->library('upload', $config);
+		$result = get_date_shift();
+			
+		if ( ! $this->upload->do_upload('file')){
+			$this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <span class="badge badge-pill badge-danger">Error</span> Format excel denied!. Please change to Excel 2003 (.xls).
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>');
+		}else{
+			$uploader = $this->upload->data();
+			$datas = new Spreadsheet_Excel_Reader($uploader['full_path']);
+			$baris = $datas->rowcount($sheet_index=0);
+			for ($i=6; $i <= $baris; $i++) {				
+				$date 				= date("Y-m-d", strtotime( trim( $datas->val($i, 2) ) ));
+				$code_number		= trim( $datas->val($i, 3) );
+				$no_unit			= trim( $datas->val($i, 4) );
+				$no_id 				= trim( $datas->val($i, 5) );
+				$time 				= trim( $datas->val($i, 6) );
+				$csa 				= trim( $datas->val($i, 7) );
+				
+
+				if ($code_number != '') {
+
+					$src  	= $this->Crud->search('table_shiftoperations', array(
+						'date'			=> $date, 
+						'code_number'	=> $code_number, 
+						'deleted_at' 	=> NULL));
+					if ($src->num_rows() > 0 ) {
+						$x 			= $src->row_array();
+						$data 		= array(
+										'updated_at'	=> date('Y-m-d H:i:s'),
+										'code_number'	=> $code_number,
+										'no_unit'		=> $no_unit,
+										'no_id'			=> $no_id,
+										'time'			=> $time,
+										'csa'			=> $csa,
+										'by_user'		=> $by_user
+									);
+									$this->Crud->update('table_shiftos', array('id' => $x['id']), $data);
+					} else {						
+						$data 		= array(
+										'created_at'	=> date('Y-m-d H:i:s'), 
+										'updated_at'	=> date('Y-m-d H:i:s'),
+										'date'			=> $date, 
+										'code_number'	=> $code_number,
+										'no_unit'		=> $no_unit,
+										'no_id'			=> $no_id,
+										'time'			=> $time,
+										'csa'			=> $csa,
+										'by_user'		=> $by_user
+									);
+									$this->Crud->insert('table_shiftos', $data);
+					}
 				}
 			}
 

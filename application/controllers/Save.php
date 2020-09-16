@@ -16,6 +16,7 @@ class Save extends CI_Controller {
 		// Variable
 		$date 				= date('Y-m-d', strtotime($result['date']));
 		$shift 				= $result['shift'];
+		$time 				= $this->input->post('time');
 		$id_unit 			= $this->input->post('id_unit');
 		$position 			= "K";
 		$cargo_muatan 		= $this->input->post('cargo_muatan');
@@ -33,6 +34,7 @@ class Save extends CI_Controller {
 					'updated_at' 		=> date('Y-m-d H:i:s'),
 					'deleted_at' 		=> NULL,
 					'date' 				=> $date,
+					'time'				=> $time,
 					'shift' 			=> $shift,
 					'cn_unit' 			=> $id_unit,
 					'position' 			=> $position,
@@ -62,6 +64,55 @@ class Save extends CI_Controller {
         </div>');
 		}
 		redirect($_SERVER['HTTP_REFERER']);
+	}
+
+	public function bulk_shift_operation()
+	{
+		$result 	= get_date_shift();	
+		print_r($_POST);
+		$date 				= date('Y-m-d', strtotime($result['date']));
+		$shift 				= $result['shift'];
+		$time 				= $this->input->post('time');
+		$id_unit 			= $this->input->post('id_unit');
+		$position 			= "K";
+		$cargo_muatan 		= $this->input->post('cargo_muatan');
+		$to_rom				= $this->input->post('rom');
+		$remark 			= "";
+		$i = 0;
+		$this->form_validation->set_rules('id_unit[]','id_unit','required');
+		if( $this->form_validation->run() != false ) {	
+			foreach ($id_unit as $value) {
+				$this->db->insert('table_shiftoperations', array(
+					'created_at' 		=> date('Y-m-d H:i:s'),
+					'updated_at' 		=> date('Y-m-d H:i:s'),
+					'deleted_at' 		=> NULL,
+					'date' 				=> $date,
+					'time'				=> $time[$i],
+					'shift' 			=> $shift,
+					'cn_unit' 			=> $value,
+					'position' 			=> $position,
+					'cargo' 			=> $cargo_muatan[$i],
+					'remark'			=> $remark,
+					'to_rom'			=> $to_rom[$i],
+					'by_area'			=> $this->by_area,
+					'by_user'			=> $this->by_user
+					));
+				$i++;
+			}			
+			$this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissible" role="alert">
+	        <span class="badge badge-pill badge-success">Success</span> <b>Data</b> has been added.
+	        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	        <span aria-hidden="true">&times;</span>
+	        </button></div>');
+		} else {
+			$this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissible" role="alert">
+            <span class="badge badge-pill badge-danger">Error</span> ' . validation_errors() . '
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span></button></div>');
+		 }
+		 redirect($_SERVER['HTTP_REFERER']);
+		
+		// redirect(base_url('Dash/daily_record_production'));
 	}
 
 	public function monitoring_operations() {
@@ -174,6 +225,58 @@ class Save extends CI_Controller {
 		      </div>');
 		}
 
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
+	public function people() {
+		$username = trim($this->input->post('username'));
+		$name = trim($this->input->post('full_name'));
+		$password = password_hash(trim($this->input->post('pass')), PASSWORD_DEFAULT);
+		$description = trim($this->input->post('description'));
+		$level = trim($this->input->post('level'));
+		$src = $this->Crud->search('table_users', array('username' => $username))->num_rows();
+		if ( preg_match('/[^A-Za-z0-9]/',$username)) {
+			$this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissible fade-alert">
+	                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+	                <h4><i class="icon fa fa-ban"></i> Alert!</h4>
+	                Insert error, username only allowed number and alfabet!
+	              </div>');
+		} else {
+			if ($src > 0) {
+				$this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissible fade-alert">
+	                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+	                <h4><i class="icon fa fa-ban"></i> Alert!</h4>
+	                Username <b>"' . $username . '"</b> is already on database!
+	              </div>');
+			} else {
+				$src = $this->Crud->search('table_enum', array('id' => $level, 'type' => 'level'))->num_rows();
+				if ($src > 0) {
+					$data = array(
+						'created_at'	=> date('Y-m-d H:i:s'),
+						'updated_at'	=> date('Y-m-d H:i:s'),
+						'nrp'			=> $username,
+						'username' 		=> $username,
+						'full_name'		=> $name,
+						'password' 		=> $password,
+						'description' 	=> $description,
+						'level' 		=> $level,
+					);
+					$this->Crud->insert('table_users', $data);
+					$this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissible fade-alert">
+		                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+		                <h4><i class="icon fa fa-check"></i> Success!</h4>
+		                <b>"' . $name . '"</b> is added on database!
+		              </div>');
+				} else {
+					$this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissible fade-alert">
+	                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+	                <h4><i class="icon fa fa-ban"></i> Alert!</h4>
+	                Insert error, please check your data again!
+	              </div>');				
+				}
+			}
+		}
+		
 		redirect($_SERVER['HTTP_REFERER']);
 	}
 }

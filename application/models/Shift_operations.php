@@ -58,7 +58,7 @@ class Shift_operations extends CI_Model
 
 	public function rom_monitoring_shift_operations($by_rom)
 	{
-		$result 		= get_date_shift();
+		$result 		= get_date_shift();	
 		$this->db->select('table_shiftoperations.*, cargo.description as color, rom.name as rom_name, a.time_in, a.time_out');
 		$this->db->from('table_shiftoperations');
 		$this->db->join('table_enum as cargo','table_shiftoperations.cargo = cargo.name','LEFT');
@@ -66,6 +66,9 @@ class Shift_operations extends CI_Model
 		$this->db->join('(SELECT table_romoperations.id, time_in, time_out, ref_id FROM (SELECT MAX(id) as id FROM table_romoperations WHERE deleted_at IS NULL GROUP BY ref_id) as a
 			LEFT JOIN table_romoperations ON table_romoperations.id = a.id
 			WHERE deleted_at IS NULL) as a','table_shiftoperations.id = a.ref_id ','LEFT');
+		if ($by_rom) {
+			$this->db->where('table_shiftoperations.to_rom', $by_rom);
+		}
 		$this->db->where('table_shiftoperations.deleted_at', NULL);
 		$this->db->where('table_shiftoperations.date',$result['date']);
 		$this->db->where('table_shiftoperations.position', 'K');

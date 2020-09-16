@@ -18,14 +18,23 @@
         <div class="box box-primary">
           <div class="box-header with-border">
             <div class="row">
-              <div class="col-xs-6">
-                <button type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="Add Unit" id="add-unit">
-                  <i class="fa fa-plus"></i> Add Unit
+              <div class="col-xs-12">
+                <button class="btn btn-primary  " data-toggle="modal" id="add-unit">
+                  <i class="fa fa-plus"> Add Unit</i>
                 </button>
-                <!-- <a href="" class="btn btn-success">
+                <a href="<?php echo base_url('Dash/daily_multiple_record_production');?>" class="btn btn-success">
                   <i class="fa fa-list-ul"> Add Multiple Unit</i>
-                </a> -->
-              </div>
+                </a>
+                <!-- <button type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="Add Unit" id="add-unit">
+                  <i class="fa fa-plus"></i> Add Unit
+                </button> -->
+                <!-- <button href="#" class="btn btn-primary  " data-toggle="modal" data-target="#upload-addunit">
+                  <i class="fa fa-upload"> Upload Add Unit</i>
+                </button> 
+                <button href="#" class="btn btn-warning pull-right" data-toggle="modal" data-target="#upload-validateunit">
+                  <i class="fa fa-upload"> Upload Validate Unit</i>
+                </button>  -->
+              </div>  
             </div>
           </div>
         </div>
@@ -67,7 +76,7 @@
                               <td>'.$value['cn_unit'].'</td>
                               <td style="background-color:'. $color[0] . ';color:'.@$color[1].'" >'.$value['cargo'].'</td>  
                               <td>'.$value['rom_name'].'</td>
-                              <td>'. date('Y-m-d H:i',strtotime($value['created_at'])).'</td>';
+                              <td>'. date('Y-m-d H:i',strtotime($value['time'])).'</td>';
                         echo '<td nowrap>';
 
                         // $btn_disabled = $no == 1 ? ' disabled' : '';
@@ -106,11 +115,20 @@
         <div class="modal-body ">
           <div class="form-group">
             <div class="form-body">
-              <div class="col-xs-4">
+              <div class="col-xs-3">
+                <label>Time</label> 
+                  <div class="input-group">
+                    <input type="text" style="background-color: #e9ecef" class="form-control timepicker" id="input-time"  name="time" value="">
+                      <div class="input-group-addon">
+                        <i class="fa fa-clock-o"></i>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-xs-3">
                 <label>ID Unit</label> 
                 <input class="form-control" type="text" name="id_unit" id="id_unit" placeholder="Enter Unit ID">
               </div>
-              <div class="col-xs-4">
+              <div class="col-xs-3">
                 <label>Cargo Muatan</label> 
                   <select class="form-control" name="cargo_muatan" id="cargo_muatan">
                     <?php foreach ($cargo_muatan as $value) {
@@ -118,7 +136,7 @@
                     }?>
                   </select>                 
               </div>
-              <div class="col-xs-4">
+              <div class="col-xs-3">
                 <label>ROM</label> 
                   <select class="form-control" name="rom">
                     <?php foreach ($rom as $value) {
@@ -159,6 +177,56 @@
   </div>
 </div>
 
+<div class="modal fade" id="upload-addunit" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form method="post" enctype="multipart/form-data" action="<?php echo base_url('Upload/');?>">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span></button>
+              <h4 class="modal-title">Import Data With Excel</h4>
+        </div>
+        <div class="modal-body">
+          <div class="custom-file">
+            <input type="file" class="custom-file-input" id="customFile" name="file">
+              <label class="custom-file-label" for="customFile">Choose file</label>
+            <div class="invalid-feedback">Only file .xls (Microsoft Excel 2003). <a href="<?php echo base_url('example_upload_add_unit.xls');?>">Download Example</a></div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary" name="adds">Import Now</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="upload-validateunit" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form method="post" enctype="multipart/form-data" action="<?php echo base_url('Upload/');?>">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span></button>
+              <h4 class="modal-title">Import Data With Excel</h4>
+        </div>
+        <div class="modal-body">
+          <div class="custom-file">
+            <input type="file" class="custom-file-input" id="customFile" name="file">
+              <label class="custom-file-label" for="customFile">Choose file</label>
+            <div class="invalid-feedback">Only file .xls (Microsoft Excel 2003). <a href="<?php echo base_url('.xls');?>">Download Example</a></div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary" name="adds">Import Now</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 <script type="text/javascript">
   $(function () {
     $('#example1').DataTable({
@@ -178,12 +246,10 @@
     var d = new Date();
     var H = (d.getHours() < 10) ? '0' + d.getHours() : d.getHours();
     var m = (d.getMinutes() < 10) ? '0' + d.getMinutes() : d.getMinutes();
-      $("#input-time-in").val(H+':'+m);
-      $("#input-time-out").val(H+':'+m);
-      $("#input-time-passing").val(H);
+      $("#input-time").val(H+':'+m);
 
       $("#modal-addunit").modal('toggle');
-  });
+  }); 
 
   $('.datepicker').datepicker({
     autoclose: true

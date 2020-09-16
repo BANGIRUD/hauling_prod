@@ -72,4 +72,40 @@ class Api extends CI_Controller {
 		echo json_encode($response);
 	}
 
+	public function people($id ='') {
+		$sql = $this->Crud->search('table_users', array('id' => $id))->result_array();
+		if(count($sql) > 0 ){
+			$response = array();
+			$response["data"] = array();
+			foreach ($sql as $x) {
+				$h['id'] = $x["id"];
+				$h['nrp'] = $x["nrp"];
+				$h['username'] = $x["username"];
+				$h['full_name'] = $x["full_name"];
+				$h['description'] = $x["description"];
+				$h['level'] = $x["level"];
+				$h['last_login'] = $x['last_login'];
+				array_push($response["data"], $h);
+			}
+		}else {
+			$response["data"]="empty";  
+		}
+		echo json_encode($response);
+	}
+
+	public function setting_updated() {
+		$data = $this->Crud->sql_query("SELECT `date` FROM `shift_ritase` ORDER BY `date` DESC LIMIT 1");
+		$response = array();
+			if($data->num_rows() > 0 ){
+				$response["data"] 	= array();
+				foreach ($data->result_array() as $x) {
+					$h['date'] 			= $x['date'];
+				array_push($response["data"], $h);
+				}
+			}else {
+				$response["data"]="empty";  
+			}
+		echo json_encode($response);
+	}
+
 }

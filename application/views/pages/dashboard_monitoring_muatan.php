@@ -1,10 +1,48 @@
 <div class="content-wrapper"><!-- Content Header (Page header) -->
   	<section class="content-header">
-    	<h1>Monitoring Unit Muatan<small></small></h1>
+    	<h1>Monitoring Unit Muatan <?=get_enum($this->session->userdata('area'))?><small></small></h1>
     		<ol class="breadcrumb">
       			<li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-      			<li class="active">Monitoring Unit Muatan</li>
-    		</ol>
+      			<li class="active">Monitoring Unit Muatan <?=get_enum($this->session->userdata('area'))?></li>
+    		</ol></br>
+    	<div class="row">
+    		<div class="col-md-2">
+    			<div class="form-group">
+    				<label>Area :</label>
+    				<select class="form-control" name="pos" id="pos">
+                    <?php foreach ($pos as $key) {
+                      echo '<option value="'.$key['id'].'">'.$key['name'].' </option>';
+                    }?>
+                  </select>
+    			</div>
+    		</div>
+    		<div class="col-md-2">
+    			<div class="form-group">
+    				<label>Date :</label>
+					<div class="input-group date">
+                      <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                      <input  type="text" name="date" class="form-control datepicker" value=" <?= date('m/d/Y');?>">
+                    </div>
+    			</div>
+    		</div>
+    		<div class="col-md-2">
+    			<div class="form-group">
+    				<label>Shift :</label>
+					<select class="form-control" name="shift_code" id="shift_code">
+                    <?php foreach ($shift_code as $key) {
+                      echo '<option value="'.$key['code'].'">'.$key['code'].' </option>';
+                    }?>
+                  </select>
+    			</div>
+    		</div>
+    		<div class="col-md-4">
+    			<div class="form-group">
+    				<label>&nbsp;</label></br>
+    				<button type="button" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
+    				<a href="#" class="btn btn-success"><i class="fa fa-file-excel-o"></i> Export</a>
+    			</div>
+    		</div>
+    	</div>
   	</section>
   	<section class="content"><!-- Main content -->
   		<div class="row">
@@ -83,3 +121,9 @@
 		</div> 
   	</section>
 </div>
+
+<script type="text/javascript">
+	$('.datepicker').datepicker({
+		autoclose: true
+	});
+</script>

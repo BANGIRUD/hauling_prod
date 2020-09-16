@@ -97,17 +97,37 @@
         <?php endif; ?>
 
         <?php if ($level != 'rom'): ?>
-        <li class="treeview <?php if($this->uri->segment(2) == 'index' || $this->uri->segment(2) == 'daily_monitoring_muatan' || $this->uri->segment(2) == 'daily_control_passing'||$this->uri->segment(2) == 'dashboard_ach_passingunit'||$this->uri->segment(2) == '') { echo ' active';}?>">
+        <li class="treeview <?php if($this->uri->segment(2) == 'index' || $this->uri->segment(2) == '') { echo ' active';}?>">
           <a href="#"><i class="fa fa-dashboard"></i> <span>Dashboard</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
           </a>
             <ul class="treeview-menu">
-              <li <?php if($this->uri->segment(2) == 'index' || $this->uri->segment(2) == '') { echo' class="active"';} ?>><a href="<?php echo base_url('dash/index');?>"><i class="fa fa-desktop"></i>Monitoring Unit CSA </a></li>
-              <li <?php if($this->uri->segment(2) == 'daily_monitoring_muatan') { echo' class="active"';} ?>><a href="<?php echo base_url('dash/daily_monitoring_muatan');?>"><i class="fa fa-desktop"></i>Monitoring Muatan</a></li>
-              <li <?php if($this->uri->segment(2) == 'daily_control_passing') { echo' class="active"';} ?>><a href="<?php echo base_url('dash/daily_control_passing');?>"><i class="fa fa-desktop"></i>Quality Control Passing</a></li>           
-              <li <?php if($this->uri->segment(2) == 'dashboard_ach_passingunit') { echo' class="active"';} ?>><a href="<?php echo base_url('dash/dashboard_ach_passingunit');?>"><i class="fa fa-pie-chart"></i>Achievement Passing</a></li>
+              <li <?php if($this->uri->segment(2) == 'index' || $this->uri->segment(2) == '') { echo' class="active"';} ?>><a href="<?php echo base_url('dash/index');?>"><i class="fa fa-circle-o"></i>Monitoring Unit CSA </a></li>
             </ul>
         </li>
         <?php endif; ?>
+
+        <?php if ($area != '12'): ?>
+        <li class="header">DASHBOARD KM 34 & KM 65</li>
+        <li class="treeview <?php if ($this->uri->segment(2) == 'dashboard_monitoring_muatan' || $this->uri->segment(2) == 'dashboard_quality_passing'||$this->uri->segment(2) == 'dashboard_ach_passingunit') { echo ' active';}?>">
+          <a href="#"><i class="fa fa-dashboard"></i> <span>Monitoring</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+          </a>
+            <ul class="treeview-menu">
+              <li <?php if($this->uri->segment(2) == 'dashboard_monitoring_muatan') { echo' class="active"';} ?>><a href="<?php echo base_url('dash/dashboard_monitoring_muatan');?>"><i class="fa fa-circle-o"></i>Monitoring Muatan</a></li>
+              <li <?php if($this->uri->segment(2) == 'dashboard_quality_passing') { echo' class="active"';} ?>><a href="<?php echo base_url('dash/dashboard_quality_passing');?>"><i class="fa fa-circle-o"></i>Quality Control Passing</a></li>           
+              <li <?php if($this->uri->segment(2) == 'dashboard_ach_passingunit') { echo' class="active"';} ?>><a href="<?php echo base_url('dash/dashboard_ach_passingunit');?>"><i class="fa fa-circle-o"></i>Achievement Passing</a></li>
+            </ul>
+        </li>
+        <?php endif; ?>
+        
+        <li class="header">DASHBOARD KM 67</li>
+        <li class="treeview <?php if($this->uri->segment(2) == 'dashboard_rtk_rom' || $this->uri->segment(2) == 'dashboard_ach_seamseries') { echo ' active';}?>">
+          <a href="#"><i class="fa fa-dashboard"></i> <span>Monitoring</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+          </a>
+            <ul class="treeview-menu">
+              <li <?php if($this->uri->segment(2) == 'dashboard_ach_seamseries') { echo' class="active"';} ?>><a href="<?php echo base_url('dash/dashboard_ach_seamseries');?>"><i class="fa fa-circle-o"></i>Achievement Seam Series</a></li>           
+              <li <?php if($this->uri->segment(2) == 'dashboard_rtk_rom') { echo' class="active"';} ?>><a href="<?php echo base_url('dash/dashboard_rtk_rom');?>"><i class="fa fa-circle-o"></i>RTK ROM</a></li>
+            </ul>
+        </li>
 
         <?php if ($level != 'rom' && $level != 'checker'): ?>
         <li class="header">INPUT</li>
@@ -119,20 +139,32 @@
         </li>
         <?php endif;?>
 
-        <li class="header">VIEW</li>
+        <li class="header">VIEW KM 34 & KM 65</li>
 
         <?php if ($level != 'rom'): ?>
-        <li class="treeview <?php if($this->uri->segment(2) == 'daily_monitoring_operations') { echo ' active';}?>">
-          <a href="#"><i class="fa fa-video-camera"></i> <span>Monitoring Post</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+        <li class="treeview <?php if($this->uri->segment(2) == 'daily_monitoring_operations' || $this->uri->segment(2) == 'daily_monitoring_operations_standby') { echo ' active';}?>">
+          <a href="#"><i class="fa fa-video-camera"></i> <span>Monitoring Pos</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
           </a>
           <ul class="treeview-menu">
             <li <?php if($this->uri->segment(2) == 'daily_monitoring_operations' && $this->uri->segment(3) == 'M') { echo' class="active"';} ?>><a href="<?php echo base_url('dash/daily_monitoring_operations/M');?>"><i class="fa fa-circle-o"></i>Muatan </a></li>
-            <li <?php if($this->uri->segment(2) == 'daily_monitoring_operations' && $this->uri->segment(3) == 'K') { echo' class="active"';} ?>><a href="<?php echo base_url('dash/daily_monitoring_operations/K');?>"><i class="fa fa-circle-o"></i>Kosongan</a></li>
+            <!-- <li <?php if($this->uri->segment(2) == 'daily_monitoring_operations' && $this->uri->segment(3) == 'K') { echo' class="active"';} ?>><a href="<?php echo base_url('dash/daily_monitoring_operations/K');?>"><i class="fa fa-circle-o"></i>Kosongan</a></li> -->
+            <li <?php if($this->uri->segment(2) == 'daily_monitoring_operations_standby') { echo' class="active"';} ?>><a href="<?php echo base_url('dash/daily_monitoring_operations_standby');?>"><i class="fa fa-circle-o"></i>Standby</a></li>
           </ul>
         </li>
         <?php endif;?>
 
+        <li class="header">VIEW KM 69</li>
+        <li class="treeview <?php if($this->uri->segment(2) == 'daily_monitoring_operations_69') { echo ' active';}?>">
+          <a href="#"><i class="fa fa-video-camera"></i> <span>Monitoring Pos</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+          </a>
+          <ul class="treeview-menu">
+            <li <?php if($this->uri->segment(2) == 'daily_monitoring_operations_69' && $this->uri->segment(3) == 'M') { echo' class="active"';} ?>><a href="<?php echo base_url('dash/daily_monitoring_operations_69/');?>"><i class="fa fa-circle-o"></i>Muatan </a></li>
+            <li <?php if($this->uri->segment(2) == 'daily_monitoring_operations_69' && $this->uri->segment(3) == 'K') { echo' class="active"';} ?>><a href="<?php echo base_url('dash/daily_monitoring_operations_69/K');?>"><i class="fa fa-circle-o"></i>Kosongan</a></li>
+          </ul>
+        </li>
+
         <?php if ($level != 'checker'): ?>
+        <li class="header">VIEW ROM</li>
         <li <?php if($this->uri->segment(2) == 'daily_rom_operations') { echo' class="active"';} ?>>
           <a href="<?php echo base_url('Dash/daily_rom_operations');?>">
             <i class="fa fa-cubes "></i> <span>Monitoring ROM</span>
@@ -193,7 +225,8 @@
         <?php endif;?>
 
         <li class="header">ACCOUNTS</li>
-        <li><a href="<?php echo base_url('Dash/profile');?>"><i class="fa fa-user"></i> <span>Profile</span></a></li>
+        <li <?php if($this->uri->segment(2) == 'user') { echo' class="active"';} ?>><a href="<?php echo base_url('Dash/user');?>"><i class="fa fa-user-plus"></i> <span>Users</span></a></li>
+        <li <?php if($this->uri->segment(2) == 'profile') { echo' class="active"';} ?>><a href="<?php echo base_url('Dash/profile');?>"><i class="fa fa-user"></i> <span>Profile</span></a></li>
         <li><a href="<?php echo base_url('Auth/logout');?>"><i class="fa fa-sign-out"></i> <span>Logout</span></a></li>
         </ul>
       </section>

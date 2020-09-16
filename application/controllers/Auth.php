@@ -59,6 +59,7 @@ class Auth extends CI_Controller {
 				return false;
 			}
 			if (password_verify($password, $data['password'])) {
+				$this->Crud->update('table_users', array('username' => $username), array('last_login' => date('Y-m-d H:i:s', strtotime('+ 1 minutes'))));
 				$session_data = array(
 					'id' 				=> $data['id'],
 					'username' 			=> $data['username'], 

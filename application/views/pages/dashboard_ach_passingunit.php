@@ -1,27 +1,55 @@
 <script src="<?php echo base_url('___/bower_components/chart.js/Chart.min.js');?>"></script>
 
 <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        Dashboard
-        <small>Control panel</small>
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-        <li class="active">Achievement Passing</li>
-      </ol>
-    </section>
-    <section class="content">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>
+      Dashboard
+      <small>Achievement Passing</small>
+    </h1>
+    <ol class="breadcrumb">
+      <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+      <li class="active">Achievement Passing</li>
+    </ol></br>
       <div class="row">
-        <div class="col-md-12">
-          <div class="box box-primary">
-            <div class="box-header with-border">
-              <h3 style="text-align: center">Achievement Passing KM 34</h3>
-            </div>
+        <div class="col-md-2">
+          <div class="form-group">
+            <label>Select Date :</label>
+          <div class="input-group date">
+                      <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                      <input  type="text" name="date" class="form-control datepicker" value=" <?= date('m/d/Y');?>">
+                    </div>
           </div>
         </div>
-        <div class="col-md-12">
+        <div class="col-md-2">
+          <div class="form-group">
+            <label>Shift :</label>
+          <select class="form-control" name="shift_code" id="shift_code">
+                    <?php foreach ($shift_code as $key) {
+                      echo '<option value="'.$key['code'].'">'.$key['code'].' </option>';
+                    }?>
+                  </select>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>&nbsp;</label></br>
+            <button type="button" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
+            <a href="#" class="btn btn-success"><i class="fa fa-file-excel-o"></i> Export</a>
+          </div>
+        </div>
+      </div>
+  </section>
+  <section class="content">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="box box-primary">
+          <div class="box-header with-border">
+            <h3 style="text-align: center">Achievement Passing KM 34</h3>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
         <div class="box ">
           <div class="box-body">  
             <div class="table-responsive">
@@ -41,155 +69,118 @@
                 </thead>
                 <tbody>
                   <?php 
-
-                  $no = 0;
-                  foreach ($rows as $row) {
+                    $no = 0;                    
+                    $label_js = '';
+                    $plan_jam = '';
+                    $actual_jam = '';
+                    $percent_jam = '';
+                    $sum_plan = '';
+                    $sum_actual = '';
+                    $sum_percent = '';
+                    $total_plan = array();
+                    $total_act = array();
+                    foreach ($rows as $row) {
                     $no++;
                     $a = $row['jam'];
-                    if ($a >= 24) $a = $a - 24;
-
-                    $b = $a + 1;
-                    if ($b > 23) $b = ($b - 24);
-                    if ($a < 10) 
-                      $a = '0'.$a;
-
-                    if ($b < 10) 
-                      $b = '0'.$b;
-
-                    $c = $a . '-' . ($b) ;
-
-                    $percent = $row['jam_'.$no] != 0 || $row['actual'] != 0? $row['actual']/$row['jam_'.$no]*100 : 0;
-
+                      if ($a >= 24) $a = $a - 24;
+                        $b = $a + 1;
+                      if ($b > 23) $b = ($b - 24);
+                      if ($a < 10) 
+                        $a = '0'.$a;
+                      if ($b < 10) 
+                        $b = '0'.$b;
+                        $c = $a . '-' . ($b) ;
+                        $total_plan[] = $row['jam_'.$no];
+                        $total_act[] = $row['actual'];
+                        $percent = $row['jam_'.$no] != 0 || $row['actual'] != 0? $row['actual']/$row['jam_'.$no]*100 : 0;
+                        $label_js .= "'".$c ."'," ;
+                        $plan_jam .= $row['jam_'.$no]."," ;
+                        $actual_jam .= $row['actual']."," ;
+                        $percent_jam .= number_format($percent,1)."," ;
+                        $sum_plan = @array_sum($total_plan);
+                        $sum_actual = @array_sum($total_act);
+                        $sum_percent = $sum_plan != 0 || $sum_actual != 0? $sum_actual/$sum_plan*100 : 0;
                     echo '<tr>';
-                    echo '<td>'.$c.'</td>';
-                    echo '<td>'.$row['jam_'.$no].'</td>';
-                    echo '<td>'.$row['actual'] .'</td>';
-                    echo '<td>'.number_format($percent, 1).' %</td>';
-                     echo '<td>
+                      echo '<td>'.$c.'</td>';
+                      echo '<td>'.$row['jam_'.$no].'</td>';
+                      echo '<td>'.$row['actual'] .'</td>';
+                      echo '<td>'.number_format($percent, 1).' %</td>';
+                      echo '<td>
                               <select class="form-control status-post" data-toggle="tooltip" data-placement="top" title="Click here to edit" data-shift="' . $shift . '" data-time="' . $a . '" data-date="' . $date . '">
-                              <option value=""></option>';
-                              foreach ($status_passing as $value) {
-                                if($value['name'] == $row['status']) {
-                                  echo '<option value="'.$value['name'].'" selected>'.$value['name'].'</option>';
-                                } else {
-                                  echo '<option value="'.$value['name'].'">'.$value['name'].'</option>';
-                                }
-                              }
-
-                              echo '</select>
-                              </td>';
-                              echo '<td><input type="text" name="keterangan" class="form-control keterangan-post" data-shift="' . $shift . '" data-time="' . $a . '" data-date="' . $date . '" value="'.$row['keterangan'].'"/></td>';
+                                <option value=""></option>';
+                                  foreach ($status_passing as $value) {
+                                    if($value['name'] == $row['status']) {
+                                      echo '<option value="'.$value['name'].'" selected>'.$value['name'].'</option>';
+                                    } else {
+                                      echo '<option value="'.$value['name'].'">'.$value['name'].'</option>';
+                                    }
+                                  }
+                        echo '</select>
+                            </td>';
+                      echo '<td><input type="text" name="keterangan" class="form-control keterangan-post" data-shift="' . $shift . '" data-time="' . $a . '" data-date="' . $date . '" value="'.$row['keterangan'].'"/></td>';
                     echo '</tr>';
-                  }
-
-                  //       $jam = 6;
-
-                  //       $label_js = '';
-                  //       $plan_jam = '';
-                  //       $actual_jam = '';
-                  //       $percent_jam = '';
-
-                  //       if ($shift == 2) {
-                  //         $jam = 18;
-
-                  //       }
-
-                  //       $total_plan = array();
-                  //       $total_act = array();
-                        
-                  //       for ($a=$jam, $i = 1; $i <= 12; $i++, $a++) { 
-                  //         if ($a >= 24) {
-                  //           $a = $a - 24;
-                  //         }
-                  //         $b = $a + 1;
-                  //         if ($b > 23) {
-                  //           $b = ($b - 24);
-                  //         }
-                  //         if ($a < 10) {
-                  //           $a = '0'.$a;
-                  //         }
-                  //         if ($b < 10) {
-                  //           $b = '0'.$b;
-                  //         }
-                  //         if ($a == 7) {
-                  //           $c = $a . '-' . ($b) ;
-                  //         }else{
-                  //           $c = $a . '-' . ($b);
-                  //         }
-
-                  //         $total_plan[] = $data['jam_'.$i];
-                  //         $total_act[] = $data['actual_'.$i];
-
-                         
-
-                  //         $percent = $data['jam_'.$i] != 0 || $data['actual_'.$i] != 0? $data['actual_'.$i]/$data['jam_'.$i]*100 : 0;
-
-
-                  //         $label_js .= "'".$c ."'," ;
-                  //         $plan_jam .= $data['jam_'.$i]."," ;
-                  //         $actual_jam .= $data['actual_'.$i]."," ;
-                  //         $percent_jam .= number_format($percent,1)."," ;
-                  
-                  //       echo    '<tr>
-                  //             <td>'.$c.'</td>
-                  //             <td>'.$data['jam_'.$i].'</td>
-                  //             <td>'.$data['actual_'.$i].'</td>
-                  //             <td>'.number_format($percent, 1).' %</td>
-
-                  //             <td>
-                  //             <select class="form-control status-post" data-toggle="tooltip" data-placement="top" title="Click here to edit" data-shift="' . $shift . '" data-time="' . $a . '" data-date="' . $date . '">
-                  //             <option value=""></option>';
-
-                  //             foreach ($status_passing as $value) {
-                  //               if($value['name'] == $data['status_'.$i]) {
-                  //                 echo '<option value="'.$value['name'].'" selected>'.$value['name'].'</option>';
-                  //               } else {
-                  //                 echo '<option value="'.$value['name'].'">'.$value['name'].'</option>';
-                  //               }
-                  //             }
-
-                  //             echo '</select>
-                  //             </td>
-
-                  //             <td><input type="text" name="keterangan" class="form-control keterangan-post" data-shift="' . $shift . '" data-time="' . $a . '" data-date="' . $date . '" value="'.$data['keterangan_'.$i].'"/></td>
-                  //           </tr>';
-                  // }
-
-
-          // $sum_plan = @array_sum($total_plan);
-          // $sum_actual = @array_sum($total_act);
-
-          // $sum_percent = $sum_plan != 0 || $sum_actual != 0? $sum_actual/$sum_plan*100 : 0;
-
+                    }
                   ?>
-                  <tr style="background-color: #74b9ff; font-weight: bolder;">
-                    <td>Total</td>
-                    <td><?php //$sum_plan;?></td>
-                    <td><?php //$sum_actual;?></td>
-                    <!-- <td> %</td> -->
-                    <td><?php //number_format($sum_percent, 1);?> %</td>
-                  </tr>
+                          <tr style="background-color: #74b9ff; font-weight: bolder;">
+                            <td>Total</td>
+                            <td><?=$sum_plan;?></td>
+                            <td><?=$sum_actual;?></td>
+                            <td><?=@number_format($sum_percent, 1);?> %</td>
+                          </tr>
                 </tbody>
               </table>
-
             </div>
           </div>
         </div>
+      </div>
+      <div class="col-md-12">
+        <div id="container" >
+          <canvas id="canvas"></canvas>
         </div>
-        <div class="col-md-12">
-          <div id="container" >
-            <canvas id="canvas"></canvas>
-          </div>
+      </div>
+  </section>
+</div>
+
+<script type="text/javascript">
+
+  $('.datepicker').datepicker({
+    autoclose: true
+  });
   
-        </div>
+  $(document).on("change", ".status-post", function() {
+    var date = $( this ).attr('data-date');
+    var shift = $( this ).attr('data-shift');
+    var time = $( this ).attr('data-time');
+    var status = $( this ).val();
+      $.ajax({
+        type: 'POST',
+        data: 'date=' + date + '&shift=' + shift + '&time=' + time + '&status=' + status,
+        url: "<?php echo base_url('Post/status_passing/');?>",
+        dataType: 'JSON',
+        error: function () {
+          console.log("errr");
+        }
+      });
+  });
 
-    </section>
+  $(document).on("change", ".keterangan-post", function() {
+    var date = $( this ).attr('data-date');
+    var shift = $( this ).attr('data-shift');
+    var time = $( this ).attr('data-time');
+    var keterangan = $( this ).val();
+    $.ajax({
+      type: 'POST',
+      data: 'date=' + date + '&shift=' + shift + '&time=' + time + '&keterangan=' + keterangan,
+      url: "<?php echo base_url('Post/keterangan_status_passing/');?>",
+      dataType: 'JSON',
+      
+      error: function () {
+        console.log("errr");
+      }
+    });
+  });
 
-
-  </div>
-
-  <script type="text/javascript">
-  var chartData = {
+ var chartData = {
     labels: [<?=$label_js?>],
       datasets: [{
         type: 'line',
@@ -263,40 +254,76 @@
             }
         }
       });
-    };
+    }; 
+</script>
 
 
-      $(document).on("change", ".status-post", function() {
-        var date = $( this ).attr('data-date');
-        var shift = $( this ).attr('data-shift');
-        var time = $( this ).attr('data-time');
-        var status = $( this ).val();
-        $.ajax({
-          type: 'POST',
-          data: 'date=' + date + '&shift=' + shift + '&time=' + time + '&status=' + status,
-          url: "<?php echo base_url('Post/status_passing/');?>",
-          dataType: 'JSON',
-          
-          error: function () {
-            console.log("errr");
-          }
-        });
-      });
+<!-- 
 
-      $(document).on("change", ".keterangan-post", function() {
-        var date = $( this ).attr('data-date');
-        var shift = $( this ).attr('data-shift');
-        var time = $( this ).attr('data-time');
-        var keterangan = $( this ).val();
-        $.ajax({
-          type: 'POST',
-          data: 'date=' + date + '&shift=' + shift + '&time=' + time + '&keterangan=' + keterangan,
-          url: "<?php echo base_url('Post/keterangan_status_passing/');?>",
-          dataType: 'JSON',
-          
-          error: function () {
-            console.log("errr");
-          }
-        });
-      });
-  </script>
+
+                  //       $jam = 6;
+
+                  
+                        
+                  //       for ($a=$jam, $i = 1; $i <= 12; $i++, $a++) { 
+                  //         if ($a >= 24) {
+                  //           $a = $a - 24;
+                  //         }
+                  //         $b = $a + 1;
+                  //         if ($b > 23) {
+                  //           $b = ($b - 24);
+                  //         }
+                  //         if ($a < 10) {
+                  //           $a = '0'.$a;
+                  //         }
+                  //         if ($b < 10) {
+                  //           $b = '0'.$b;
+                  //         }
+                  //         if ($a == 7) {
+                  //           $c = $a . '-' . ($b) ;
+                  //         }else{
+                  //           $c = $a . '-' . ($b);
+                  //         }
+
+                  //         $total_plan[] = $data['jam_'.$i];
+                  //         $total_act[] = $data['actual_'.$i];
+
+                         
+
+                  //         $percent = $data['jam_'.$i] != 0 || $data['actual_'.$i] != 0? $data['actual_'.$i]/$data['jam_'.$i]*100 : 0;
+
+
+                  //         $label_js .= "'".$c ."'," ;
+                  //         $plan_jam .= $data['jam_'.$i]."," ;
+                  //         $actual_jam .= $data['actual_'.$i]."," ;
+                  //         $percent_jam .= number_format($percent,1)."," ;
+                  
+                  //       echo    '<tr>
+                  //             <td>'.$c.'</td>
+                  //             <td>'.$data['jam_'.$i].'</td>
+                  //             <td>'.$data['actual_'.$i].'</td>
+                  //             <td>'.number_format($percent, 1).' %</td>
+
+                  //             <td>
+                  //             <select class="form-control status-post" data-toggle="tooltip" data-placement="top" title="Click here to edit" data-shift="' . $shift . '" data-time="' . $a . '" data-date="' . $date . '">
+                  //             <option value=""></option>';
+
+                  //             foreach ($status_passing as $value) {
+                  //               if($value['name'] == $data['status_'.$i]) {
+                  //                 echo '<option value="'.$value['name'].'" selected>'.$value['name'].'</option>';
+                  //               } else {
+                  //                 echo '<option value="'.$value['name'].'">'.$value['name'].'</option>';
+                  //               }
+                  //             }
+
+                  //             echo '</select>
+                  //             </td>
+
+                  //             <td><input type="text" name="keterangan" class="form-control keterangan-post" data-shift="' . $shift . '" data-time="' . $a . '" data-date="' . $date . '" value="'.$data['keterangan_'.$i].'"/></td>
+                  //           </tr>';
+                  // }
+
+
+         
+
+  
