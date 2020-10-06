@@ -45,7 +45,7 @@ class Dash extends CI_Controller {
 		);
 		$this->load->view('framework/header', array('title' => 'Monitoring'));
 		$this->load->view('framework/sidebar');
-		$this->load->view('pages/daily_monitoring_unit_csa', $data);
+		$this->load->view('pages/dashboard/monitoring_unit_csa', $data);
 		$this->load->view('framework/footer');
 	}
 
@@ -70,7 +70,7 @@ class Dash extends CI_Controller {
 
 		$this->load->view('framework/header', array('title' => 'Record Production'));
 		$this->load->view('framework/sidebar');
-		$this->load->view('pages/record_production', $data);
+		$this->load->view('pages/dispatching/record_production', $data);
 		$this->load->view('framework/footer');	
 	}
 
@@ -98,7 +98,63 @@ class Dash extends CI_Controller {
 		$this->load->view('framework/footer');	
 	}
 
-	public function daily_monitoring_operations($position = "K", $by_area = "")
+	public function achievement_seam_series()
+	{
+		$result = get_date_shift();
+		$this->load->model('Supplay_passing_model', 'supplay');
+		$table = $this->supplay->show_data()->result_array();
+
+		$rom	  	= $this->Crud->search('table_enum', array('type' => 'rom'))->result_array();
+		$pos		= $this->Crud->search('table_enum', array('type' => 'area'))->result_array();
+		$shift_code	= $this->Crud->search('table_enum', array('type' => 'shift'))->result_array();
+		
+		$data  = array(
+			'hour'			=> $result['hour'],
+			'shift' 		=> $result['shift'],
+			'table'			=> $table,
+			'shift_code'	=> $shift_code,
+			'rom'			=> $rom,
+			'pos'			=> $pos
+
+
+		);
+
+		$this->load->view('framework/header', array('title' => 'Achievement Seam Series'));
+		$this->load->view('framework/sidebar');
+		$this->load->view('pages/dispatching/achievement_seam_series',$data);
+		$this->load->view('framework/footer');
+	}
+
+	public function rtk_rom()
+	{
+		$result = get_date_shift();
+		$this->load->model('Supplay_passing_model', 'supplay');
+		$table = $this->supplay->show_data()->result_array();
+
+		$rom	  		= $this->Crud->search('table_enum', array('type' => 'rom'))->result_array();
+		$shift_code	  	= $this->Crud->search('table_enum', array('type' => 'shift'))->result_array();
+		
+		$data  = array(
+			'hour'			=> $result['hour'],
+			'shift' 		=> $result['shift'],
+			'table'			=> $table,
+			'rom'			=> $rom,
+			'shift_code'	=> $shift_code,
+
+
+		);
+		$this->load->view('framework/header', array('title' => 'Dashoard RTK ROM'));
+		$this->load->view('framework/sidebar');
+		$this->load->view('pages/dispatching/rtk_rom',$data);
+		$this->load->view('framework/footer');
+	}
+
+	public function report_production()
+	{
+		# code...
+	}
+
+	public function post_34_muatan($position = "K", $by_area = "")
 	{
 		$by_level  = $this->session->userdata('level');
 		$result 			= get_date_shift();	
@@ -123,13 +179,153 @@ class Dash extends CI_Controller {
 			'position'			=> $position
 		);
 
-		$this->load->view('framework/header', array('title' => 'Monitoring Post'));
+		$this->load->view('framework/header', array('title' => 'Post KM 34 Muatan'));
 		$this->load->view('framework/sidebar');
-		$this->load->view('pages/daily_monitoring_operations',$data);
+		$this->load->view('pages/post/post_34_muatan');
 		$this->load->view('framework/footer');
 	}
 
-	public function daily_rom_operations($by_rom = "")
+	public function post_34_standby()
+	{
+		$this->load->view('framework/header', array('title' => 'Post KM 34 Standby'));
+		$this->load->view('framework/sidebar');
+		$this->load->view('pages/post/post_34_standby');
+		$this->load->view('framework/footer');
+	}
+
+	public function post_65_muatan()
+	{
+		$by_level  = $this->session->userdata('level');
+		$result 			= get_date_shift();	
+		// $by_area			= $by_area == '' ? $this->session->userdata('area') : $by_area;
+		// $code				= $code == '' ? "L" : $code;
+		$date  				= $result['date'];
+		$cargo_muatan		= $this->Crud->search('table_enum', array('type' => 'cargo_muatan'))->result_array();
+		$rom	  			= $this->Crud->search('table_enum', array('type' => 'rom'))->result_array();		
+		$area 				= $this->Crud->search('table_enum', array('type' => 'area'))->result_array();
+
+		$this->load->model('Shift_operations', 'operations');
+		
+		$data = $this->operations->monitoring_shift_operations($position,$by_area)->result_array();
+		
+
+		$data 		= array (
+			'dateid' 			=> $result['date'],
+			'cargo_muatan'		=> $cargo_muatan,
+			'rom'				=> $rom,
+			'data'				=> $data,			
+			'area'				=> $area,
+			'position'			=> $position
+		);
+
+		$this->load->view('framework/header', array('title' => 'Post KM 65 Muatan'));
+		$this->load->view('framework/sidebar');
+		$this->load->view('pages/post/post_34_muatan');
+		$this->load->view('framework/footer');
+	}
+
+	public function post_65_standby()
+	{
+		$this->load->view('framework/header', array('title' => 'Post KM 65 Standby'));
+		$this->load->view('framework/sidebar');
+		$this->load->view('pages/post/post_34_standby');
+		$this->load->view('framework/footer');
+	}
+
+	public function post_69()
+	{
+		$position	  	= $this->Crud->search('table_enum', array('type' => 'position'))->result_array();
+		$code_standby	= $this->Crud->search('table_enum', array('type' => 'code_standby'))->result_array();
+
+		$this->load->model('Monitoring_operations', 'monitoring');
+		$data = $this->monitoring->detail_monitoring_operations()->result_array();
+
+		$data 		= array (
+			'position'		=> $position,
+			'code_standby'	=> $code_standby,
+			'data'			=> $data,
+		);
+
+		$this->load->view('framework/header', array('title' => 'Post KM 69'));
+		$this->load->view('framework/sidebar');
+		$this->load->view('pages/post/post_69',$data);
+		$this->load->view('framework/footer');
+	}
+
+	public function monitoring_passing()
+	{
+		$result = get_date_shift();
+		$shift  = $result['shift'];
+		$pos	= $this->Crud->search('table_enum', array('type' => 'area'))->result_array();
+		$shift_code	  	= $this->Crud->search('table_enum', array('type' => 'shift'))->result_array();
+
+		$model_monitoring = $this->load->model('Monitoring_model', 'monitoring');
+
+		$data = array(
+			'shift' 		=> $shift,
+			'pos'			=> $pos,
+			'shift_code'	=> $shift_code,
+			'monitoring'	=> $model_monitoring
+		);
+		$this->load->view('framework/header', array('title' => 'Monitoring Passing'));
+		$this->load->view('framework/sidebar');
+		$this->load->view('pages/post/monitoring_passing',$data);
+		$this->load->view('framework/footer');
+	}
+
+	public function quality_control_passing()
+	{
+		$result = get_date_shift();
+		$shift  = $result['shift'];
+		$pos	= $this->Crud->search('table_enum', array('type' => 'area'))->result_array();
+		$shift_code	  	= $this->Crud->search('table_enum', array('type' => 'shift'))->result_array();
+
+		$this->load->model('Monitoring_model', 'monitoring');
+
+		$data = $this->monitoring->supplay_passing()->result_array();
+
+		$data = array(
+			'shift' 		=> $shift,
+			'shift_code'	=> $shift_code,
+			'pos'			=> $pos,
+			'data' 			=> $data
+		);
+
+		$this->load->view('framework/header', array('title' => 'Quality Control Passing'));
+		$this->load->view('framework/sidebar');
+		$this->load->view('pages/post/quality_control_passing',$data);
+		$this->load->view('framework/footer');
+	}
+
+	public function achievement_passing()
+	{
+		$result 		= get_date_shift();
+		$date  			= $result['date'];
+		$shift  		= $result['shift'];
+		$pos	= $this->Crud->search('table_enum', array('type' => 'area'))->result_array();
+
+		$status_passing	= $this->Crud->search('table_enum', array('type' => 'status_passing'))->result_array();
+
+		$this->load->model('Monitoring_model', 'monitoring');
+
+		$data = $this->monitoring->hour_supplay_passing()->result_array();
+
+		$data = array(
+			'date' 				=> $date,
+			'shift' 			=> $shift,
+			'status_passing'	=> $status_passing,
+			'pos'				=> $pos,
+			'rows' 				=> $data
+		);
+
+
+		$this->load->view('framework/header', array('title' => 'Dashboard Achievement Passing'));
+		$this->load->view('framework/sidebar');
+		$this->load->view('pages/post/achievement_passing',$data);
+		$this->load->view('framework/footer');
+	}
+
+	public function record_rom($by_rom = "")
 	{
 		$result 			= get_date_shift();
 		
@@ -148,9 +344,49 @@ class Dash extends CI_Controller {
 			'data'				=> $data,
 		);
 
-		$this->load->view('framework/header', array('title' => 'Monitoring ROM'));
+		$this->load->view('framework/header', array('title' => 'Record ROM'));
 		$this->load->view('framework/sidebar');
-		$this->load->view('pages/daily_rom_monitoring',$data);
+		$this->load->view('pages/rom/record_rom',$data);
+		$this->load->view('framework/footer');
+	}
+
+	public function report_rom($by_rom="")
+	{
+		$result 			= get_date_shift();
+		$by_rom				= $by_rom == '' ?$this->session->userdata('rom') : $by_rom;
+		$rom	  			= $this->Crud->search('table_enum', array('type' => 'rom'))->result_array();
+
+		$this->load->model('Shift_operations', 'operations');
+		$data = $this->operations->report_rom_monitoring_shift_operations($by_rom)->result_array();
+
+		$data 		= array (
+			'rom'			=> $rom,
+			'data'			=> $data,
+		);
+
+		$this->load->view('framework/header', array('title' => 'Report Monitoring ROM'));
+		$this->load->view('framework/sidebar');
+		$this->load->view('pages/rom/report_rom',$data);
+		$this->load->view('framework/footer');
+
+	}
+
+	public function user()
+	{
+		$level = $this->Crud->search('table_enum', array('type' => 'level'))->result_array();
+		
+		$this->load->model('Account_control', 'user');
+		$data = $this->user->detail_user()->result_array();
+
+		$data = array(
+			'level'	=> $level,
+			'data'	=> $data
+
+		);
+
+		$this->load->view('framework/header', array('title' => 'User'));
+		$this->load->view('framework/sidebar');
+		$this->load->view('pages/admin/user',$data);
 		$this->load->view('framework/footer');
 	}
 
@@ -224,7 +460,6 @@ class Dash extends CI_Controller {
 		$this->load->view('framework/footer');
 	}
 
-
 	public function overshift_unit()
 	{
 		$csa 		=	$this->Crud->search('enum', array('type' => 'csa', 'deleted_at' => NULL))->result_array();
@@ -287,217 +522,73 @@ class Dash extends CI_Controller {
 		$this->load->view('pages/admin/profile', $data);
 	}
 
-	public function dashboard_monitoring_muatan()
-	{
-		$result = get_date_shift();
-		$shift  = $result['shift'];
-		$pos	= $this->Crud->search('table_enum', array('type' => 'area'))->result_array();
-		$shift_code	  	= $this->Crud->search('table_enum', array('type' => 'shift'))->result_array();
-
-		$model_monitoring = $this->load->model('Monitoring_model', 'monitoring');
-
-		$data = array(
-			'shift' 		=> $shift,
-			'pos'			=> $pos,
-			'shift_code'	=> $shift_code,
-			'monitoring'	=> $model_monitoring
-		);
-		$this->load->view('framework/header', array('title' => 'Monitoring Muatan'));
-		$this->load->view('framework/sidebar');
-		$this->load->view('pages/dashboard_monitoring_muatan',$data);
-		$this->load->view('framework/footer');
-	}
-
-	public function dashboard_quality_passing()
-	{
-		$result = get_date_shift();
-		$shift  = $result['shift'];
-		$pos	= $this->Crud->search('table_enum', array('type' => 'area'))->result_array();
-		$shift_code	  	= $this->Crud->search('table_enum', array('type' => 'shift'))->result_array();
-
-		$this->load->model('Monitoring_model', 'monitoring');
-
-		$data = $this->monitoring->supplay_passing()->result_array();
-
-		$data = array(
-			'shift' 		=> $shift,
-			'shift_code'	=> $shift_code,
-			'pos'			=> $pos,
-			'data' 			=> $data
-		);
-
-		$this->load->view('framework/header', array('title' => 'Quality Control Passing'));
-		$this->load->view('framework/sidebar');
-		$this->load->view('pages/dashboard_quality_passing',$data);
-		$this->load->view('framework/footer');
-	}
-
-	public function dashboard_ach_passingunit()
-	{
-		$result 		= get_date_shift();
-		$date  			= $result['date'];
-		$shift  		= $result['shift'];
-		$pos	= $this->Crud->search('table_enum', array('type' => 'area'))->result_array();
-
-		$status_passing	= $this->Crud->search('table_enum', array('type' => 'status_passing'))->result_array();
-
-		$this->load->model('Monitoring_model', 'monitoring');
-
-		$data = $this->monitoring->hour_supplay_passing()->result_array();
-
-		$data = array(
-			'date' 				=> $date,
-			'shift' 			=> $shift,
-			'status_passing'	=> $status_passing,
-			'pos'				=> $pos,
-			'rows' 				=> $data
-		);
-
-
-		$this->load->view('framework/header', array('title' => 'Dashboard Achievement Passing'));
-		$this->load->view('framework/sidebar');
-		$this->load->view('pages/dashboard_ach_passingunit',$data);
-		$this->load->view('framework/footer');
-	}
-
-	public function report_rom($by_rom="")
-	{
-		$result 			= get_date_shift();
-		$by_rom				= $by_rom == '' ?$this->session->userdata('rom') : $by_rom;
-		$rom	  			= $this->Crud->search('table_enum', array('type' => 'rom'))->result_array();
-
-		$this->load->model('Shift_operations', 'operations');
-		$data = $this->operations->report_rom_monitoring_shift_operations($by_rom)->result_array();
-
-		$data 		= array (
-			'rom'			=> $rom,
-			'data'			=> $data,
-		);
-
-		$this->load->view('framework/header', array('title' => 'Report Monitoring ROM'));
-		$this->load->view('framework/sidebar');
-		$this->load->view('pages/report_rom_monitoring',$data);
-		$this->load->view('framework/footer');
-
-	}
-
-	public function user()
-	{
-		$level = $this->Crud->search('table_enum', array('type' => 'level'))->result_array();
-		
-		$this->load->model('Account_control', 'user');
-		$data = $this->user->detail_user()->result_array();
-
-		$data = array(
-			'level'	=> $level,
-			'data'	=> $data
-
-		);
-
-		$this->load->view('framework/header', array('title' => 'User'));
-		$this->load->view('framework/sidebar');
-		$this->load->view('pages/admin/user',$data);
-		$this->load->view('framework/footer');
-	}
-
-	public function dashboard_rtk_rom()
-	{
-		$result = get_date_shift();
-		$this->load->model('Supplay_passing_model', 'supplay');
-		$table = $this->supplay->show_data()->result_array();
-
-		$rom	  		= $this->Crud->search('table_enum', array('type' => 'rom'))->result_array();
-		$shift_code	  	= $this->Crud->search('table_enum', array('type' => 'shift'))->result_array();
-		
-		$data  = array(
-			'hour'			=> $result['hour'],
-			'shift' 		=> $result['shift'],
-			'table'			=> $table,
-			'rom'			=> $rom,
-			'shift_code'	=> $shift_code,
-
-
-		);
-		$this->load->view('framework/header', array('title' => 'Dashoard RTK ROM'));
-		$this->load->view('framework/sidebar');
-		$this->load->view('pages/dashboard_rtk_rom',$data);
-		$this->load->view('framework/footer');
-	}
-
-	public function dashboard_ach_seamseries()
-	{
-		$result = get_date_shift();
-		$this->load->model('Supplay_passing_model', 'supplay');
-		$table = $this->supplay->show_data()->result_array();
-
-		$rom	  	= $this->Crud->search('table_enum', array('type' => 'rom'))->result_array();
-		$pos		= $this->Crud->search('table_enum', array('type' => 'area'))->result_array();
-		$shift_code	= $this->Crud->search('table_enum', array('type' => 'shift'))->result_array();
-		
-		$data  = array(
-			'hour'			=> $result['hour'],
-			'shift' 		=> $result['shift'],
-			'table'			=> $table,
-			'shift_code'	=> $shift_code,
-			'rom'			=> $rom,
-			'pos'			=> $pos
-
-
-		);
-
-		$this->load->view('framework/header', array('title' => 'Achievement Seam Series'));
-		$this->load->view('framework/sidebar');
-		$this->load->view('pages/dashboard_ach_seamseries',$data);
-		$this->load->view('framework/footer');
-	}
-
-	public function daily_monitoring_operations_standby($code = '')
-	{
-		$result 		= get_date_shift();	
-		$by_area		= $this->session->userdata('area');
-		$by_user		= $this->session->userdata('id');
-		$shift			= $this->Crud->search('table_enum', array('type' => 'shift'))->result_array();
-		$area			= $this->Crud->search('table_enum', array('type' => 'area'))->result_array();
-		$cargo_muatan	= $this->Crud->search('table_enum', array('type' => 'cargo_muatan'))->result_array();
-		$code_standby	= $this->Crud->search('table_enum', array('type' => 'code_standby'))->result_array();
-		$position		= $this->db->from('table_enum')->where('type', 'position')->order_by('name', 'desc')->get()->result_array();
-
-		// $this->load->model('Monitoring_operations', 'operations');
-		// $data = $this->operations->detail_monitoring_operations_standby($by_area, $code)->result_array();
-
-		// $data 		= array (
-		// 	'dateid' 			=> $result['date'],
-		// 	'shift'	 			=> $shift,
-		// 	'area'	 			=> $area,
-		// 	'cargo_muatan'		=> $cargo_muatan,
-		// 	'position'			=> $position,
-		// 	'data'				=> $data,
-		// 	'code_standby'		=> $code_standby,
-		// );
-
-		$this->load->view('framework/header', array('title' => 'Monitoring Pos Standby'));
-		$this->load->view('framework/sidebar');
-		$this->load->view('pages/daily_monitoring_operations_standby');
-		$this->load->view('framework/footer');
-	}
-
-	public function monitoring_operations_69()
-	{
-		$position	  	= $this->Crud->search('table_enum', array('type' => 'position'))->result_array();
-		$code_standby	= $this->Crud->search('table_enum', array('type' => 'code_standby'))->result_array();
-
-		$this->load->model('Monitoring_operations', 'monitoring');
-		$data = $this->monitoring->detail_monitoring_operations()->result_array();
-
-		$data 		= array (
-			'position'		=> $position,
-			'code_standby'	=> $code_standby,
-			'data'			=> $data,
-		);
-
-		$this->load->view('framework/header', array('title' => 'Post KM 69'));
-		$this->load->view('framework/sidebar');
-		$this->load->view('pages/post_69',$data);
-		$this->load->view('framework/footer');
-	}
 }
+
+
+
+
+
+
+
+	// public function daily_monitoring_operations_standby($code = '')
+	// {
+	// 	$result 		= get_date_shift();	
+	// 	$by_area		= $this->session->userdata('area');
+	// 	$by_user		= $this->session->userdata('id');
+	// 	$shift			= $this->Crud->search('table_enum', array('type' => 'shift'))->result_array();
+	// 	$area			= $this->Crud->search('table_enum', array('type' => 'area'))->result_array();
+	// 	$cargo_muatan	= $this->Crud->search('table_enum', array('type' => 'cargo_muatan'))->result_array();
+	// 	$code_standby	= $this->Crud->search('table_enum', array('type' => 'code_standby'))->result_array();
+	// 	$position		= $this->db->from('table_enum')->where('type', 'position')->order_by('name', 'desc')->get()->result_array();
+
+	// 	// $this->load->model('Monitoring_operations', 'operations');
+	// 	// $data = $this->operations->detail_monitoring_operations_standby($by_area, $code)->result_array();
+
+	// 	// $data 		= array (
+	// 	// 	'dateid' 			=> $result['date'],
+	// 	// 	'shift'	 			=> $shift,
+	// 	// 	'area'	 			=> $area,
+	// 	// 	'cargo_muatan'		=> $cargo_muatan,
+	// 	// 	'position'			=> $position,
+	// 	// 	'data'				=> $data,
+	// 	// 	'code_standby'		=> $code_standby,
+	// 	// );
+
+	// 	$this->load->view('framework/header', array('title' => 'Monitoring Pos Standby'));
+	// 	$this->load->view('framework/sidebar');
+	// 	$this->load->view('pages/daily_monitoring_operations_standby');
+	// 	$this->load->view('framework/footer');
+	// }
+
+
+
+	// public function daily_monitoring_operations($position = "K", $by_area = "")
+	// {
+	// 	$by_level  = $this->session->userdata('level');
+	// 	$result 			= get_date_shift();	
+	// 	// $by_area			= $by_area == '' ? $this->session->userdata('area') : $by_area;
+	// 	// $code				= $code == '' ? "L" : $code;
+	// 	$date  				= $result['date'];
+	// 	$cargo_muatan		= $this->Crud->search('table_enum', array('type' => 'cargo_muatan'))->result_array();
+	// 	$rom	  			= $this->Crud->search('table_enum', array('type' => 'rom'))->result_array();		
+	// 	$area 				= $this->Crud->search('table_enum', array('type' => 'area'))->result_array();
+
+	// 	$this->load->model('Shift_operations', 'operations');
+		
+	// 	$data = $this->operations->monitoring_shift_operations($position,$by_area)->result_array();
+		
+
+	// 	$data 		= array (
+	// 		'dateid' 			=> $result['date'],
+	// 		'cargo_muatan'		=> $cargo_muatan,
+	// 		'rom'				=> $rom,
+	// 		'data'				=> $data,			
+	// 		'area'				=> $area,
+	// 		'position'			=> $position
+	// 	);
+
+	// 	$this->load->view('framework/header', array('title' => 'Monitoring Post'));
+	// 	$this->load->view('framework/sidebar');
+	// 	$this->load->view('pages/daily_monitoring_operations',$data);
+	// 	$this->load->view('framework/footer');
+	// }

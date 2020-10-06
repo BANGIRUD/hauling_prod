@@ -74,7 +74,7 @@ class Auth extends CI_Controller {
 				);
 				$this->session->set_userdata($session_data);
 				if ($data['level_description'] == 'rom') {
-					redirect(base_url('Dash/daily_rom_operations'));
+					redirect(base_url('Dash/record_rom'));
 				}else{
 					 redirect(base_url('Dash'));
 				}

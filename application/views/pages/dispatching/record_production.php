@@ -8,7 +8,7 @@
       <small><?=get_enum($by_area)?></small>
     </h1>
     <ol class="breadcrumb">
-      <li><a href="#"><i class="fa fa-home"></i> Dashboard</a></li>
+      <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
       <li class="active">Record Production <?=get_enum($by_area)?></li>
     </ol>
   </section>
@@ -49,7 +49,6 @@
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
                   <tr style="background-color: #2e86de ; color: #ffffff ">
-                    <th style="text-align: center;"></th>
                     <th style="text-align: center;">No</th>
                     <th style="text-align: center;">C/N</th>
                     <th style="text-align: center;">Cargo Muatan</th> 
@@ -64,20 +63,14 @@
                     foreach ($data as $value) {
                       $no++; 
                       $color = explode(',', $value['color']);
-                        echo '<tr style="text-align: center;">'; 
-                        echo '<td nowrap class="text-center">
-                                <a href="#" class="btn btn-xs btn-primary" data-target="#editdata" id="edit" data-id="'.$value['id'].'" data-original-title="Edit" data-toggle="tooltip"><i class="fa fa-edit"></i>
-                                </a>
-                                <a href="#" class="btn btn-xs btn-danger" data-target="#deletedata" id="delete" data-id="'.$value['id'].'" data-original-title="delete" data-toggle="tooltip"><i class="fa fa-trash"></i>
-                                </a>
-                              </td>';                   
+                        echo '<tr style="text-align: center;">';                  
                         echo '
                               <td>'.$no.'</td>
                               <td>'.$value['cn_unit'].'</td>
                               <td style="background-color:'. $color[0] . ';color:'.@$color[1].'" >'.$value['cargo'].'</td>  
                               <td>'.$value['rom_name'].'</td>
                               <td>'. date('Y-m-d H:i',strtotime($value['time'])).'</td>';
-                        echo '<td nowrap>';
+                        // echo '<td nowrap>';
 
                         // $btn_disabled = $no == 1 ? ' disabled' : '';
                         // echo '<a href="'.base_url('edit/edit_shift_operation_ordered/'.$value['id'].'/'.$no.'/top').'" class="btn btn-xs btn-warning '.$btn_disabled.'" id="up" data-id="" data-column="cancel" data-text=" " title="Up"><i class="fa  fa-arrow-up"></i>
@@ -85,8 +78,13 @@
 
                         // echo '<a href="'.base_url('edit/edit_shift_operation_ordered/'.$value['id'].'/'.$no.'/down').'" class="btn btn-xs btn-warning" id="down" data-id="" data-column="cancel" data-text=" " title="Down"><i class="fa  fa-arrow-down"></i>
                         //       </a>';
-                        echo '</td>';      
-                        
+                        // echo '</td>';                            
+                        echo '<td nowrap class="text-center">
+                                <a href="#" class="btn btn-xs btn-primary" data-target="#editdata" id="edit" data-id="'.$value['id'].'" data-original-title="Edit" data-toggle="tooltip"><i class="fa fa-edit"></i>
+                                </a>
+                                <a href="#" class="btn btn-xs btn-danger" data-target="#deletedata" id="delete" data-id="'.$value['id'].'" data-original-title="delete" data-toggle="tooltip"><i class="fa fa-trash"></i>
+                                </a>
+                              </td>'; 
 
                         echo '</tr>';
                     }
