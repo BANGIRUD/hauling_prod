@@ -8,7 +8,7 @@
       <small><?=get_enum($by_area)?></small>
     </h1>
     <ol class="breadcrumb">
-      <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+      <li><a href="#"><i class="fa fa-home"></i> Dashboard</a></li>
       <li class="active">Record Production <?=get_enum($by_area)?></li>
     </ol>
   </section>
@@ -22,7 +22,7 @@
                 <button class="btn btn-primary  " data-toggle="modal" id="add-unit">
                   <i class="fa fa-plus"> Add Unit</i>
                 </button>
-                <a href="<?php echo base_url('Dash/daily_multiple_record_production');?>" class="btn btn-success">
+                <a href="<?php echo base_url('Dash/multiple_record_production');?>" class="btn btn-success">
                   <i class="fa fa-list-ul"> Add Multiple Unit</i>
                 </a>
                 <!-- <button type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="Add Unit" id="add-unit">
@@ -247,7 +247,6 @@
     var H = (d.getHours() < 10) ? '0' + d.getHours() : d.getHours();
     var m = (d.getMinutes() < 10) ? '0' + d.getMinutes() : d.getMinutes();
       $("#input-time").val(H+':'+m);
-
       $("#modal-addunit").modal('toggle');
   }); 
 

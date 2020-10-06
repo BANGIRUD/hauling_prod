@@ -15,7 +15,7 @@
       <div class="col-md-12">
         <div class="box box-primary">
           <div class="box-header with-border">
-            <a href="<?php echo base_url('Dash/daily_record_production');?>" class="btn btn-primary">
+            <a href="<?php echo base_url('Dash/record_production');?>" class="btn btn-primary">
               <i class="fa fa-reply">  Kembali</i>
             </a>
           </div>

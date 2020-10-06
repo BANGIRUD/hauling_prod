@@ -9,7 +9,7 @@ class Shift_operations extends CI_Model
 {
 	private $table = 'table_shiftoperations';
 
-	public function daily_record_production()
+	public function record_production()
 	{
 		$result 		= get_date_shift();	
 		$this->db->select('table_shiftoperations.*, cargo.description as color, rom.name as rom_name');

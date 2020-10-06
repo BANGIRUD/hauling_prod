@@ -56,5 +56,10 @@ class Monitoring_operations extends CI_Model
 		$this->db->group_by('table_shiftoperations.id');
 		return $this->db->get();
 	}
+
+	public function detail_monitoring_operations_69($value='')
+	{
+		# code...
+	}
 }
 ?>

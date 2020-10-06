@@ -50,7 +50,7 @@ class Dash extends CI_Controller {
 	}
 
 
-	public function daily_record_production()
+	public function record_production()
 	{
 		$result 			= get_date_shift();	
 		$by_area			= $this->session->userdata('area');
@@ -59,7 +59,7 @@ class Dash extends CI_Controller {
 		$rom	  			= $this->Crud->search('table_enum', array('type' => 'rom'))->result_array();
 
 		$this->load->model('Shift_operations', 'operations');
-		$data = $this->operations->daily_record_production()->result_array();
+		$data = $this->operations->record_production()->result_array();
 
 		$data 		= array (
 			'dateid' 			=> $result['date'],
@@ -70,11 +70,11 @@ class Dash extends CI_Controller {
 
 		$this->load->view('framework/header', array('title' => 'Record Production'));
 		$this->load->view('framework/sidebar');
-		$this->load->view('pages/daily_record_production', $data);
+		$this->load->view('pages/record_production', $data);
 		$this->load->view('framework/footer');	
 	}
 
-	public function daily_multiple_record_production()
+	public function multiple_record_production()
 	{
 		$result 			= get_date_shift();	
 		$by_area			= $this->session->userdata('area');
@@ -83,7 +83,7 @@ class Dash extends CI_Controller {
 		$rom	  			= $this->Crud->search('table_enum', array('type' => 'rom'))->result_array();
 
 		$this->load->model('Shift_operations', 'operations');
-		$data = $this->operations->daily_record_production()->result_array();
+		$data = $this->operations->record_production()->result_array();
 
 		$data 		= array (
 			'dateid' 			=> $result['date'],
@@ -94,7 +94,7 @@ class Dash extends CI_Controller {
 			
 		$this->load->view('framework/header', array('title' => 'Add Multiple Unit'));
 		$this->load->view('framework/sidebar');
-		$this->load->view('pages/daily_record_multiple_production', $data);
+		$this->load->view('pages/record_multiple_production', $data);
 		$this->load->view('framework/footer');	
 	}
 
@@ -169,7 +169,7 @@ class Dash extends CI_Controller {
 
 		$this->load->view('framework/header', array('title' => 'Populasi Unit'));
 		$this->load->view('framework/sidebar');
-		$this->load->view('pages/populasi_unit', $data);
+		$this->load->view('pages/admin/populasi_unit', $data);
 		$this->load->view('framework/footer');
 	}
 
@@ -179,7 +179,7 @@ class Dash extends CI_Controller {
 		$data['rows'] = $this->Crud->search('table_enum', array('table_enum.type' => 'cargo_muatan', 'deleted_at' => NULL))->result_array();
 		$this->load->view('framework/header', array('title' => 'Raw Material'));
 		$this->load->view('framework/sidebar');
-		$this->load->view('pages/raw_material', $data);
+		$this->load->view('pages/admin/raw_material', $data);
 		$this->load->view('framework/footer');
 	}
 
@@ -202,11 +202,11 @@ class Dash extends CI_Controller {
 
 		$this->load->view('framework/header',array('title' => 'Setting Unit Operasi'));
 		$this->load->view('framework/sidebar');
-		$this->load->view('pages/daily_setting_unit_operasi', $data);
+		$this->load->view('pages/admin/setting_unit', $data);
 		$this->load->view('framework/footer');	
 	}
 
-	public function daily_plan_supplypassing()
+	public function plan_supplypassing()
 	{
 		$result = get_date_shift();
 		$this->load->model('Supplay_passing_model', 'supplay');
@@ -220,24 +220,22 @@ class Dash extends CI_Controller {
 			
 		$this->load->view('framework/header', array('title' => 'Daily Plan Supplay Passing'));
 		$this->load->view('framework/sidebar');
-		$this->load->view('pages/daily_plan_supplypassing', $data);
+		$this->load->view('pages/admin/supplay_passing', $data);
 		$this->load->view('framework/footer');
 	}
 
 
-	public function daily_overshift_unit()
+	public function overshift_unit()
 	{
-		$csa 		=	$this->Crud->search('enum', array('type' => 'csa', 'deleted_at' => NULL))->result_array();	
-
-
-		$data	= array(
+		$csa 		=	$this->Crud->search('enum', array('type' => 'csa', 'deleted_at' => NULL))->result_array();
+		$data		= array(
 			'csa'		=> $csa,
 
 		);
 
 		$this->load->view('framework/header', array('title' => 'Plan Daily Overshift'));
 		$this->load->view('framework/sidebar');
-		$this->load->view('pages/daily_overshift_unit', $data);
+		$this->load->view('pages/admin/overshift_unit', $data);
 		$this->load->view('framework/footer');	
 	}
 
@@ -258,7 +256,7 @@ class Dash extends CI_Controller {
 
 		$this->load->view('framework/header', array('title' => 'Database Quality'));
 		$this->load->view('framework/sidebar');
-		$this->load->view('pages/quality', $data);
+		$this->load->view('pages/admin/database_quality', $data);
 		$this->load->view('framework/footer');
 	}
 
@@ -286,7 +284,7 @@ class Dash extends CI_Controller {
 			'username' => $username,
 			'data' => $profile,
 		);
-		$this->load->view('pages/profile', $data);
+		$this->load->view('pages/admin/profile', $data);
 	}
 
 	public function dashboard_monitoring_muatan()
@@ -398,7 +396,7 @@ class Dash extends CI_Controller {
 
 		$this->load->view('framework/header', array('title' => 'User'));
 		$this->load->view('framework/sidebar');
-		$this->load->view('pages/user',$data);
+		$this->load->view('pages/admin/user',$data);
 		$this->load->view('framework/footer');
 	}
 
@@ -483,11 +481,23 @@ class Dash extends CI_Controller {
 		$this->load->view('framework/footer');
 	}
 
-	public function daily_monitoring_operations_69()
+	public function monitoring_operations_69()
 	{
-		$this->load->view('framework/header', array('title' => 'Monitoring Pos'));
+		$position	  	= $this->Crud->search('table_enum', array('type' => 'position'))->result_array();
+		$code_standby	= $this->Crud->search('table_enum', array('type' => 'code_standby'))->result_array();
+
+		$this->load->model('Monitoring_operations', 'monitoring');
+		$data = $this->monitoring->detail_monitoring_operations()->result_array();
+
+		$data 		= array (
+			'position'		=> $position,
+			'code_standby'	=> $code_standby,
+			'data'			=> $data,
+		);
+
+		$this->load->view('framework/header', array('title' => 'Post KM 69'));
 		$this->load->view('framework/sidebar');
-		$this->load->view('pages/daily_monitoring_operations_69');
+		$this->load->view('pages/post_69',$data);
 		$this->load->view('framework/footer');
 	}
 }
