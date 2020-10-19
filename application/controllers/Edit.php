@@ -284,5 +284,18 @@ class Edit extends CI_Controller {
 		redirect(base_url($refer));
 	}
 
+	public function ready_to_operation_34($id, $val)
+	{
+		$time_out = $val == 0 ? '' : date('Y-m-d H:i:s');
+		$this->db->where('id', $id);
+		$this->db->update('table_monitoringoperations', array('operation' => $val, 'time_out' => $time_out ));
+	}
+
+	public function ready_to_operation_65($id, $val)
+	{
+		$time_out = $val == 0 ? '' : date('Y-m-d H:i:s');
+		$this->db->where('id', $id);
+		$this->db->update('table_monitoringoperations', array('operation' => $val, 'time_out' => $time_out ));
+	}
 	
 }

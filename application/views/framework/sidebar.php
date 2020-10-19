@@ -104,6 +104,11 @@
             <i class="fa fa-edit"></i> <span>Record Production</span>
           </a>
         </li>
+        <li <?php if($this->uri->segment(2) == 'monitoring_data_production') { echo' class="active"';} ?>>
+          <a href="<?php echo base_url('Dash/monitoring_data_production');?>">
+            <i class="fa fa-building-o"></i><span>Monitoring Data</span>
+          </a>
+        </li>
         <li <?php if($this->uri->segment(2) == 'achievement_seam_series') { echo' class="active"';} ?>>
           <a href="<?php echo base_url('dash/achievement_seam_series');?>">
             <i class="fa fa-feed"></i><span>Achievement Seam Series</span>
@@ -114,27 +119,26 @@
             <i class="fa fa-gavel"></i><span>RTK ROM</span>
           </a>
         </li>
-        <li>
+        <!-- <li>
           <a href="#">
             <i class="fa fa-bar-chart"></i><span>Data Report Production</span>
           </a>
-        </li>
+        </li> -->
         <li class="header">MONITORING POST</li>
         <li class="treeview <?php if($this->uri->segment(2) == 'post_34_muatan' || $this->uri->segment(2) == 'post_34_standby') { echo ' active';}?>">
           <a href="#"><i class="fa fa-send-o"></i> <span>Post KM 34</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
           </a>
           <ul class="treeview-menu">
             <li <?php if($this->uri->segment(2) == 'post_34_muatan') { echo' class="active"';} ?>><a href="<?php echo base_url('dash/post_34_muatan');?>"><i class="fa fa-circle-o"></i>Muatan </a></li>
-            <li <?php if($this->uri->segment(2) == 'daily_monitoring_operations_standby') { echo' class="active"';} ?>><a href="<?php echo base_url('dash/daily_monitoring_operations_standby');?>"><i class="fa fa-circle-o"></i>Standby</a></li>
+            <li <?php if($this->uri->segment(2) == 'post_34_standby') { echo' class="active"';} ?>><a href="<?php echo base_url('dash/post_34_standby');?>"><i class="fa fa-circle-o"></i>Standby</a></li>
           </ul>
         </li>
-        <li class="treeview <?php if($this->uri->segment(2) == 'daily_monitoring_operations' || $this->uri->segment(2) == 'daily_monitoring_operations_standby') { echo ' active';}?>">
+        <li class="treeview <?php if($this->uri->segment(2) == 'post_65_muatan' || $this->uri->segment(2) == 'post_65_standby') { echo ' active';}?>">
           <a href="#"><i class="fa fa-send-o"></i> <span>Post KM 65</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
           </a>
           <ul class="treeview-menu">
-            <li <?php if($this->uri->segment(2) == 'daily_monitoring_operations' && $this->uri->segment(3) == 'M') { echo' class="active"';} ?>><a href="<?php echo base_url('dash/daily_monitoring_operations/M');?>"><i class="fa fa-circle-o"></i>Muatan </a></li>
-            <!-- <li <?php if($this->uri->segment(2) == 'daily_monitoring_operations' && $this->uri->segment(3) == 'K') { echo' class="active"';} ?>><a href="<?php echo base_url('dash/daily_monitoring_operations/K');?>"><i class="fa fa-circle-o"></i>Kosongan</a></li> -->
-            <li <?php if($this->uri->segment(2) == 'daily_monitoring_operations_standby') { echo' class="active"';} ?>><a href="<?php echo base_url('dash/daily_monitoring_operations_standby');?>"><i class="fa fa-circle-o"></i>Standby</a></li>
+            <li <?php if($this->uri->segment(2) == 'post_65_muatan') { echo' class="active"';} ?>><a href="<?php echo base_url('dash/post_65_muatan');?>"><i class="fa fa-circle-o"></i>Muatan </a></li>
+            <li <?php if($this->uri->segment(2) == 'post_65_standby') { echo' class="active"';} ?>><a href="<?php echo base_url('dash/post_65_standby');?>"><i class="fa fa-circle-o"></i>Standby</a></li>
           </ul>
         </li>
         <li <?php if($this->uri->segment(2) == 'post_69') { echo' class="active"';} ?>>

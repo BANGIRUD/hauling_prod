@@ -94,15 +94,34 @@ class Dash extends CI_Controller {
 			
 		$this->load->view('framework/header', array('title' => 'Add Multiple Unit'));
 		$this->load->view('framework/sidebar');
-		$this->load->view('pages/record_multiple_production', $data);
+		$this->load->view('pages/dispatching/record_multiple_production', $data);
 		$this->load->view('framework/footer');	
+	}
+
+	public function monitoring_data_production()
+	{
+		$this->load->view('framework/header', array('title' => 'Monitoring Data'));
+		$this->load->view('framework/sidebar');
+		$this->load->view('pages/dispatching/monitoring_data');
+		$this->load->view('framework/footer');
 	}
 
 	public function achievement_seam_series()
 	{
+
+		$shift_code	= $this->session->userdata('shift');
+
 		$result = get_date_shift();
 		$this->load->model('Supplay_passing_model', 'supplay');
 		$table = $this->supplay->show_data()->result_array();
+
+		if ($shift_code == 1) {
+				$jam = 4;
+				$limit = 12;
+			} else {
+				$jam = 16;
+				$limit = 12;
+			}
 
 		$rom	  	= $this->Crud->search('table_enum', array('type' => 'rom'))->result_array();
 		$pos		= $this->Crud->search('table_enum', array('type' => 'area'))->result_array();
@@ -114,6 +133,8 @@ class Dash extends CI_Controller {
 			'table'			=> $table,
 			'shift_code'	=> $shift_code,
 			'rom'			=> $rom,
+			'jam'			=> $jam,
+			'limit'			=> $limit,
 			'pos'			=> $pos
 
 
@@ -154,81 +175,87 @@ class Dash extends CI_Controller {
 		# code...
 	}
 
-	public function post_34_muatan($position = "K", $by_area = "")
+	public function post_34_muatan()
 	{
 		$by_level  = $this->session->userdata('level');
-		$result 			= get_date_shift();	
-		// $by_area			= $by_area == '' ? $this->session->userdata('area') : $by_area;
-		// $code				= $code == '' ? "L" : $code;
+		$result 			= get_date_shift();
 		$date  				= $result['date'];
-		$cargo_muatan		= $this->Crud->search('table_enum', array('type' => 'cargo_muatan'))->result_array();
-		$rom	  			= $this->Crud->search('table_enum', array('type' => 'rom'))->result_array();		
-		$area 				= $this->Crud->search('table_enum', array('type' => 'area'))->result_array();
+		$position			= $this->Crud->search('table_enum', array('type' => 'position'))->result_array();
+		$code_standby		= $this->Crud->search('table_enum', array('type' => 'code_standby'))->result_array();	
+	
 
-		$this->load->model('Shift_operations', 'operations');
+		$this->load->model('Monitoring_operations', 'operations');
 		
-		$data = $this->operations->monitoring_shift_operations($position,$by_area)->result_array();
+		$data = $this->operations->monitoring_operations_34_muatan()->result_array();
 		
-
 		$data 		= array (
 			'dateid' 			=> $result['date'],
-			'cargo_muatan'		=> $cargo_muatan,
-			'rom'				=> $rom,
-			'data'				=> $data,			
-			'area'				=> $area,
-			'position'			=> $position
+			'data'				=> $data,
+			'position'			=> $position,
+			'code_standby'		=> $code_standby
 		);
 
 		$this->load->view('framework/header', array('title' => 'Post KM 34 Muatan'));
 		$this->load->view('framework/sidebar');
-		$this->load->view('pages/post/post_34_muatan');
+		$this->load->view('pages/post/post_34_muatan',$data);
 		$this->load->view('framework/footer');
 	}
 
 	public function post_34_standby()
 	{
+		$this->load->model('Monitoring_operations', 'operations');
+		
+		$data = $this->operations->monitoring_operations_34_standby()->result_array();
+
+		$data 		= array (
+			'data'				=> $data
+		);
+
 		$this->load->view('framework/header', array('title' => 'Post KM 34 Standby'));
 		$this->load->view('framework/sidebar');
-		$this->load->view('pages/post/post_34_standby');
+		$this->load->view('pages/post/post_34_standby',$data);
 		$this->load->view('framework/footer');
 	}
 
 	public function post_65_muatan()
 	{
 		$by_level  = $this->session->userdata('level');
-		$result 			= get_date_shift();	
-		// $by_area			= $by_area == '' ? $this->session->userdata('area') : $by_area;
-		// $code				= $code == '' ? "L" : $code;
+		$result 			= get_date_shift();
 		$date  				= $result['date'];
-		$cargo_muatan		= $this->Crud->search('table_enum', array('type' => 'cargo_muatan'))->result_array();
-		$rom	  			= $this->Crud->search('table_enum', array('type' => 'rom'))->result_array();		
-		$area 				= $this->Crud->search('table_enum', array('type' => 'area'))->result_array();
+		$position			= $this->Crud->search('table_enum', array('type' => 'position'))->result_array();
+		$code_standby		= $this->Crud->search('table_enum', array('type' => 'code_standby'))->result_array();	
+	
 
-		$this->load->model('Shift_operations', 'operations');
+		$this->load->model('Monitoring_operations', 'operations');
 		
-		$data = $this->operations->monitoring_shift_operations($position,$by_area)->result_array();
+		$data = $this->operations->monitoring_operations_65_muatan()->result_array();
 		
-
 		$data 		= array (
 			'dateid' 			=> $result['date'],
-			'cargo_muatan'		=> $cargo_muatan,
-			'rom'				=> $rom,
-			'data'				=> $data,			
-			'area'				=> $area,
-			'position'			=> $position
+			'data'				=> $data,
+			'position'			=> $position,
+			'code_standby'		=> $code_standby
 		);
-
+		
 		$this->load->view('framework/header', array('title' => 'Post KM 65 Muatan'));
 		$this->load->view('framework/sidebar');
-		$this->load->view('pages/post/post_34_muatan');
+		$this->load->view('pages/post/post_65_muatan',$data);
 		$this->load->view('framework/footer');
 	}
 
 	public function post_65_standby()
 	{
+		$this->load->model('Monitoring_operations', 'operations');
+		
+		$data = $this->operations->monitoring_operations_65_standby()->result_array();
+
+		$data 		= array (
+			'data'				=> $data
+		);
+
 		$this->load->view('framework/header', array('title' => 'Post KM 65 Standby'));
 		$this->load->view('framework/sidebar');
-		$this->load->view('pages/post/post_34_standby');
+		$this->load->view('pages/post/post_65_standby',$data);
 		$this->load->view('framework/footer');
 	}
 
@@ -237,8 +264,9 @@ class Dash extends CI_Controller {
 		$position	  	= $this->Crud->search('table_enum', array('type' => 'position'))->result_array();
 		$code_standby	= $this->Crud->search('table_enum', array('type' => 'code_standby'))->result_array();
 
-		$this->load->model('Monitoring_operations', 'monitoring');
-		$data = $this->monitoring->detail_monitoring_operations()->result_array();
+		$this->load->model('Monitoring_operations', 'operations');
+		
+		$data = $this->operations->monitoring_operations_65_standby()->result_array();
 
 		$data 		= array (
 			'position'		=> $position,

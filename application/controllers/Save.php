@@ -175,7 +175,59 @@ class Save extends CI_Controller {
 		redirect($_SERVER['HTTP_REFERER']);
 	}
 
-	public function monitoring_operations_69() {
+	public function monitoring_operations_34() {
+		$id_unit 			= $this->input->post('id_unit');
+		$position 			= $this->input->post('position');
+		$code_standby 		= $this->input->post('code_standby');
+		$remark 			= $this->input->post('remark');
+
+		$this->form_validation->set_rules('id_unit','id_unit','required');
+		$this->form_validation->set_rules('position','position','required');
+		$this->form_validation->set_rules('code_standby','code_standby','required');
+
+		if( $this->form_validation->run() != false ) {
+			$data = array(
+					'ref_id'			=> 0,
+					'created_at' 		=> date('Y-m-d H:i:s'),
+					'updated_at' 		=> date('Y-m-d H:i:s'),
+					'deleted_at' 		=> NULL,
+					'time_in'			=> date('Y-m-d H:i:s'),
+					'time_out'			=> NULL,
+					'cn_unit' 			=> $id_unit,
+					'position' 			=> $position,
+					'cargo' 			=> "Kosongan",
+					'code_stby' 		=> $code_standby,
+					'time_passing'		=> NULL,
+					'remark'			=> $remark,
+					'operation' 		=> 0,
+					'by_ordered'		=> 0,
+					'by_area'			=> $this->by_area,
+					'by_user'			=> $this->by_user
+				);
+
+				$this->Crud->insert('table_monitoringoperations', $data);
+
+				$this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissible" role="alert">
+	            <span class="badge badge-pill badge-success">Success</span> <b>Data</b> has been added.
+	            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	                <span aria-hidden="true">&times;</span>
+	            </button>
+	        </div>');
+
+
+		} else {
+			$this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissible" role="alert">
+            <span class="badge badge-pill badge-danger">Error</span> ' . validation_errors() . '
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>');
+		}
+		redirect($_SERVER['HTTP_REFERER']);
+
+	}
+
+	public function monitoring_operations_65() {
 		$id_unit 			= $this->input->post('id_unit');
 		$position 			= $this->input->post('position');
 		$code_standby 		= $this->input->post('code_standby');
@@ -227,6 +279,57 @@ class Save extends CI_Controller {
 
 	}
 
+	public function monitoring_operations_69() {
+		$id_unit 			= $this->input->post('id_unit');
+		$position 			= $this->input->post('position');
+		$code_standby 		= $this->input->post('code_standby');
+		$remark 			= $this->input->post('remark');
+
+		$this->form_validation->set_rules('id_unit','id_unit','required');
+		$this->form_validation->set_rules('position','position','required');
+		$this->form_validation->set_rules('code_standby','code_standby','required');
+
+		if( $this->form_validation->run() != false ) {
+			$data = array(
+					'ref_id'			=> 0,
+					'created_at' 		=> date('Y-m-d H:i:s'),
+					'updated_at' 		=> date('Y-m-d H:i:s'),
+					'deleted_at' 		=> NULL,
+					'time_in'			=> date('Y-m-d H:i:s'),
+					'time_out'			=> NULL,
+					'cn_unit' 			=> $id_unit,
+					'position' 			=> $position,
+					'cargo' 			=> NULL,
+					'code_stby' 		=> $code_standby,
+					'time_passing'		=> NULL,
+					'remark'			=> $remark,
+					'operation' 		=> 0,
+					'by_ordered'		=> 0,
+					'by_area'			=> $this->by_area,
+					'by_user'			=> $this->by_user
+				);
+
+				$this->Crud->insert('table_monitoringoperations', $data);
+
+				$this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissible" role="alert">
+	            <span class="badge badge-pill badge-success">Success</span> <b>Data</b> has been added.
+	            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	                <span aria-hidden="true">&times;</span>
+	            </button>
+	        </div>');
+
+
+		} else {
+			$this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissible" role="alert">
+            <span class="badge badge-pill badge-danger">Error</span> ' . validation_errors() . '
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>');
+		}
+		redirect($_SERVER['HTTP_REFERER']);
+
+	}
 
 	public function rom_operations($id) {
 		$this->load->model('Shift_operations', 'operation');

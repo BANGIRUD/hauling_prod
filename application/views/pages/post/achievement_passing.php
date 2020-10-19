@@ -4,12 +4,12 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-      Dashboard
-      <small>Achievement Passing</small>
+      Achievement Passing
+      <small>Shift <?=$shift?></small>
     </h1>
     <ol class="breadcrumb">
-      <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-      <li class="active">Achievement Passing</li>
+      <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
+      <li class="active">Achievement Passing <?=get_enum($this->session->userdata('area'))?></li>
     </ol></br>
       <div class="row">
         <div class="col-md-2">
@@ -134,10 +134,32 @@
         </div>
       </div>
       <div class="col-md-12">
+          <!-- AREA CHART -->
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">PASSING PLAN VS ACTUAL DISPATCH 34</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+              </div>
+            </div>
+            <div class="box-body">
+              <div class="container">
+                <canvas id="canvas" style="height:250px"></canvas>
+              </div>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+
+        </div>
+      <!-- <div class="col-md-12">
         <div id="container" >
           <canvas id="canvas"></canvas>
         </div>
-      </div>
+      </div> -->
   </section>
 </div>
 
@@ -214,7 +236,6 @@
           responsive: true,
           title: {
             display: true,
-            text: 'PASSING PLAN VS ACTUAL DISPATCH 34'
           },
           tooltips: {
             mode: 'index',

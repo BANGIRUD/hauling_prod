@@ -4,12 +4,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Dashboard
-        <small>RTK ROM</small>
+        RTK ROM
+        <small><?=get_enum($this->session->userdata('area'))?></small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-        <li class="active">RTK ROM</li>
+        <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
+        <li class="active">RTK ROM <?=get_enum($this->session->userdata('area'))?></li>
       </ol></br>
       <div class="row">
         <div class="col-md-2">
@@ -25,8 +25,17 @@
         <div class="col-md-2">
           <div class="form-group">
             <label>Time :</label>
-            <select class="form-control" name="pos" id="pos">
-              <option>15:00</option>
+            <select class="form-control" name="time" id="time">
+              <?php
+                for ($a=$jam, $i = 0; $i < 24; $i++, $a++) { 
+                  if ($a >= 24) {
+                    $a = $a - 24;
+                  }
+                    $b = $a . ':00';
+                  echo  '<option value="' . $a . '">' . $b. '</option>';
+                  
+                }
+              ?>
             </select>
           </div>
         </div>
@@ -34,7 +43,7 @@
           <div class="form-group">
             <label>Date :</label>
           <div class="input-group date">
-            <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+            <div class="input-group-addon" style="background-color: #e9ecef"><i class="fa fa-calendar"></i></div>
             <input  type="text" name="date" class="form-control datepicker" value=" <?= date('m/d/Y');?>">
           </div>
           </div>

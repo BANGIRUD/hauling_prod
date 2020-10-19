@@ -22,12 +22,12 @@
               <?php if ($this->session->userdata('level') == 'administrator' || $this->session->userdata('level') == 'dispatcher'):?>
                <p style="padding: 0 15px">Click tombol untuk filter ROM:</p>
                 <?php $no=0;
-                echo '<a class="btn btn-app bg-maroon" href="'.base_url('Dash/daily_rom_operations/').'"><i class="fa fa-list"></i>ALL</a>';
+                echo '<a class="btn btn-app bg-maroon" href="'.base_url('Dash/record_rom/').'"><i class="fa fa-list"></i>ALL</a>';
                 foreach ($rom as $value):$no++;
                   if ($no % 2 == 0) {
-                    echo '<a class="btn btn-app bg-olive" href="'.base_url('Dash/daily_rom_operations/'.$value['id']).'"><i class="fa fa-inbox"></i>'.$value['name'].'</a>';
+                    echo '<a class="btn btn-app bg-olive" href="'.base_url('Dash/record_rom/'.$value['id']).'"><i class="fa fa-inbox"></i>'.$value['name'].'</a>';
                   }else{
-                    echo '<a class="btn btn-app bg-orange" href="'.base_url('Dash/daily_rom_operations/'.$value['id']).'"><i class="fa fa-inbox"></i>'.$value['name'].'</a>';
+                    echo '<a class="btn btn-app bg-orange" href="'.base_url('Dash/record_rom/'.$value['id']).'"><i class="fa fa-inbox"></i>'.$value['name'].'</a>';
                   }
                 ?>
                 <?php endforeach;?>
@@ -45,7 +45,8 @@
                   <tr style="background-color: #2e86de ; color: #ffffff ">
                     <th style="text-align: center;">No</th>
                     <th style="text-align: center;">C/N</th>
-                    <th style="text-align: center;">Cargo Muatan</th>                
+                    <th style="text-align: center;">Cargo Muatan</th>
+                    <th style="text-align: center;">ROM</th>                
                     <th style="text-align: center;">Action</th>
                   </tr>                  
                 </thead>
@@ -58,7 +59,8 @@
                       echo '<tr style="text-align: center;">';
                         echo '<td>'.$no.'</td>
                               <td>'.$value['cn_unit'].'</td>
-                              <td style="background-color:'. $color[0] . ';color:'.@$color[1].'" >'.$value['cargo'].'</td>';
+                              <td style="background-color:'. $color[0] . ';color:'.@$color[1].'" >'.$value['cargo'].'</td>
+                              <td>'.$value['rom_name'].'</td>';
                         echo '<td nowrap>';
                         if($by_level != 'dispatcher'&& $by_level != 'administrator') :
                           $time_in = $value['time_in'];

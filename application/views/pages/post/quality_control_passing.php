@@ -11,13 +11,13 @@
       <small>Shift <?=$shift?></small>
     </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-        <li class="active">Quality Control Passing</li>
+        <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
+        <li class="active">Quality Control Passing <?=get_enum($this->session->userdata('area'))?></li>
       </ol></br>
       <div class="row">
         <div class="col-md-2">
           <div class="form-group">
-            <label>sDate :</label>
+            <label>Date :</label>
           <div class="input-group date">
                       <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
                       <input  type="text" name="date" class="form-control datepicker" value=" <?= date('m/d/Y');?>">

@@ -1,9 +1,9 @@
 <div class="content-wrapper"><!-- Content Header (Page header) -->
   	<section class="content-header">
-    	<h1>Monitoring Unit Muatan <?=get_enum($this->session->userdata('area'))?><small></small></h1>
+    	<h1>Monitoring Passing <?=get_enum($this->session->userdata('area'))?><small></small></h1>
     		<ol class="breadcrumb">
-      			<li><a href="#"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-      			<li class="active">Monitoring Unit Muatan <?=get_enum($this->session->userdata('area'))?></li>
+      			<li><a href="#"><i class="fa fa-home"></i> Home</a></li>
+      			<li class="active">Monitoring Passing <?=get_enum($this->session->userdata('area'))?></li>
     		</ol></br>
     	<div class="row">
     		<div class="col-md-2">

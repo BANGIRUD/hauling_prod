@@ -20,11 +20,16 @@
         <div class="box box-primary">
           <div class="box-header with-border">
             <div class="row">
-              <div class="col-xs-12">
-                <button class="btn btn-primary  " data-toggle="modal" id="add-unit">
+              <div class="col-xs-6">
+                <button class="btn btn-success  " data-toggle="modal" id="add-unit">
                   <i class="fa fa-plus"> Add Unit</i>
                 </button>
-              </div>  
+              </div> 
+              <div class="col-xs-6 text-right">
+                 <a href="<?php echo base_url('Dash/daily_monitoring_operations_standby/standby');?>" class="btn btn-primary">Standby</a>
+                  <a href="<?php echo base_url('Dash/daily_monitoring_operations_standby/l');?>" class="btn btn-warning">Operation</a>
+                  <a href="<?php echo base_url('Dash/daily_monitoring_operations_standby/');?>" class="btn btn-danger">All</a>
+              </div> 
             </div>
           </div>
         </div>
@@ -32,80 +37,80 @@
       <div class="col-md-12">
         <div class="box">
           <div class="box-body">
-            <div class="nav-tabs-custom">
-              <ul class="nav nav-tabs">
-                <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="true">Kosongan</a></li>
-                <li><a href="#tab_2" data-toggle="tab" aria-expanded="true">Muatan</a></li>
-              </ul>
-              <div class="tab-content">
-                <div class="tab-pane active" id="tab_1">
-                  <div class="table-responsive">
-                    <table class="table table-bordered table-striped" id="kosongan_69">
-                      <thead style="background-color: #3742fa; color: #ffffff;">
-                        <tr>
-                          <th>No</th>
-                          <th>C/N</th>
-                          <th>Position</th>
-                          <th>Code Standby</th>
-                          <th>Action</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <?php
-                          $no = 0;
-                          foreach ($data as $value) {
-                            $no++;
-                            echo '<tr style="text-align: center;">';
-                              echo '<td>'.$no.'</td>
-                                   <td>'.$value['cn_unit'].'</td>
-                                   <td>'.$value['position'].'</td>
-                                   <td>'.$value['code_stby'].'</td>';
-                              echo '<td nowrap>';
-                              $btn_disabled = $no == 1 ? ' disabled' : '';
-                                echo '<a href="'.base_url('edit/edit_shift_operation_ordered/'.$value['id'].'/'.$no.'/top').'" class="btn btn-xs btn-warning '.$btn_disabled.'" id="up" data-id="" data-column="cancel" data-text=" " title="Up"><i class="fa fa-arrow-up"></i></a> ';
-                                echo '<a href="'.base_url('edit/edit_shift_operation_ordered/'.$value['id'].'/'.$no.'/down').'" class="btn btn-xs btn-warning" id="down" data-id="" data-column="cancel" data-text=" " title="Down"><i class="fa fa-arrow-down"></i></a>';
-                                if($value['operation'] == 0 && strtolower($value['code_stby']) != 'l') : 
-                                echo ' <a href="#" class="btn btn-xs btn-success" id="ready" data-id="'.$value['id'].'" data-value="'.$value['operation'].'" data-original-title="Ready" data-toggle="tooltip"><i class="fa fa-check"></i>
-                                  </a>';
-                                else:
-                                echo ' <a href="#" class="btn btn-xs btn-danger" id="ready" data-id="'.$value['id'].'" data-value="'.$value['operation'].'" data-original-title="Cancel" data-toggle="tooltip"><i class="fa fa-remove"></i>
-                                  </a>';
-                                endif;
-                              echo '</td>';
-                            echo '</tr>';
-                          }
-                        ?>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-                <div class="tab-pane" id="tab_2">
-                  <div class="table-responsive">
-                    <table class="table table-bordered table-striped" id="kosongan_69">
-                      <thead style="background-color: #3742fa; color: #ffffff;">
-                        <tr>
-                          <th>No</th>
-                          <th>C/N</th>
-                          <th>Code Standby</th>
-                          <th>Cargo Muatan</th>
-                          <th>Action</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr style="text-align: center;">
-                          <td>1</td>
-                          <td>100</td>
-                          <td>S01</td>
-                          <td>HAV ASG</td>
-                          <td></td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+            <div class="table-responsive">
+              <table id="example1" class="table table-bordered table-striped">
+                <thead style="background-color: #2e86de ; color: #ffffff ; font-size: 12px;">
+                  <tr>
+                    <th rowspan="2" style="text-align: center;">&nbsp;</th>
+                    <th rowspan="2" style="text-align: center;">No</th>
+                    <th rowspan="2" style="text-align: center;">Date</th>
+                    <th colspan="3" style="text-align: center;">Time</th>
+                    <th rowspan="2" style="text-align: center;">CN Unit</th>                  
+                    <th rowspan="2" style="text-align: center;">Position</th>
+                    <th rowspan="2" style="text-align: center;">Cargo Muatan</th>
+                    <th rowspan="2" style="text-align: center;">Time Passing</th>
+                    <th rowspan="2" style="text-align: center;">Remarks</th>
+                    <th rowspan="2" style="text-align: center;">CSA</th>
+                    <th rowspan="2" style="text-align: center;">Time OS</th>
+                    <th rowspan="2" style="text-align: center;">Register</th>
+                    <th rowspan="2" style="text-align: center;">Action</th>
+                  </tr>
+                  <tr>
+                    <th style="text-align: center;">In</th>
+                    <th style="text-align: center;">Out</th>
+                    <th style="text-align: center;">Hour Stb</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php $no=0;
+                    foreach ($data as $value) {
+                      $no++;
+                      echo '<tr style="text-align: center; font-size: 12px;">';
+                        echo '<td>
+                                <a href="" class="btn btn-xs btn-warning" id="up" data-id="" data-column="cancel" data-text=" " data-original-title="Up" data-toggle="tooltip">
+                                  <i class="fa fa-arrow-up"></i>
+                                </a> 
+                                <a href="" class="btn btn-xs btn-warning" id="down" data-id="" data-column="cancel" data-text=" " data-original-title="Down" data-toggle="tooltip">
+                                  <i class="fa fa-arrow-down"></i>
+                                </a>
+                                <a href="#" class="btn btn-xs btn-primary" data-target="#editdata" id="edit" data-id="" data-original-title="Edit" data-toggle="tooltip">
+                                  <i class="fa fa-edit"></i>
+                                </a>
+                              </td>';
+                        echo '<td>'.$no.'</td>
+                              <td>10/08/2020</td>
+                              <td>'.date('H:i',strtotime($value['time_in'])).'</td>';
+                              if (strtolower($value['code_stby']) == 'l') {
+                                      $timeout = date('H:i',strtotime($value['time_out']));
+                                    } else {
+                                      $timeout = $value['operation'] == 0 ? '-' : date('H:i',strtotime($value['time_out']));
+                                    }
+                        echo '<td>'.$timeout.'</td>';
+                               $timestb = $value['operation'] == 0 ? '-' : date('H:i',strtotime(selisih_hour($value['time_in'],$value['time_out'])));
+                        echo '<td>'.$timestb.'</td>
+                              <td>'.$value['cn_unit'].'</td>
+                              <td>'.$value['position'].'</td>
+                              <td>'.$value['cargo'].'</td>
+                              <td>'.date('H',strtotime($value['time_passing'])).'</td>
+                              <td>'.$value['remark'].'</td>
+                              <td>CSA</td>
+                              <td>Time OS</td>
+                              <td>Regist / Unregist</td>';
+                        echo '<td>
+                                <a href="#" class="btn btn-xs btn-success" id="ready" data-id="'.$value['id'].'" data-value="'.$value['operation'].'" data-original-title="Ready" data-toggle="tooltip">
+                                  <i class="fa fa-check"></i>
+                                </a> 
+                                <a href="#" class="btn btn-xs btn-danger" data-target="#deletedata" id="delete" data-id="" data-original-title="delete" data-toggle="tooltip">
+                                  <i class="fa fa-trash"></i>
+                                </a>                                          
+                              </td>';
+                      echo '</tr>';
+                    }
+                  ?>  
+                </tbody>
+              </table>
+            </div>  
+          </div>          
         </div>
       </div>
     </div>
@@ -172,9 +177,9 @@
       'paging'      : false,
       'lengthChange': true,
       'searching'   : true,
-      'ordering'    : true,
+      'ordering'    : false,
       'info'        : true,
-      'autoWidth'   : true,
+      'autoWidth'   : false,
         buttons: [
       'print'
         ]
