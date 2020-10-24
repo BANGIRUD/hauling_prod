@@ -51,41 +51,7 @@
                   </tr>                  
                 </thead>
                 <tbody>
-                   <?php 
-                    $no = 0;
-                    foreach ($data as $value) {
-                      $no++; 
-                      $color = explode(',', $value['color']);
-                      echo '<tr style="text-align: center;">';
-                        echo '<td>'.$no.'</td>
-                              <td>'.$value['cn_unit'].'</td>
-                              <td style="background-color:'. $color[0] . ';color:'.@$color[1].'" >'.$value['cargo'].'</td>
-                              <td>'.$value['rom_name'].'</td>';
-                        echo '<td nowrap>';
-                        if($by_level != 'dispatcher'&& $by_level != 'administrator') :
-                          $time_in = $value['time_in'];
-                          $time_out = $value['time_out'];
-                          $btn_in = " disabled";
-                          if($time_in == NULL && $time_out == NULL)
-                            $btn_in = "";
-                          echo '<a href="#" class="btn btn-sm btn-success'.$btn_in.'"  id="edit_in_rom" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit masuk ROM" data-toggle="tooltip"><i class="fa  fa-reply"> In</i>
-                                </a>';
-
-                          $btn_out = " disabled";
-                          if($time_in != NULL && $time_out == NULL)
-                            $btn_out = "";
-                          echo ' <a href="#" class="btn btn-sm btn-danger'.$btn_out.'"  id="edit_out_rom" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit keluar ROM" data-toggle="tooltip"><i class="fa  fa-share"> Out</i>  
-                              </a>';
-                        else :
-                          echo '<a href="#" class="btn btn-sm btn-success disabled"  id="edit_in_rom" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit masuk ROM" data-toggle="tooltip"><i class="fa  fa-reply"> In</i>
-                                </a>';
-                          echo ' <a href="#" class="btn btn-sm btn-danger disabled"  id="edit_out_rom" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit keluar ROM" data-toggle="tooltip"><i class="fa  fa-share"> Out</i>  
-                              </a>';
-                        endif;
-                        echo '</td>';
-                      echo '</tr>';
-                    }
-                  ?>
+                  
                 </tbody>  
               </table>
             </div>  
@@ -99,8 +65,8 @@
 
 
 <script type="text/javascript">
-  $(function () {
-    $('#example1').DataTable({
+  $(document).ready(function () {
+    var table = $('#example1').DataTable({
       'paging'      : true,
       'lengthChange': true,
       'searching'   : true,
@@ -109,9 +75,16 @@
       'autoWidth'   : true,
         buttons: [
       'print'
-        ]
-    })
+        ],
+      "ajax": '<?= base_url('Ajax/record_rom/' . $by_rom);?>'
+    });
+
+
+    setInterval(function () {
+        table.ajax.reload();
+    }, 5000);
   });
+
 
   $(document).on('click', '#add-unit', function(e) {
     var d = new Date();

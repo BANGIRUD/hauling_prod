@@ -370,6 +370,7 @@ class Dash extends CI_Controller {
 			'cargo_muatan'		=> $cargo_muatan,
 			'rom'				=> $rom,
 			'data'				=> $data,
+			'by_rom'			=> $by_rom
 		);
 
 		$this->load->view('framework/header', array('title' => 'Record ROM'));
