@@ -1,0 +1,10 @@
+{
+  "name": "socket-hauling",
+  "version": "0.0.1",
+  "description": "Hauling socket.io app",
+  "dependencies": {
+    "express": "^4.15.2",
+    "mysql": "^2.18.1",
+    "socket.io": "^2.3.0"
+  }
+}

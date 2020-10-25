@@ -3,6 +3,7 @@
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
+      <form method="GET">
       <h1>
         Achievement SeamSeries
         <small><?=get_enum($this->session->userdata('area'))?></small>
@@ -15,25 +16,26 @@
         <div class="col-md-2">
           <div class="form-group">
             <label>Shift :</label>
-          <select class="form-control" name="shift_code" id="shift_code">
+          <select class="form-control" name="shift" id="shift_code">
                     <?php foreach ($shift_code as $key) {
-                      echo '<option value="'.$key['code'].'">'.$key['code'].' </option>';
+                      $select = $key['code'] == $shift ? ' selected': '';
+                      echo '<option value="'.$key['code'].'"'.$select.'>'.$key['code'].' </option>';
                     }?>
                   </select>
           </div>
         </div>
         <div class="col-md-2">
           <div class="form-group">
-            <label>Time :</label>
+            <label>Time : </label>
             <select class="form-control" name="time" id="time">
               <?php
-                for ($a=$jam, $i = 0; $i < 24; $i++, $a++) { 
+                for ($a=$jam, $i = 0; $i < 12; $i++, $a++) { 
                   if ($a >= 24) {
                     $a = $a - 24;
                   }
-                    $b = $a . ':00';
-                  echo  '<option value="' . $a . '">' . $b. '</option>';
-                  
+                  $b = $a . ':00';
+                  $select = $a == $hour ? ' selected': '';
+                  echo  '<option value="' . $a . '"'.$select.'>' . $b. '</option>';                  
                 }
               ?>
             </select>
@@ -44,18 +46,19 @@
             <label>Date :</label>
           <div class="input-group date">
                       <div class="input-group-addon" style="background-color: #e9ecef"> <i class="fa fa-calendar"></i></div>
-                      <input  type="text" name="date" class="form-control datepicker" value=" <?= date('m/d/Y');?>">
+                      <input  type="text" name="date" class="form-control datepicker" value=" <?= date('m/d/Y', strtotime($date));?>">
                     </div>
           </div>
         </div>
         <div class="col-md-4">
           <div class="form-group">
             <label>&nbsp;</label></br>
-            <button type="button" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
+            <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
             <a href="#" class="btn btn-success"><i class="fa fa-file-excel-o"></i> Export</a>
           </div>
         </div>
       </div>
+      </form>
     </section>
     <section class="content">
       <div class="row">
@@ -81,7 +84,6 @@
                           $jam = 4;
                           if ($shift == 2) {
                             $jam = 16;
-
                           }
                           for ($a=$jam, $i = 1; $i <= 12; $i++, $a++) { 
                             if ($a >= 24) {
@@ -93,6 +95,8 @@
                               $b = $a . ':00';
                             }
                             echo '<th colspan="2" width="120" style="text-align: center;"> ' .$b. ' </th>' ; 
+                            if ($a == $hour)
+                              break;
                         }?> 
                         <th colspan="2" nowrap style="text-align: center; vertical-align: middle;">Total</th>
                         <th rowspan="2" nowrap style="text-align: center; vertical-align: middle;">ACHIEV.</th>
@@ -101,13 +105,54 @@
                     <?php for ($a=$jam, $i = 1; $i <= 12; $i++, $a++):?>
                       <th width="500" style="text-align: center;">Plan</th>
                       <th nowrap style="text-align: center;">Actual</th>
-                    <?php endfor;?>
+                    <?php if ($a == $hour)
+                              break;
+                            endfor;?>
                       <th width="500" style="text-align: center;">Plan</th>
                       <th nowrap style="text-align: center;">Actual</th>                    
                     </tr>
                 </thead>
                 <tbody>
-                  
+                  <?php foreach ($table as $value): ?>
+                    <tr>
+                      <td nowrap><?= $value['material'];?></td>
+                      <td nowrap><?= $value['rom_spp'];?></td>
+
+                      <?php
+                          $jam = 4;
+                          if ($shift == 2) {
+                            $jam = 16;
+
+                          }
+                          $plan = 0;
+                          $actual = 0;
+                          for ($a=$jam, $i = 1; $i <= 12; $i++, $a++) { 
+                            if ($a >= 24) {
+                              $a = $a - 24;
+                            }
+                            if ($a == 7) {
+                              $b = $a . ':00';
+                            }else{
+                              $b = $a . ':00';
+                            }
+                            echo '<td> ' .$value['jam_'.$i]. ' </td>';
+                            echo '<td> ' .$value['actual_'.$i]. ' </td>';
+
+                            $plan = $plan+$value['jam_'.$i];
+                            $actual = $actual+$value['actual_'.$i];
+                            if ($a == $hour)
+                              break;
+                          }
+                        ?>
+                        <td nowrap><?= $plan;?></td>
+                        <td nowrap><?= $actual;?></td>
+                        <td nowrap><?php
+                        $ach = $plan != 0 || $actual != 0 ? $actual/$plan*100 : 0;
+
+                        echo number_format($ach, 1);?>%</td>
+                    </tr>
+                    <?php endforeach;
+                  ?>
                 </tbody>
               </table>
 

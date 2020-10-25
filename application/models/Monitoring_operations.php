@@ -59,24 +59,15 @@ class Monitoring_operations extends CI_Model
 
 	public function monitoring_operations_34_muatan($position = 'M')
 	{
-		// $this->db->select('table_monitoringoperations.*, cargo.description as color');
-		// $this->db->from('table_monitoringoperations');
-		// $this->db->join('table_enum as cargo','table_monitoringoperations.cargo = cargo.name','LEFT');
-		// $this->db->where('table_monitoringoperations.deleted_at', NULL);
-		// return $this->db->get();
-		$result 		= get_date_shift();
-		$this->db->select('table_shiftoperations.*, cargo.description as color, rom.name as rom_name, a.time_in, a.time_out, a.code_stby');
-		$this->db->from('table_shiftoperations');
+		$result = get_date_shift();
+		$this->db->select('table_shiftoperations.*, cargo.description as color');
+		$this->db->from('table_romoperations');
+		$this->db->join('table_shiftoperations','table_romoperations.ref_id = table_shiftoperations.id','LEFT');
 		$this->db->join('table_enum as cargo','table_shiftoperations.cargo = cargo.name','LEFT');
-		$this->db->join('table_enum as rom','table_shiftoperations.to_rom = rom.id','LEFT');
-		$this->db->join('(SELECT table_monitoringoperations.* FROM (SELECT MAX(id) as id FROM table_monitoringoperations WHERE deleted_at IS NULL GROUP BY ref_id) as a
-			LEFT JOIN table_monitoringoperations ON table_monitoringoperations.id = a.id
-			WHERE deleted_at IS NULL) as a','table_shiftoperations.id = a.ref_id AND table_shiftoperations.position = a.position ','LEFT');
 		$this->db->where('table_shiftoperations.deleted_at', NULL);
-		$this->db->where('table_shiftoperations.date',$result['date']);
-		$this->db->where('table_shiftoperations.position',$position);
-		$this->db->order_by('time_out asc');
-		$this->db->group_by('table_shiftoperations.id');
+		$this->db->where('table_shiftoperations.id IN (SELECT ref_id FROM `table_monitoringoperations` WHERE deleted_at IS NULL AND time_out IS NOT NULL AND by_area = 11)');
+		$this->db->where('table_shiftoperations.id NOT IN (SELECT ref_id FROM `table_monitoringoperations` WHERE deleted_at IS NULL AND by_area = 10)');
+		$this->db->where('table_shiftoperations.date', $result['date']);
 		return $this->db->get();
 	}
 
@@ -100,19 +91,25 @@ class Monitoring_operations extends CI_Model
 
 	public function monitoring_operations_65_muatan()
 	{
-		$this->db->select('table_monitoringoperations.*, cargo.description as color');
-		$this->db->from('table_monitoringoperations');
-		$this->db->join('table_enum as cargo','table_monitoringoperations.cargo = cargo.name','LEFT');
-		$this->db->where('table_monitoringoperations.deleted_at', NULL);
+		$result = get_date_shift();
+		$this->db->select('table_shiftoperations.*, cargo.description as color');
+		$this->db->from('table_romoperations');
+		$this->db->join('table_shiftoperations','table_romoperations.ref_id = table_shiftoperations.id','LEFT');
+		$this->db->join('table_enum as cargo','table_shiftoperations.cargo = cargo.name','LEFT');
+		$this->db->where('table_shiftoperations.deleted_at', NULL);
+		$this->db->where('table_shiftoperations.id NOT IN (SELECT ref_id FROM `table_monitoringoperations` WHERE deleted_at IS NULL AND by_area = 11)');
+		$this->db->where('table_shiftoperations.date', $result['date']);
 		return $this->db->get();
 	}
 
 	public function monitoring_operations_65_standby()
 	{
+		$result = get_date_shift();
 		$this->db->select('table_monitoringoperations.*, cargo.description as color');
 		$this->db->from('table_monitoringoperations');
 		$this->db->join('table_enum as cargo','table_monitoringoperations.cargo = cargo.name','LEFT');
 		$this->db->where('table_monitoringoperations.deleted_at', NULL);
+		$this->db->where('DATE(table_monitoringoperations.time_in)', $result['date']);
 		return $this->db->get();
 	}
 
@@ -137,6 +134,14 @@ class Monitoring_operations extends CI_Model
 		$this->db->from('table_monitoringoperations');
 		$this->db->where('table_monitoringoperations.deleted_at', NULL);
 		$this->db->where('table_monitoringoperations.id = \''.$id.'\'');
+		return $this->db->get();
+	}
+
+	public function detail_shift_operations($id = 1)
+	{
+		$this->db->from('table_shiftoperations');
+		$this->db->where('table_shiftoperations.deleted_at', NULL);
+		$this->db->where('table_shiftoperations.id = \''.$id.'\'');
 		return $this->db->get();
 	}
 

@@ -176,7 +176,7 @@
     var id = $(this).attr('data-id');
       $.ajax({
     type: "GET",
-    url: "<?php echo base_url('Edit/bypass_monitoring_operations_65/');?>" + id , 
+    url: "<?php echo base_url('Edit/bypass_monitoring_operations/');?>" + id , 
       success: function(response) {
         window.location.reload();
       } 

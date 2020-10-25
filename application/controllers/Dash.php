@@ -108,20 +108,22 @@ class Dash extends CI_Controller {
 
 	public function achievement_seam_series()
 	{
-
-		$shift_code	= $this->session->userdata('shift');
-
 		$result = get_date_shift();
-		$this->load->model('Supplay_passing_model', 'supplay');
-		$table = $this->supplay->show_data()->result_array();
+		$date = $this->input->get('date') == '' ? $result['date'] : date('Y-m-d', strtotime($this->input->get('date')));
+		$shift = $this->input->get('shift') == '' ? $result['shift'] : $this->input->get('shift');
+		$hour = $this->input->get('time') == '' ? date('H') : $this->input->get('time');
+		$this->load->model('Monitoring_model', 'monitoring');
 
-		if ($shift_code == 1) {
-				$jam = 4;
-				$limit = 12;
-			} else {
-				$jam = 16;
-				$limit = 12;
-			}
+
+		$table = $this->monitoring->achievement_seam_series($date, $shift)->result_array();
+
+		if ($shift == 1) {
+			$jam = 4;
+			$limit = 12;
+		} else {
+			$jam = 16;
+			$limit = 12;
+		}
 
 		$rom	  	= $this->Crud->search('table_enum', array('type' => 'rom'))->result_array();
 		$pos		= $this->Crud->search('table_enum', array('type' => 'area'))->result_array();
@@ -135,7 +137,10 @@ class Dash extends CI_Controller {
 			'rom'			=> $rom,
 			'jam'			=> $jam,
 			'limit'			=> $limit,
-			'pos'			=> $pos
+			'pos'			=> $pos,
+			'date'  		=> $date,
+			'shift'  		=> $shift,
+			'hour'  		=> $hour,
 
 
 		);

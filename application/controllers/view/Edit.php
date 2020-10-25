@@ -226,7 +226,7 @@ class Edit extends CI_Controller {
 
 		$this->load->model('Monitoring_operations', 'operations');
 		
-		$data = $this->operations->detail_monitoring_operations_65($id)->result();
+		$data = $this->operations->detail_shift_operations($id)->result();
 		$data = $data[0];
 
 		?>

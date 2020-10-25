@@ -132,6 +132,30 @@ class Monitoring_model extends CI_Model
 		$this->db->group_by('a.jam');
 		return $this->db->get();
 	}
+
+	public function achievement_seam_series($date, $shift)
+	{		
+		$result = get_date_shift();
+		$date = $date == '' ? $result['date'] : $date;
+		$shift = $shift == '' ? $result['shift'] : $shift;
+		if ($result['shift'] == 1) {
+			$hour = 6;
+		} else {
+			$hour = 18;
+		}
+		$this->db->select('table_supplaypassing.*,table_enum.name as rom_spp');
+		for ($a = 1, $i=$hour; $i < ($hour+12) ; $i++, $a++) { 
+			$this->db->select('SUM(IF(HOUR(DATE_ADD(table_romoperations.time_out, INTERVAL 2 HOUR)) = '.$i.', 1, 0)) as actual_' . $a);
+		}
+		$this->db->from('table_supplaypassing');
+		$this->db->join('table_enum','table_supplaypassing.rom = table_enum.code','LEFT');
+		$this->db->join('table_romoperations','table_enum.id = table_romoperations.by_rom AND DATE(DATE_ADD(table_romoperations.time_out, INTERVAL 2 HOUR)) = table_supplaypassing.date','LEFT');
+		$this->db->where('table_supplaypassing.date',$date);
+		$this->db->where('table_supplaypassing.shift',$shift);
+		$this->db->where('table_supplaypassing.deleted_at',NULL);
+		$this->db->group_by('table_supplaypassing.material');
+		return $this->db->get();
+	}
 	
 }
 ?>
