@@ -100,9 +100,44 @@ class Dash extends CI_Controller {
 
 	public function monitoring_data_production()
 	{
+		$this->load->model('Monitoring_model', 'monitoring');
+
+		$result = get_date_shift();
+		$date = $this->input->get('date') == '' ? $result['date'] : date('Y-m-d', strtotime($this->input->get('date')));
+		$shift = $this->input->get('shift') == '' ? $result['shift'] : $this->input->get('shift');
+		$hour = $this->input->get('time') == '' ? date('H') : $this->input->get('time');
+
+		if ($shift == 1) {
+			$jam = 4;
+			$limit = 12;
+		} else {
+			$jam = 16;
+			$limit = 12;
+		}
+
+		$rom	  	= $this->Crud->search('table_enum', array('type' => 'rom'))->result_array();
+		$pos		= $this->Crud->search('table_enum', array('type' => 'area'))->result_array();
+		$shift_code	= $this->Crud->search('table_enum', array('type' => 'shift'))->result_array();
+
+		$table_rom = $this->monitoring->rom_supplaypassing($date, $shift);
+
+		$data  = array(
+			'hour'			=> $result['hour'],
+			'shift' 		=> $result['shift'],
+			'shift_code'	=> $shift_code,
+			'rom'			=> $rom,
+			'jam'			=> $jam,
+			'limit'			=> $limit,
+			'pos'			=> $pos,
+			'date'  		=> $date,
+			'shift'  		=> $shift,
+			'hour'  		=> $hour,
+			'table_rom'		=> $table_rom
+		);
+
 		$this->load->view('framework/header', array('title' => 'Monitoring Data'));
 		$this->load->view('framework/sidebar');
-		$this->load->view('pages/dispatching/monitoring_data');
+		$this->load->view('pages/dispatching/monitoring_data', $data);
 		$this->load->view('framework/footer');
 	}
 

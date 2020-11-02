@@ -10,11 +10,11 @@ class Monitoring_model extends CI_Model
 	public function monitoring_csa($by_area, $code = '') {
 		$result 			= get_date_shift();
 		$this->db->select('table_monitoringoperations.*, table_enum.description as color');
-		$this->db->from('(SELECT MAX(id) as id FROM table_monitoringoperations GROUP BY ref_id) as a');
+		$this->db->from('(SELECT MAX(id) as id FROM table_monitoringoperations WHERE DATE(table_monitoringoperations.time_in) = \''.$result['date'].'\' GROUP BY cn_unit) as a');
 		$this->db->join('table_monitoringoperations','a.id = table_monitoringoperations.id','LEFT');
 		$this->db->join('table_shiftoperations','table_monitoringoperations.ref_id = table_shiftoperations.id','LEFT');
-		$this->db->join('table_enum','table_monitoringoperations.cargo = table_enum.name','LEFT');
-		$this->db->where('table_shiftoperations.date', $result['date']);
+		$this->db->join('table_enum','table_monitoringoperations.cargo = table_enum.name AND table_enum.type = \'cargo_muatan\'','LEFT');
+		// $this->db->where('table_shiftoperations.date', $result['date']);
 		$this->db->where('table_monitoringoperations.by_area', $by_area);
 		if (strtolower($code) == 'l') {
  			$this->db->where('table_monitoringoperations.time_out !=', NULL);
@@ -154,6 +154,18 @@ class Monitoring_model extends CI_Model
 		$this->db->where('table_supplaypassing.shift',$shift);
 		$this->db->where('table_supplaypassing.deleted_at',NULL);
 		$this->db->group_by('table_supplaypassing.material');
+		return $this->db->get();
+	}
+
+	public function rom_supplaypassing($date, $shift)
+	{
+		$this->db->select('table_supplaypassing.*,table_enum.name as rom_spp');
+		$this->db->from('table_supplaypassing');
+		$this->db->join('table_enum','table_supplaypassing.rom = table_enum.code','LEFT');
+		$this->db->where('table_supplaypassing.date',$date);
+		$this->db->where('table_supplaypassing.shift',$shift);
+		$this->db->where('table_supplaypassing.deleted_at',NULL);
+		$this->db->group_by('table_supplaypassing.rom');
 		return $this->db->get();
 	}
 	

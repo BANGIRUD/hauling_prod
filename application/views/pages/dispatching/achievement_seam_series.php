@@ -3,15 +3,15 @@
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <form method="GET">
+      <!-- <form method="GET"> -->
       <h1>
         Achievement SeamSeries
         <small><?=get_enum($this->session->userdata('area'))?></small>
-      </h1>
+      </h1><br>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
         <li class="active">Achievement SeamSeries <?=get_enum($this->session->userdata('area'))?></li>
-      </ol></br>
+      </ol>
       <div class="row">
         <div class="col-md-2">
           <div class="form-group">
@@ -95,8 +95,6 @@
                               $b = $a . ':00';
                             }
                             echo '<th colspan="2" width="120" style="text-align: center;"> ' .$b. ' </th>' ; 
-                            if ($a == $hour)
-                              break;
                         }?> 
                         <th colspan="2" nowrap style="text-align: center; vertical-align: middle;">Total</th>
                         <th rowspan="2" nowrap style="text-align: center; vertical-align: middle;">ACHIEV.</th>
@@ -105,9 +103,7 @@
                     <?php for ($a=$jam, $i = 1; $i <= 12; $i++, $a++):?>
                       <th width="500" style="text-align: center;">Plan</th>
                       <th nowrap style="text-align: center;">Actual</th>
-                    <?php if ($a == $hour)
-                              break;
-                            endfor;?>
+                    <?php endfor;?>
                       <th width="500" style="text-align: center;">Plan</th>
                       <th nowrap style="text-align: center;">Actual</th>                    
                     </tr>
@@ -126,6 +122,8 @@
                           }
                           $plan = 0;
                           $actual = 0;
+                          $start_jam = $jam;
+                          $start_i = $jam;
                           for ($a=$jam, $i = 1; $i <= 12; $i++, $a++) { 
                             if ($a >= 24) {
                               $a = $a - 24;
@@ -140,8 +138,27 @@
 
                             $plan = $plan+$value['jam_'.$i];
                             $actual = $actual+$value['actual_'.$i];
-                            if ($a == $hour)
+                            if ($a == $hour) {
+                              $start_jam = $a;
+                              $start_i = $i;
                               break;
+                            }
+                          }
+
+                          for ($a=$start_jam+1, $i = $start_i+1; $i <= 12; $i++, $a++) { 
+                            if ($a >= 24) {
+                              $a = $a - 24;
+                            }
+                            if ($a == 7) {
+                              $b = $a . ':00';
+                            }else{
+                              $b = $a . ':00';
+                            }
+                            echo '<td>0</td>';
+                            echo '<td>0</td>';
+
+                            $plan = $plan+0;
+                            $actual = $actual+0;
                           }
                         ?>
                         <td nowrap><?= $plan;?></td>
