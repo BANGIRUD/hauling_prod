@@ -73,10 +73,12 @@ class Monitoring_operations extends CI_Model
 
 	public function monitoring_operations_34_standby()
 	{	
+		$result = get_date_shift();
 		$this->db->select('table_monitoringoperations.*, cargo.description as color');
 		$this->db->from('table_monitoringoperations');
 		$this->db->join('table_enum as cargo','table_monitoringoperations.cargo = cargo.name','LEFT');
 		$this->db->where('table_monitoringoperations.deleted_at', NULL);
+		$this->db->where('DATE(table_monitoringoperations.time_in)', $result['date']);
 		return $this->db->get();
 	}
 
