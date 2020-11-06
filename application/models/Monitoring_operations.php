@@ -116,6 +116,15 @@ class Monitoring_operations extends CI_Model
 		return $this->db->get();
 	}
 
+	public function detail_operations_65_standby($id)
+	{	
+		$this->db->select('table_monitoringoperations.*, cargo.description as color');
+		$this->db->from('table_monitoringoperations');
+		$this->db->join('table_enum as cargo','table_monitoringoperations.cargo = cargo.name','LEFT');
+		$this->db->where('table_monitoringoperations.id = \''.$id.'\'');
+		return $this->db->get();
+	}
+
 	public function monitoring_operations_69()
 	{
 		$this->db->from('table_monitoringoperations');

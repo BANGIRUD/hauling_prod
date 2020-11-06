@@ -80,7 +80,7 @@
                                 <a href="" class="btn btn-xs btn-warning" id="down" data-id="" data-column="cancel" data-text=" " data-original-title="Down" data-toggle="tooltip">
                                   <i class="fa fa-arrow-down"></i>
                                 </a>
-                                <a href="#" class="btn btn-xs btn-primary" data-target="#editdata" id="edit" data-id="" data-original-title="Edit" data-toggle="tooltip">
+                                <a href="#" class="btn btn-xs btn-primary" data-target="#editdata" id="edit" data-id="'.$value['id'].'" data-original-title="Edit" data-toggle="tooltip">
                                   <i class="fa fa-edit"></i>
                                 </a>
                               </td>';
@@ -201,8 +201,8 @@
 </div>
 <!-- End Modal Add Unit -->
 <!-- Modal Edit Unit -->
-<div class="modal fade" id="modal-edit" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+<div class="modal fade " id="modal-edit" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <form action="<?= base_url('Edit/post_65_standby');?>" method="post" enctype="multipart/form-data" class="form-horizontal">
         <div class="modal-header">
@@ -242,10 +242,9 @@ autoclose: true
 });
 
 $(document).on('click','#edit', function() {
-var id = $(this).attr('data-id');
-$("#modal-body-edit").load("<?= base_url('View/edit/monitoring_operations_65_standby/');?>" + id);
-$('#modal-edit').modal('toggle');
-
+  var id = $(this).attr('data-id');
+    $("#modal-body-edit").load("<?= base_url('View/edit/monitoring_operations_65_standby/');?>" + id);
+    $('#modal-edit').modal('toggle');
 });
 
 $(document).on('click', '#delete', function() {
