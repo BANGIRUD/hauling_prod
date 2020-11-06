@@ -51,7 +51,7 @@
                       echo '<td>'.$no.'</td>
                             <td>'.$value['cn_unit'].'</td>
                             <td style="background-color:'. $color[0] . ';color:'.@$color[1].'" >'.$value['cargo'].'</td>
-                            <td>To ROM</td>';
+                            <td>'.$value['name_rom'].'</td>';
                       echo '<td>
                               <a href="#" class="btn btn-xs btn-success" data-target="#editindata" id="editincsa" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit masuk CSA" data-toggle="tooltip">
                                 <i class="fa  fa-reply"> In</i>

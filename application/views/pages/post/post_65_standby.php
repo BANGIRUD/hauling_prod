@@ -204,7 +204,7 @@
 <div class="modal fade" id="modal-edit" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <form action="<?= base_url('Edit/edit_shift_operation');?>" method="post" enctype="multipart/form-data" class="form-horizontal">
+      <form action="<?= base_url('Edit/post_65_standby');?>" method="post" enctype="multipart/form-data" class="form-horizontal">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -243,7 +243,7 @@ autoclose: true
 
 $(document).on('click','#edit', function() {
 var id = $(this).attr('data-id');
-$("#modal-body-edit").load("<?= base_url('');?>" + id);
+$("#modal-body-edit").load("<?= base_url('View/edit/monitoring_operations_65_standby/');?>" + id);
 $('#modal-edit').modal('toggle');
 
 });

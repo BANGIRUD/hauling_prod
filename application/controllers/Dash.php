@@ -324,6 +324,7 @@ class Dash extends CI_Controller {
 	{
 		$result = get_date_shift();
 		$shift  = $result['shift'];
+		$this->db->where("name IN ('KM 65', 'KM 34')", NULL);
 		$pos	= $this->Crud->search('table_enum', array('type' => 'area'))->result_array();
 		$shift_code	  	= $this->Crud->search('table_enum', array('type' => 'shift'))->result_array();
 

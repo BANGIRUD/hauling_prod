@@ -1,5 +1,7 @@
 <?php
   $by_area   = $this->session->userdata('area');
+
+  $this->load->model('Shift_operations', 'shift_ops');
 ?>
 <div class="content-wrapper">
   <section class="content-header">
@@ -64,21 +66,25 @@
                       </tr>
                       <tr style="background-color: blue; color: white;">
                         <?php foreach ($table_rom->result_array() as $key) {
-                          echo '<th colspan="5">'.$key['rom_spp'].'</th>';
+                          echo '<th colspan="5" align="center">'.$key['rom_spp'].'</th>';
                         }
                         ?>
                       </tr>
                       <tr style="background-color: blue; color: white;">
                         <?php foreach ($table_rom->result_array() as $key) {
-                          echo '<th>Time</th><th>Truck No</th><th>Material</th><th>Area</th><th>Status</th>';
+                          echo '<th>Time</th><th nowrap>Truck No</th><th>Material</th><th>Area</th><th>Status</th>';
+
+                          $dd = $shift_ops->report_rom_monitoring_shift_operations($key['id']);
+                          if ($dd->num_rows() > 0) {
+                            foreach ($dd->result_array() as $value) {
+                              echo $value['id'];
+                            }
+                          }
                         }
                         ?>
                       </tr>
                     </thead>
                     <tbody>
-                      <?php foreach ($table_rom->result_array() as $key) {
-                         echo '<th>Time</th><th>Truck No</th><th>Material</th><th>Area</th><th>Status</th>';
-                      }?>
                       <tr>
                         <td>0</td><td>290</td><td>T300 CT1</td><td>KM 69</td><td>REG</td><td>0</td><td>290</td><td>T300 CT1</td><td>KM 69</td><td>REG</td><td>0</td><td>290</td><td>T300 CT1</td><td>KM 69</td><td>REG</td><td>0</td><td>290</td><td>T300 CT1</td><td>KM 69</td><td>REG</td><td>0</td><td>290</td><td>T300 CT1</td><td>KM 69</td><td>REG</td>
                       </tr>
