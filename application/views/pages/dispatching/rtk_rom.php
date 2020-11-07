@@ -15,25 +15,26 @@
         <div class="col-md-2">
           <div class="form-group">
             <label>Shift :</label>
-            <select class="form-control" name="shift_code" id="shift_code">
-                    <?php foreach ($shift_code as $key) {
-                      echo '<option value="'.$key['code'].'">'.$key['code'].' </option>';
-                    }?>
-                  </select>
+            <select class="form-control" name="shift" id="shift_code">
+              <?php foreach ($shift_code as $key) {
+                  $select = $key['code'] == $shift ? ' selected': '';
+                    echo '<option value="'.$key['code'].'"'.$select.'>'.$key['code'].' </option>';
+              }?>
+            </select>
           </div>
         </div>
         <div class="col-md-2">
           <div class="form-group">
-            <label>Time :</label>
+           <label>Time : </label>
             <select class="form-control" name="time" id="time">
               <?php
-                for ($a=$jam, $i = 0; $i < 24; $i++, $a++) { 
+                for ($a=$jam, $i = 0; $i < 12; $i++, $a++) { 
                   if ($a >= 24) {
                     $a = $a - 24;
                   }
-                    $b = $a . ':00';
-                  echo  '<option value="' . $a . '">' . $b. '</option>';
-                  
+                  $b = $a . ':00';
+                  $select = $a == $hour ? ' selected': '';
+                  echo  '<option value="' . $a . '"'.$select.'>' . $b. '</option>';                  
                 }
               ?>
             </select>
@@ -42,10 +43,10 @@
         <div class="col-md-2">
           <div class="form-group">
             <label>Date :</label>
-          <div class="input-group date">
-            <div class="input-group-addon" style="background-color: #e9ecef"><i class="fa fa-calendar"></i></div>
-            <input  type="text" name="date" class="form-control datepicker" value=" <?= date('m/d/Y');?>">
-          </div>
+            <div class="input-group date">
+              <div class="input-group-addon" style="background-color: #e9ecef"> <i class="fa fa-calendar"></i></div>
+                <input  type="text" name="date" class="form-control datepicker" value=" <?= date('m/d/Y', strtotime($date));?>">
+            </div>
           </div>
         </div>
         <div class="col-md-4">
@@ -75,25 +76,17 @@
                 <thead style="background-color: #74b9ff;">
                   <tr>
                     <th rowspan="2" style="text-align: center; vertical-align: middle;">Time</th>
-                    <?php foreach ($rom as $value) {
-                      echo '<th colspan="3" style="text-align: center;">'.$value ['name'].'</th>';
+                  <?php
+                    foreach ($table as $value) {
+                      echo '<th colspan="3">'.$value['rom_spp'].'</th>
+                            </tr>';
+                      echo '<tr>
+                              <th>Plan</th>
+                              <th>Act.K</th>
+                              <th>Act.M</th>
+                            </tr>';
                     }
-                    ?>
-                    
-                    <th rowspan="2" style="text-align: center; vertical-align: middle;">Actual.Kos</th>
-                    <th rowspan="2" style="text-align: center; vertical-align: middle;">Actual.Mua</th>
-                    <th rowspan="2" style="text-align: center; vertical-align: middle;">PLAN</th>
-                    <th rowspan="2" style="text-align: center; vertical-align: middle;">Porsentase</th>
-                  </tr>
-                  <tr>
-                    <?php
-                    for ($i=0; $i <13 ; $i++) { 
-                     echo '<th style="text-align: center;">Plan</th>';
-                     echo '<th style="text-align: center;">Actual.Kos</th> ';
-                     echo '<th style="text-align: center;">Actual.Mua</th>';
-                    }
-                    ?>
-                  </tr>
+                  ?>
                 </thead>
                 <tbody>
                   

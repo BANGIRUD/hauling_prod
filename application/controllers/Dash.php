@@ -189,21 +189,42 @@ class Dash extends CI_Controller {
 	public function rtk_rom()
 	{
 		$result = get_date_shift();
-		$this->load->model('Supplay_passing_model', 'supplay');
-		$table = $this->supplay->show_data()->result_array();
+		$date = $this->input->get('date') == '' ? $result['date'] : date('Y-m-d', strtotime($this->input->get('date')));
+		$shift = $this->input->get('shift') == '' ? $result['shift'] : $this->input->get('shift');
+		$hour = $this->input->get('time') == '' ? date('H') : $this->input->get('time');
+		$this->load->model('Monitoring_model', 'monitoring');
 
-		$rom	  		= $this->Crud->search('table_enum', array('type' => 'rom'))->result_array();
-		$shift_code	  	= $this->Crud->search('table_enum', array('type' => 'shift'))->result_array();
+
+		$table = $this->monitoring->achievement_seam_series($date, $shift)->result_array();
+
+		if ($shift == 1) {
+			$jam = 4;
+			$limit = 12;
+		} else {
+			$jam = 16;
+			$limit = 12;
+		}
+
+		$rom	  	= $this->Crud->search('table_enum', array('type' => 'rom'))->result_array();
+		$pos		= $this->Crud->search('table_enum', array('type' => 'area'))->result_array();
+		$shift_code	= $this->Crud->search('table_enum', array('type' => 'shift'))->result_array();
 		
 		$data  = array(
 			'hour'			=> $result['hour'],
 			'shift' 		=> $result['shift'],
 			'table'			=> $table,
-			'rom'			=> $rom,
 			'shift_code'	=> $shift_code,
+			'rom'			=> $rom,
+			'jam'			=> $jam,
+			'limit'			=> $limit,
+			'pos'			=> $pos,
+			'date'  		=> $date,
+			'shift'  		=> $shift,
+			'hour'  		=> $hour,
 
 
 		);
+		
 		$this->load->view('framework/header', array('title' => 'Dashoard RTK ROM'));
 		$this->load->view('framework/sidebar');
 		$this->load->view('pages/dispatching/rtk_rom',$data);

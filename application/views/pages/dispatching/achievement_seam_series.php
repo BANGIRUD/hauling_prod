@@ -110,7 +110,7 @@
                 </thead>
                 <tbody>
                   <?php foreach ($table as $value): ?>
-                    <tr>
+                    <tr nowrap style="text-align: center; vertical-align: middle;">
                       <td nowrap><?= $value['material'];?></td>
                       <td nowrap><?= $value['rom_spp'];?></td>
 
@@ -136,6 +136,9 @@
                             echo '<td> ' .$value['jam_'.$i]. ' </td>';
                             echo '<td> ' .$value['actual_'.$i]. ' </td>';
 
+                            $total[$i][] = $value['jam_'.$i];
+                            $total_act[$i][] = $value['actual_'.$i];
+
                             $plan = $plan+$value['jam_'.$i];
                             $actual = $actual+$value['actual_'.$i];
                             if ($a == $hour) {
@@ -154,8 +157,8 @@
                             }else{
                               $b = $a . ':00';
                             }
-                            echo '<td>0</td>';
-                            echo '<td>0</td>';
+                            echo '<td>' .$value['jam_'.$i]. ' </td>';
+                            echo '<td>' .$value['actual_'.$i]. ' </td>';
 
                             $plan = $plan+0;
                             $actual = $actual+0;
@@ -170,6 +173,58 @@
                     </tr>
                     <?php endforeach;
                   ?>
+                    <tr nowrap style="text-align: center; vertical-align: middle; background-color: #74b9ff; font-weight: bolder;">
+                      <td colspan="2">Total</td>
+                      <!-- <?php for ($a=$jam, $i = 1; $i <= 12; $i++, $a++):
+                        $sum_plan   = @array_sum($total[$i]);
+                        $sum_actual = @array_sum($total_act[$i]);
+                        ?>
+                      <td><?= $sum_plan;?></td>
+                      <td><?= $sum_actual;?></td>
+                      <?php endfor;?> -->
+
+                      <?php
+                          $start_jam = $jam;
+                          $start_i = $jam;
+                          $sums_plan = '';
+                          $sums_actual = '';
+                        for ($a=$jam, $i = 1; $i <= 12; $i++, $a++) { 
+                          if ($a >= 24) {
+                              $a = $a - 24;
+                            }
+                            if ($a == 7) {
+                              $b = $a . ':00';
+                            }else{
+                              $b = $a . ':00';
+                            }
+                            echo '<td> ' .$sum_plan. ' </td>';
+                            echo '<td> ' .$sum_actual. ' </td>';
+
+                            $sum_plan   = @array_sum($total[$i]);
+                            $sum_actual = @array_sum($total_act[$i]); 
+
+                            if ($a == $hour) {
+                              $start_jam = $a;
+                              $start_i = $i;
+                              break;
+                            }
+                          }
+
+                          for ($a=$start_jam+1, $i = $start_i+1; $i <= 12; $i++, $a++) { 
+                            if ($a >= 24) {
+                              $a = $a - 24;
+                            }
+                            if ($a == 7) {
+                              $b = $a . ':00';
+                            }else{
+                              $b = $a . ':00';
+                            }
+                            echo '<td> ' .$sum_plan. ' </td>';
+                            echo '<td> ' .$sum_actual. ' </td>';
+
+                          }
+                      ?>
+                    </tr>
                 </tbody>
               </table>
 
