@@ -144,14 +144,8 @@ class Dash extends CI_Controller {
 	public function achievement_seam_series()
 	{
 		$result = get_date_shift();
-		$date = $this->input->get('date') == '' ? $result['date'] : date('Y-m-d', strtotime($this->input->get('date')));
+
 		$shift = $this->input->get('shift') == '' ? $result['shift'] : $this->input->get('shift');
-		$hour = $this->input->get('time') == '' ? date('H') : $this->input->get('time');
-		$this->load->model('Monitoring_model', 'monitoring');
-
-
-		$table = $this->monitoring->achievement_seam_series($date, $shift)->result_array();
-
 		if ($shift == 1) {
 			$jam = 4;
 			$limit = 12;
@@ -160,6 +154,15 @@ class Dash extends CI_Controller {
 			$limit = 12;
 		}
 
+
+		$date = $this->input->get('date') == '' ? $result['date'] : date('Y-m-d', strtotime($this->input->get('date')));
+		$hour = $this->input->get('time') == '' ? date('H') : $this->input->get('time');
+		$this->load->model('Monitoring_model', 'monitoring');
+
+
+		$table = $this->monitoring->achievement_seam_series($date, $shift)->result_array();
+
+		
 		$rom	  	= $this->Crud->search('table_enum', array('type' => 'rom'))->result_array();
 		$pos		= $this->Crud->search('table_enum', array('type' => 'area'))->result_array();
 		$shift_code	= $this->Crud->search('table_enum', array('type' => 'shift'))->result_array();
@@ -345,6 +348,9 @@ class Dash extends CI_Controller {
 	{
 		$result = get_date_shift();
 		$shift  = $result['shift'];
+		if ($this->session->userdata('level') == '') {
+			# code...
+		}
 		$this->db->where("name IN ('KM 65', 'KM 34')", NULL);
 		$pos	= $this->Crud->search('table_enum', array('type' => 'area'))->result_array();
 		$shift_code	  	= $this->Crud->search('table_enum', array('type' => 'shift'))->result_array();

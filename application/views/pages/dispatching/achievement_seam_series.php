@@ -12,6 +12,8 @@
         <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
         <li class="active">Achievement SeamSeries <?=get_enum($this->session->userdata('area'))?></li>
       </ol>
+
+      <form>
       <div class="row">
         <div class="col-md-2">
           <div class="form-group">
@@ -125,14 +127,6 @@
                           $start_jam = $jam;
                           $start_i = $jam;
                           for ($a=$jam, $i = 1; $i <= 12; $i++, $a++) { 
-                            if ($a >= 24) {
-                              $a = $a - 24;
-                            }
-                            if ($a == 7) {
-                              $b = $a . ':00';
-                            }else{
-                              $b = $a . ':00';
-                            }
                             echo '<td> ' .$value['jam_'.$i]. ' </td>';
                             echo '<td> ' .$value['actual_'.$i]. ' </td>';
 
@@ -149,16 +143,10 @@
                           }
 
                           for ($a=$start_jam+1, $i = $start_i+1; $i <= 12; $i++, $a++) { 
-                            if ($a >= 24) {
-                              $a = $a - 24;
-                            }
-                            if ($a == 7) {
-                              $b = $a . ':00';
-                            }else{
-                              $b = $a . ':00';
-                            }
-                            echo '<td>' .$value['jam_'.$i]. ' </td>';
-                            echo '<td>' .$value['actual_'.$i]. ' </td>';
+                            $total[$i][] = 0;
+                            $total_act[$i][] = 0;
+                            echo '<td>0</td>';
+                            echo '<td>0</td>';
 
                             $plan = $plan+0;
                             $actual = $actual+0;
@@ -175,55 +163,23 @@
                   ?>
                     <tr nowrap style="text-align: center; vertical-align: middle; background-color: #74b9ff; font-weight: bolder;">
                       <td colspan="2">Total</td>
-                      <!-- <?php for ($a=$jam, $i = 1; $i <= 12; $i++, $a++):
-                        $sum_plan   = @array_sum($total[$i]);
-                        $sum_actual = @array_sum($total_act[$i]);
-                        ?>
-                      <td><?= $sum_plan;?></td>
-                      <td><?= $sum_actual;?></td>
-                      <?php endfor;?> -->
-
                       <?php
-                          $start_jam = $jam;
-                          $start_i = $jam;
-                          $sums_plan = '';
-                          $sums_actual = '';
+                        $total_plan = array();
+                        $total_actual = array();
                         for ($a=$jam, $i = 1; $i <= 12; $i++, $a++) { 
-                          if ($a >= 24) {
-                              $a = $a - 24;
-                            }
-                            if ($a == 7) {
-                              $b = $a . ':00';
-                            }else{
-                              $b = $a . ':00';
-                            }
-                            echo '<td> ' .$sum_plan. ' </td>';
-                            echo '<td> ' .$sum_actual. ' </td>';
 
-                            $sum_plan   = @array_sum($total[$i]);
-                            $sum_actual = @array_sum($total_act[$i]); 
-
-                            if ($a == $hour) {
-                              $start_jam = $a;
-                              $start_i = $i;
-                              break;
-                            }
-                          }
-
-                          for ($a=$start_jam+1, $i = $start_i+1; $i <= 12; $i++, $a++) { 
-                            if ($a >= 24) {
-                              $a = $a - 24;
-                            }
-                            if ($a == 7) {
-                              $b = $a . ':00';
-                            }else{
-                              $b = $a . ':00';
-                            }
-                            echo '<td> ' .$sum_plan. ' </td>';
-                            echo '<td> ' .$sum_actual. ' </td>';
-
+                            $total_plan[] = @array_sum($total[$i]);
+                            $total_actual[] = @array_sum($total_act[$i]);
+                            echo '<td>'.@array_sum($total[$i]).'</td>';
+                            echo '<td>'.@array_sum($total_act[$i]).' </td>';
                           }
                       ?>
+                      <td nowrap><?=@array_sum($total_plan);?></td>
+                      <td nowrap><?= @array_sum($total_actual);?></td>
+                      <td nowrap><?php
+                        $ach = @array_sum($total_plan) != 0 || @array_sum($total_actual) != 0 ? @array_sum($total_actual)/@array_sum($total_plan)*100 : 0;
+
+                        echo number_format($ach, 1);?>%</td>
                     </tr>
                 </tbody>
               </table>
@@ -248,4 +204,6 @@
   $('.datepicker').datepicker({
     autoclose: true
   });
+
+
 </script>
