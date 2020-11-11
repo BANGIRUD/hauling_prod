@@ -510,6 +510,7 @@ class Dash extends CI_Controller {
 	{
 
 		$data['rows'] = $this->Crud->search('table_enum', array('table_enum.type' => 'cargo_muatan', 'deleted_at' => NULL))->result_array();
+		$data['roms'] = $this->Crud->search('table_enum', array('table_enum.type' => 'rom', 'deleted_at' => NULL))->result_array();
 		$this->load->view('framework/header', array('title' => 'Raw Material'));
 		$this->load->view('framework/sidebar');
 		$this->load->view('pages/admin/raw_material', $data);
@@ -563,6 +564,7 @@ class Dash extends CI_Controller {
 		$data		= array(
 			'csa'		=> $csa,
 
+
 		);
 
 		$this->load->view('framework/header', array('title' => 'Plan Daily Overshift'));
@@ -579,6 +581,7 @@ class Dash extends CI_Controller {
 		$this->db->select('table_quality.*');
 		$this->db->from('table_quality');
 		$this->db->where('table_quality. deleted_at is NULL');
+		$this->db->where('table_quality. date = \''.$result['date'].'\'');
 		$table = $this->db->get()->result_array();
 
 		$data = array(

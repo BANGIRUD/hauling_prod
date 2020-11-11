@@ -49,21 +49,20 @@ class Api extends CI_Controller {
 	}
 
 	public function enum($id ='') {
-		$sql = $this->Crud->search('enum', array('id' => $id))->result_array();
+		$sql = $this->Crud->search('table_enum', array('id' => $id))->result_array();
 		if(count($sql) > 0 ){
 		  $response = array();
 		  $response["data"] = array();
 		  foreach ($sql as $x) {
-		    $h['id'] 					= $x["id"];
-		    $h['created_at'] 			= $x["created_at"];
-		    $h['updated_at'] 			=$x["updated_at"];
-			$h['deleted_at'] 			=$x["deleted_at"];
-		    $h['code'] 					= $x["code"];
-		    $h['name'] 					= $x["name"];
-		    $h['category'] 				= $x["category"];
-		    $h['category_description'] 	= $x["category_description"];
-		    $h['type'] 					= $x["type"];
-		    $h['by_user'] 				= $x["by_user"];
+		    $h['id'] 				= $x["id"];
+		    $h['created_at'] 		= $x["created_at"];
+		    $h['updated_at'] 		= $x["updated_at"];
+			$h['deleted_at'] 		= $x["deleted_at"];
+		    $h['code'] 				= $x["code"];
+		    $h['name'] 				= $x["name"];
+		    $h['description'] 		= $x["description"];
+		    $h['type'] 				= $x["type"];
+		    $h['by_user'] 			= $x["by_user"];
 		    array_push($response["data"], $h);
 		  }
 		}else {

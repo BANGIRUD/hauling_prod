@@ -74,12 +74,12 @@
                         <?php foreach ($table_rom->result_array() as $key) {
                           echo '<th>Time</th><th nowrap>Truck No</th><th>Material</th><th>Area</th><th>Status</th>';
 
-                          $dd = $shift_ops->report_rom_monitoring_shift_operations($key['id']);
-                          if ($dd->num_rows() > 0) {
-                            foreach ($dd->result_array() as $value) {
-                              echo $value['id'];
-                            }
-                          }
+                          // $dd = $shift_ops->report_rom_monitoring_shift_operations($key['id']);
+                          // if ($dd->num_rows() > 0) {
+                          //   foreach ($dd->result_array() as $value) {
+                          //     echo $value['id'];
+                          //   }
+                          // }
                         }
                         ?>
                       </tr>

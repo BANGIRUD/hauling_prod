@@ -11,6 +11,70 @@ class Edit extends CI_Controller {
 		}
 	}
 
+	public function cargo_muatan()
+	{
+		$by_user				= $this->session->userdata('id');
+
+		$id 					= trim($this->input->post('id'));
+		$name 					= trim($this->input->post('name'));
+		$description 			= trim($this->input->post('description'));
+
+		$src 	= $this->Crud->search('table_enum', array('id' => $id))->num_rows();
+		if ($src > 0) {
+			$data = array(
+				'updated_at'	=> date('Y-m-d H:i:s'), 
+				'name' 			=> $name, 
+				'description' 	=> $description,
+				'by_user' 		=> $by_user
+			);
+			$this->Crud->update('table_enum', array('id' => $id),$data);
+			$this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissible">
+		                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+		                <h4><i class="icon fa fa-check"></i> Success!</h4>
+		                Succes <b>"' . $name . '"</b> your cargo is up to date now!
+		              </div>');
+		}else{
+			$this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissible">
+		                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+		                <h4><i class="icon fa fa-check"></i> Error!</h4>
+		                Failed <b>"' . $name . '"</b> your cargo is error!!!!
+		              </div>');
+		}
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
+	public function rom()
+	{
+		$by_user				= $this->session->userdata('id');
+
+		$id 					= trim($this->input->post('id'));
+		$name 					= trim($this->input->post('name'));
+		$description 			= trim($this->input->post('description'));
+
+		$src 	= $this->Crud->search('table_enum', array('id' => $id))->num_rows();
+		if ($src > 0) {
+			$data = array(
+				'updated_at'	=> date('Y-m-d H:i:s'), 
+				'name' 			=> $name, 
+				'description' 	=> $description,
+				'by_user' 		=> $by_user
+			);
+			$this->Crud->update('table_enum', array('id' => $id),$data);
+			$this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissible">
+		                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+		                <h4><i class="icon fa fa-check"></i> Success!</h4>
+		                Succes <b>"' . $name . '"</b> your cargo is up to date now!
+		              </div>');
+		}else{
+			$this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissible">
+		                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+		                <h4><i class="icon fa fa-check"></i> Error!</h4>
+		                Failed <b>"' . $name . '"</b> your cargo is error!!!!
+		              </div>');
+		}
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
 	public function shift_operation()
 	{
 		$id 					= trim($this->input->post('id'));
@@ -137,7 +201,7 @@ class Edit extends CI_Controller {
 		if ($row->num_rows() > 0) {
 
 			$row 					= $row->row_array();
-			$time_passing 			= date('i') > 55 ? date('H:00:00', strtotime('+1 Hour')) : date('H:00:00');
+			$time_passing 			= date('i') > 50 ? date('H:00:00', strtotime('+1 Hour')) : date('H:00:00');
 
 			$data = array(
 				'created_at' 		=> date('Y-m-d H:i:s'),

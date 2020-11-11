@@ -76,20 +76,36 @@
                 <thead style="background-color: #74b9ff;">
                   <tr>
                     <th rowspan="2" style="text-align: center; vertical-align: middle;">Time</th>
-                  <?php
-                    foreach ($table as $value) {
-                      echo '<th colspan="3">'.$value['rom_spp'].'</th>
-                            </tr>';
-                      echo '<tr>
-                              <th>Plan</th>
-                              <th>Act.K</th>
-                              <th>Act.M</th>
-                            </tr>';
-                    }
-                  ?>
+                    <?php foreach ($table as $value) :?>
+                    <th colspan="3"><?=$value['rom_spp'];?></th>
+                    <?php endforeach;?>
+                  </tr>
+                  <tr>
+                    <?php foreach ($table as $value) :?>
+                    <th>Plan</th>
+                    <th>Act.K</th>
+                    <th>Act.M</th>                    
+                    <?php endforeach;?>
+                  </tr>
                 </thead>
                 <tbody>
-                  
+                  <?php 
+                    $no = 0;
+                  foreach ($table as $value) {
+                    $no++;
+                     $a = 4;
+                      if ($a >= 24) $a = $a - 24;
+                        $b = $a + 1;
+                      if ($b > 23) $b = ($b - 24);
+                      if ($a < 10) 
+                        $a = '0'.$a;
+                      if ($b < 10) 
+                        $b = '0'.$b;
+                        $c = $a . '-' . ($b) ;                        
+                    echo '<tr>';
+                      echo '<td>'.$c.'</td>';                     
+                    echo '</tr>';
+                  }?>
                 </tbody>
               </table>
 
@@ -100,16 +116,12 @@
         <div class="col-md-12">
           <div id="container" >
             <canvas id="canvas"></canvas>
-          </div>
-  
+          </div>  
         </div>
-
     </section>
+</div>
 
-
-  </div>
-
-  <script type="text/javascript">
+<script type="text/javascript">
   $('.datepicker').datepicker({
     autoclose: true
   });

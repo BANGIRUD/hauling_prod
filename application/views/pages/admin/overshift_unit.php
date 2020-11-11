@@ -22,9 +22,11 @@
           </div>
         </div>
         <?php foreach ($csa as $key ) :
+            $result   = get_date_shift();
             $this->db->select('table_shiftos.*,');
             $this->db->from('table_shiftos');
             $this->db->where('table_shiftos.csa = \''.$key['name'].'\'');
+            $this->db->where('table_shiftos.deleted_at IS NULL AND table_shiftos.date = \''.$result['date'].'\'');
             $table = $this->db->get()->result_array();
         ?>
         <div class="col-md-4">

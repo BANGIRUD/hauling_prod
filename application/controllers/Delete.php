@@ -31,10 +31,10 @@ class Delete extends CI_Controller {
 	public function enum()
 	{
 		$id = $this->input->post('del');
-		$src = $this->Crud->search('enum', array('id' => $id))->num_rows();
+		$src = $this->Crud->search('table_enum', array('id' => $id))->num_rows();
 		if ($src > 0) {
 			// $this->Crud->delete('enum', array('id' => $id));
-			$this->Crud->update('enum', array('id' => $id), array('deleted_at' => date('Y-m-d H:i:s')));
+			$this->Crud->update('table_enum', array('id' => $id), array('deleted_at' => date('Y-m-d H:i:s')));
 			$this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                 <h4><i class="icon fa fa-check"></i> Success!</h4>

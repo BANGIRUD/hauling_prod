@@ -65,53 +65,7 @@
           <!-- /.box -->
         </div>
         <!-- /.col -->
-        <div class="col-md-9">
-          <div class="nav-tabs-custom">
-            <ul class="nav nav-tabs">
-              <li class="active"><a href="#timeline" data-toggle="tab" aria-expanded="false">Timeline</a></li>
-              <?php if ($userprofile == $data['username']):?>
-              <li><a href="#settings" data-toggle="tab" aria-expanded="true">Settings</a></li>
-              <?php endif;?>
-            </ul>
-            <div class="tab-content">
-              <!-- /.tab-pane -->
-              <div class="tab-pane active" id="timeline">
-                <!-- The timeline -->
-                <ul class="timeline timeline-inverse" id="date-timeline">
-
-                </ul>
-              </div>
-              <!-- /.tab-pane -->
-              <?php if ($userprofile == $data['username']):?>
-              <div class="tab-pane" id="settings">
-                <form class="form-horizontal" method="post" action="<?php echo base_url('Edit/profile');?>">
-                  <div class="form-group">
-                    <label for="inputName" class="col-sm-2 control-label">Name</label>
-                    <div class="col-sm-10">
-                      <input class="form-control" placeholder="Name" name="name" type="text" value="<?php echo $data['full_name'];?>" />
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="inputExperience" class="col-sm-2 control-label">Description</label>
-
-                    <div class="col-sm-10">
-                      <textarea class="form-control" name="description" type="text" placeholder="Description"><?php echo $data['description'];?></textarea>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                      <button type="submit" class="btn btn-danger">Submit</button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-              <!-- /.tab-pane -->
-              <?php endif;?>
-            </div>
-            <!-- /.tab-content -->
-          </div>
-          <!-- /.nav-tabs-custom -->
-        </div>
+       
         <!-- /.col -->
       </div>
       <!-- /.row -->

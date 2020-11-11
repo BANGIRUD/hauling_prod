@@ -9,6 +9,45 @@ class Save extends CI_Controller {
 		$this->by_user			= $this->session->userdata('id');
 	}
 
+
+	public function cargo_muatan()
+	{
+		$by_user			= $this->session->userdata('id');
+
+		$code_sis 	= trim($this->input->post('name'));
+		$color 	 	= trim($this->input->post('description'));
+
+		$src = $this->Crud->search('table_enum', array(
+			'name' 			=> $code_sis, 
+			'description' 	=> $color, 
+			'deleted_at' 	=> NULL))->num_rows();
+		if ($src > 0) {
+			$this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h4><i class="icon fa fa-ban"></i> Alert!</h4>
+                Name <b>"' . $code_ai . '"</b> is already on ' . $code_sis .'!
+              </div>');
+		} else {
+			$data = array(
+				'created_at'			=> date('Y-m-d H:i:s'),
+				'updated_at'			=> date('Y-m-d H:i:s'),
+				'name' 					=> $code_sis, 
+				'description' 			=> $color,
+				'type' 					=> 'cargo_muatan',
+				'by_user' 				=> $by_user
+			);
+			$this->Crud->insert('table_enum', $data);
+			$this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h4><i class="icon fa fa-check"></i> Success!</h4>
+                <b>"' . $code_ai . '"</b> is added on ' . $code_sis .'!
+              </div>');
+		}
+
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
+
 	public function shift_operation() {
 
 
