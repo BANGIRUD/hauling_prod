@@ -99,7 +99,7 @@
                          <td >' . $data['code'] .'</td>
                          <td >' . $data['name'] .'</td>
                          <td class="tools">
-                          <i class="fa fa-edit" data-toggle="modal" data-target="#modal-rom" id="edit" data-id="' . $data['id'] . '"></i>
+                          <i class="fa fa-edit" data-toggle="modal" data-target="#modal-rom" id="editrom" data-id="' . $data['id'] . '"></i>
                           <i class="fa fa-trash-o" id="delete" data-id="' . $data['id'] . '"></i>
                          </td>
                       </tr>';
@@ -111,11 +111,11 @@
                 <div class="box-body">
                   <div class="form-group">
                     <label >Code</label>
-                    <input type="text" class="form-control"  name="name" placeholder="Enter Code ...">
+                    <input type="text" class="form-control"  name="code" placeholder="Enter Code ...">
                   </div>
                   <div class="form-group">
                     <label >ROM</label>
-                    <input type="text" class="form-control" name="category_description" placeholder="Enter ROM ...">
+                    <input type="text" class="form-control" name="name" placeholder="Enter ROM ...">
                   </div>
                 </div>
                 <div class="box-footer">
@@ -150,27 +150,6 @@
   </div>
 </div>
 
-<!-- /modal edit rom -->
-<div class="modal fade" id="modal-rom" style="display: none;" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <form id="form-edit" action="<?= base_url('Edit/');?>" method="POST">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span></button>
-            <h4 class="modal-title">Form Edit</h4>
-        </div>
-        <div class="modal-body" id="modal-body">
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary" id="submit">Save changes</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-
 
 
 
@@ -183,30 +162,12 @@
         $.each(jd.data, function(i, val){   
           vPool += '<div class="form-group">'+
           '<label>Code SIS</label>'+
+          '<input class="form-control" name="id" type="hidden" required autocomplete="off" value="' + this['id'] + '">'+
           '<input class="form-control" name="name" id="name" placeholder="Type here" type="text" required autocomplete="off" value="' + this['name'] + '">'+
           '</div>'+
           '<div class="form-group">'+
           '<label>Color Fill & Text</label>'+
           '<input class="form-control" name="description" id="description" placeholder="Type here" type="text" required autocomplete="off" value="' + this['description'] + '">'+
-          '</div>'
-          ;
-        });
-        $('#modal-body').html(vPool);
-      });
-    });
-
-  $(document).on('click', '#editrom', function(e) {
-      var id = $(this).attr('data-id');
-      var vPool="";
-      $.getJSON('<?php echo base_url('Api/enum');?>/' + id, function(jd) {
-        $.each(jd.data, function(i, val){   
-          vPool += '<div class="form-group">'+
-          '<label>Code</label>'+
-          '<input class="form-control" name="name" id="name" placeholder="Type here" type="text" required autocomplete="off" value="' + this['name'] + '">'+
-          '</div>'+
-          '<div class="form-group">'+
-          '<label>Color Fill & Text</label>'+
-          '<input class="form-control" name="category_description" id="category_description" placeholder="Type here" type="text" required autocomplete="off" value="' + this['category_description'] + '">'+
           '</div>'
           ;
         });

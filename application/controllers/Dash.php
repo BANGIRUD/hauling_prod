@@ -607,13 +607,13 @@ class Dash extends CI_Controller {
 		} else {
 			$username 	= $this->session->userdata('username');
 		}
-		$this->db->select('table_users.id ,table_users.username, table_users.full_name, table_users.description, enum.name  as level');
+		$this->db->select('table_users.id ,table_users.username, table_users.full_name, table_users.description, table_enum.name  as level');
 		$this->db->from('table_users');
-		$this->db->join('enum', 'table_users.level  = enum.id', 'LEFT');
+		$this->db->join('table_enum', 'table_users.level  = table_enum.id', 'LEFT');
 		$this->db->where('table_users.username',$username);
 		$profile = $this->db->get()->row_array();
 
-		$this->load->view('framework/header', array('title' => 'ReportingMDI | Profile'));
+		$this->load->view('framework/header', array('title' => 'Profile'));
 		$data = array(
 			'userprofile' => $this->session->userdata('username'),
 			'username' => $username,

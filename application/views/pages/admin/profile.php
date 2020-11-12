@@ -41,7 +41,7 @@
 
               <h3 class="profile-username text-center"><?php echo $data['full_name'];?></h3>
 
-              <p class="text-muted text-center"><?php echo strtoupper($data['level']);?></p>
+              <p class="text-muted text-center"><?php echo $data['level'];?></p>
 
               <?php if ($userprofile == $data['username']):?>
                 <a href="#" class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal-default"><i class="fa fa-key"></i> <b>Change Password</b></a>

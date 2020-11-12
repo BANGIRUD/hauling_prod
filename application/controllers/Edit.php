@@ -27,6 +27,7 @@ class Edit extends CI_Controller {
 				'description' 	=> $description,
 				'by_user' 		=> $by_user
 			);
+
 			$this->Crud->update('table_enum', array('id' => $id),$data);
 			$this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissible">
 		                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -40,38 +41,8 @@ class Edit extends CI_Controller {
 		                Failed <b>"' . $name . '"</b> your cargo is error!!!!
 		              </div>');
 		}
-		redirect($_SERVER['HTTP_REFERER']);
-	}
 
-	public function rom()
-	{
-		$by_user				= $this->session->userdata('id');
-
-		$id 					= trim($this->input->post('id'));
-		$name 					= trim($this->input->post('name'));
-		$description 			= trim($this->input->post('description'));
-
-		$src 	= $this->Crud->search('table_enum', array('id' => $id))->num_rows();
-		if ($src > 0) {
-			$data = array(
-				'updated_at'	=> date('Y-m-d H:i:s'), 
-				'name' 			=> $name, 
-				'description' 	=> $description,
-				'by_user' 		=> $by_user
-			);
-			$this->Crud->update('table_enum', array('id' => $id),$data);
-			$this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissible">
-		                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-		                <h4><i class="icon fa fa-check"></i> Success!</h4>
-		                Succes <b>"' . $name . '"</b> your cargo is up to date now!
-		              </div>');
-		}else{
-			$this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissible">
-		                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-		                <h4><i class="icon fa fa-check"></i> Error!</h4>
-		                Failed <b>"' . $name . '"</b> your cargo is error!!!!
-		              </div>');
-		}
+		print_r($_POST);
 		redirect($_SERVER['HTTP_REFERER']);
 	}
 
@@ -282,13 +253,13 @@ class Edit extends CI_Controller {
 		$id = trim($this->input->post('id'));
 		$username = trim($this->input->post('username'));
 		$password = password_hash(trim($username), PASSWORD_DEFAULT);
-		$src = $this->Crud->search('user', array('id' => $id, 'username' => $username))->num_rows();
+		$src = $this->Crud->search('table_users', array('id' => $id, 'username' => $username))->num_rows();
 		if ($src > 0) {
 			$data = array(
 				'id' => $id,
 				'password' => $password
 			);
-			$this->Crud->update('user', array('id' => $id), $data);
+			$this->Crud->update('table_users', array('id' => $id), $data);
 			$this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissible fade-alert">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                 <h4><i class="icon fa fa-check"></i> Success!</h4>

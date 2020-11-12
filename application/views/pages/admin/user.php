@@ -83,6 +83,7 @@
           </div>
         </div>
         <div class="col-md-4">
+
           <!-- general form elements -->
           <div class="box box-primary">
             <div class="box-header with-border">
@@ -238,7 +239,7 @@
       $.ajax({
           type: "POST",
           data:'id=' + id + '&username=' + username,
-          url: "<?php echo base_url('edit/reset_password');?>",
+          url: "<?php echo base_url('Edit/reset_password');?>",
           success: function(response) {
             location.reload();
           },
