@@ -42,7 +42,42 @@ class Edit extends CI_Controller {
 		              </div>');
 		}
 
-		print_r($_POST);
+		// print_r($_POST);
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
+	public function rom()
+	{
+		$by_user				= $this->session->userdata('id');
+
+		$id 					= trim($this->input->post('id'));
+		$code 					= trim($this->input->post('code'));
+		$name 					= trim($this->input->post('name'));
+
+		$src 	= $this->Crud->search('table_enum', array('id' => $id))->num_rows();
+		if ($src > 0) {
+			$data = array(
+				'updated_at'	=> date('Y-m-d H:i:s'), 
+				'code' 			=> $code, 
+				'name' 			=> $name,
+				'by_user' 		=> $by_user
+			);
+
+			$this->Crud->update('table_enum', array('id' => $id),$data);
+			$this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissible">
+		                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+		                <h4><i class="icon fa fa-check"></i> Success!</h4>
+		                Succes <b>"' . $name . '"</b> your cargo is up to date now!
+		              </div>');
+		}else{
+			$this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissible">
+		                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+		                <h4><i class="icon fa fa-check"></i> Error!</h4>
+		                Failed <b>"' . $name . '"</b> your cargo is error!!!!
+		              </div>');
+		}
+
+		// print_r($_POST);
 		redirect($_SERVER['HTTP_REFERER']);
 	}
 

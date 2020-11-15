@@ -151,7 +151,26 @@
 </div>
 
 
-
+<!-- /modal edit rom -->
+<div class="modal fade" id="modal-rom" style="display: none;" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form id="form-edit" action="<?= base_url('Edit/rom');?>" method="POST">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span></button>
+            <h4 class="modal-title">Form Edit</h4>
+        </div>
+        <div class="modal-body" id="modal-body">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary" id="submit">Save changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 
 
 <script type="text/javascript">
@@ -168,6 +187,26 @@
           '<div class="form-group">'+
           '<label>Color Fill & Text</label>'+
           '<input class="form-control" name="description" id="description" placeholder="Type here" type="text" required autocomplete="off" value="' + this['description'] + '">'+
+          '</div>'
+          ;
+        });
+        $('#modal-body').html(vPool);
+      });
+    });
+
+  $(document).on('click', '#editrom', function(e) {
+      var id = $(this).attr('data-id');
+      var vPool="";
+      $.getJSON('<?php echo base_url('Api/enum');?>/' + id, function(jd) {
+        $.each(jd.data, function(i, val){   
+          vPool += '<div class="form-group">'+
+          '<label>Code</label>'+
+          '<input class="form-control" name="id" type="hidden" required autocomplete="off" value="' + this['id'] + '">'+
+          '<input class="form-control" name="code" id="code" placeholder="Type here" type="text" required autocomplete="off" value="' + this['code'] + '">'+
+          '</div>'+
+          '<div class="form-group">'+
+          '<label>ROM</label>'+
+          '<input class="form-control" name="name" id="name" placeholder="Type here" type="text" required autocomplete="off" value="' + this['name'] + '">'+
           '</div>'
           ;
         });

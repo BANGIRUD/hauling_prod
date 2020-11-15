@@ -415,7 +415,7 @@ class Upload extends CI_Controller {
 				$date 				= date("Y-m-d", strtotime( trim( $datas->val($i, 1) ) ));
 				$unit 				= trim( $datas->val($i, 3) );
 				if ($unit) {
-					$this->import->import_setting_daily_register($date,$unit,'register','',$by_user);
+					$this->import->import_setting_daily_register($date,$unit,'Register','',$by_user);
 				}
 			}
 
@@ -426,7 +426,7 @@ class Upload extends CI_Controller {
 				$unit 				= trim( $datas->val($i, 6) );
 				$remark 				= trim( $datas->val($i, 7) );
 				if ($unit) {
-					$this->import->import_setting_daily_register($date,$unit,'unregister',$remark,$by_user);
+					$this->import->import_setting_daily_register($date,$unit,'Unregister',$remark,$by_user);
 				}
 			}
 
@@ -435,7 +435,7 @@ class Upload extends CI_Controller {
 				$date 				= date("Y-m-d", strtotime( trim( $datas->val($i, 1) ) ));
 				$unit 				= trim( $datas->val($i, 10) );
 				if ($unit) {
-					$this->import->import_setting_daily_register($date,$unit,'floating','',$by_user);
+					$this->import->import_setting_daily_register($date,$unit,'Floating','',$by_user);
 				}
 			}
 

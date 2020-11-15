@@ -18,7 +18,7 @@
       <div class="col-md-12">
         <div class="box box-primary">
           <div class="box-header with-border">
-            <div class="row">
+            <!-- <div class="row">
               <?php if ($this->session->userdata('level') == 'administrator' || $this->session->userdata('level') == 'dispatcher'):?>
                <p style="padding: 0 15px">Click tombol untuk filter ROM:</p>
                 <?php $no=0;
@@ -32,7 +32,7 @@
                 ?>
                 <?php endforeach;?>
               <?php endif;?>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>

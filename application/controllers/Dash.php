@@ -330,7 +330,7 @@ class Dash extends CI_Controller {
 
 		$this->load->model('Monitoring_operations', 'operations');
 		
-		$data = $this->operations->monitoring_operations_65_standby()->result_array();
+		$data = $this->operations->monitoring_operations_69()->result_array();
 
 		$data 		= array (
 			'position'		=> $position,

@@ -78,7 +78,7 @@
                                 </a>
                               </td>';
                         echo '<td>'.$no.'</td>
-                              <td>10/08/2020</td>
+                              <td>'.date('Y-m-d',strtotime($value['time_in'])).'</td>
                               <td>'.date('H:i',strtotime($value['time_in'])).'</td>';
                               if (strtolower($value['code_stby']) == 'l') {
                                       $timeout = date('H:i',strtotime($value['time_out']));
@@ -93,9 +93,9 @@
                               <td>'.$value['cargo'].'</td>
                               <td>'.date('H',strtotime($value['time_passing'])).'</td>
                               <td>'.$value['remark'].'</td>
-                              <td>CSA</td>
-                              <td>Time OS</td>
-                              <td>Regist / Unregist</td>';
+                              <td>'.$value['remark'].'</td>
+                              <td>'.$value['csa'].'</td>
+                              <td>'.$value['time'].'</td>';
                         echo '<td>
                                 <a href="#" class="btn btn-xs btn-success" id="ready" data-id="'.$value['id'].'" data-value="'.$value['operation'].'" data-original-title="Ready" data-toggle="tooltip">
                                   <i class="fa fa-check"></i>
@@ -143,10 +143,10 @@
                   </select>
               </div>
               <div class="col-xs-4">
-                <label>Cargo Muatan</label> 
+                <label>Code Standby</label> 
                   <select class="form-control" name="code_standby" id="code_standby">
                     <?php foreach ($code_standby as $value) {
-                      echo '<option value="'.$value['code'].'">'.$value['code'].' </option>';
+                      echo '<option value="'.$value['code'].'">'.$value['code']. ' | ' .$value['name'].' </option>';
                     }?>
                   </select>                 
               </div>

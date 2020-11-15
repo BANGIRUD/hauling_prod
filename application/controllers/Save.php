@@ -338,7 +338,7 @@ class Save extends CI_Controller {
 					'time_out'			=> NULL,
 					'cn_unit' 			=> $id_unit,
 					'position' 			=> $position,
-					'cargo' 			=> NULL,
+					'cargo' 			=> 'Kosongan',
 					'code_stby' 		=> $code_standby,
 					'time_passing'		=> NULL,
 					'remark'			=> $remark,

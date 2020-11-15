@@ -39,7 +39,7 @@
                     <a href="#" class="btn btn-sm btn-danger" id="delete" data-id="<?= $data['id'];?>" title="Delete data"><i class="fa fa-trash"></i></a></td>
                     <td nowrap style="text-align: center"><?= $no;?></td>
                     <td nowrap><?= $data['set_trailler'];?></td>
-                    <td nowrap><?= $data['no_unit'];?></td>
+                    <td nowrap><?= $data['unit_id'];?></td>
                     <td nowrap><?= $data['register'];?></td>
                     <td nowrap><?= $data['remark'];?></td>
                   </tr>

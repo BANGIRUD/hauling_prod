@@ -129,9 +129,13 @@ class Monitoring_operations extends CI_Model
 
 	public function monitoring_operations_69()
 	{
+		$result = get_date_shift();
+		$this->db->select('table_monitoringoperations.*, table_shiftos.csa, table_shiftos.time');
 		$this->db->from('table_monitoringoperations');
-		$this->db->where('table_monitoringoperations.deleted_at', NULL);
-		$this->db->where('table_monitoringoperations.ref_id = \''.$id.'\'');
+		$this->db->join('table_shiftos','table_monitoringoperations.cn_unit = table_shiftos.no_id','LEFT');
+		$this->db->where('table_monitoringoperations.by_area', 12);
+		$this->db->where('DATE(table_monitoringoperations.time_in)', $result['date']);
+
 		return $this->db->get();
 	}
 
