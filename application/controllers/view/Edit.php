@@ -234,23 +234,35 @@ class Edit extends CI_Controller {
 		<div class="modal-body ">
           <div class="form-group">
             <div class="form-body">
-              <div class="col-xs-4">
-                <label>ID Unit</label> 
-		            <input class="form-control" type="text" name="unit" placeholder="Enter Id Unit Here" id="id_unit" value="<?= $data->cn_unit ;?>" disabled>
-              </div>
-              <div class="col-xs-4">
-                <label>Cargo Muatan</label>                
-	            <input class="form-control" type="text" name="unit" placeholder="Enter Id Unit Here" id="id_unit" value="<?= $data->cargo ;?>" disabled>
-		        </div>
-              <div class="col-xs-4">
-                <label>Code Standby</label> 
-	              	<select class="form-control" name="code_standby" id="code_standby">
-						<?php foreach ($code_standby as $value) {
-							$selected = $data->code_stby == $value['code'] ? ' selected' : '';
-							echo '<option'.$selected.' value="'.$value['code'].'">'.$value['code'] .' | '. $value['name'].'</option>';
-						}
-						?>
-					</select>
+            	<div class="row">
+	              <div class="col-xs-4">
+	                <label>ID Unit</label> 
+			            <input class="form-control" type="text" name="unit" placeholder="Enter Id Unit Here" id="id_unit" value="<?= $data->cn_unit ;?>" disabled>
+	              </div>
+	              <div class="col-xs-4">
+	                <label>Cargo Muatan</label>                
+		            <input class="form-control" type="text" name="unit" placeholder="Enter Id Unit Here" id="id_unit" value="<?= $data->cargo ;?>" disabled>
+			      </div>
+	              <div class="col-xs-4">
+	                <label>Code Standby</label> 
+		              	<select class="form-control" name="code_standby" id="code_standby">
+							<?php foreach ($code_standby as $value) {
+								$selected = $data->code_stby == $value['code'] ? ' selected' : '';
+								echo '<option'.$selected.' value="'.$value['code'].'">'.$value['code'] .' | '. $value['name'].'</option>';
+							}
+							?>
+						</select>
+	              </div>
+	            </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-body">
+              <div class="row">
+                <div class="col-xs-12">
+                  <label>Remark</label>
+                  <textarea name="remark" id="remark" class="form-control" placeholder="Enter Remark Here ..."><?= $data->remark ;?></textarea>
+                </div>
               </div>
             </div>
           </div>

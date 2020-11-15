@@ -160,6 +160,7 @@ class Save extends CI_Controller {
 
 		$id 					= trim($this->input->post('id'));
 		$code_standby 			= trim($this->input->post('code_standby'));
+		$remark 				= trim($this->input->post('remark'));
 
 		$row 					= $this->operation->detail_shift_operations($id);
 		if ($row->num_rows() > 0) {
@@ -190,7 +191,7 @@ class Save extends CI_Controller {
 				'cargo'				=> $row['cargo'],
 				'code_stby'			=> $code_standby,
 				'time_passing'		=> NULL,
-				'remark'			=> NULL,
+				'remark'			=> $remark,
 				'by_area'			=> $this->by_area,
 				'by_user'			=> $this->by_user
 			);
@@ -266,7 +267,7 @@ class Save extends CI_Controller {
 
 	}
 
-	public function monitoring_operations_65() {
+	public function monitoring_operations_65_kosongan() {
 		$id_unit 			= $this->input->post('id_unit');
 		$position 			= $this->input->post('position');
 		$code_standby 		= $this->input->post('code_standby');
@@ -286,7 +287,7 @@ class Save extends CI_Controller {
 					'time_out'			=> NULL,
 					'cn_unit' 			=> $id_unit,
 					'position' 			=> $position,
-					'cargo' 			=> NULL,
+					'cargo' 			=> 'Kosongan',
 					'code_stby' 		=> $code_standby,
 					'time_passing'		=> NULL,
 					'remark'			=> $remark,

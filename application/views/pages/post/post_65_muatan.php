@@ -52,13 +52,21 @@
                             <td>'.$value['cn_unit'].'</td>
                             <td style="background-color:'. $color[0] . ';color:'.@$color[1].'" >'.$value['cargo'].'</td>
                             <td>'.$value['name_rom'].'</td>';
-                      echo '<td>
-                              <a href="#" class="btn btn-xs btn-success" data-target="#editindata" id="editincsa" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit masuk CSA" data-toggle="tooltip">
-                                <i class="fa  fa-reply"> In</i>
-                              </a>
-                              <a href="#" class="btn btn-xs btn-primary" data-target="#editcontinuedata" id="continue" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit lanjut" data-toggle="tooltip"><i class="fa   fa-fighter-jet"> Pass Through</i>
-                              </a>
-                            </td>';
+                      echo '<td>';
+                        if($this->session->userdata('level') != 'dispatcher'):
+                          echo '<a href="#" class="btn btn-xs btn-success" data-target="#editindata" id="editincsa" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit masuk CSA" data-toggle="tooltip">
+                            <i class="fa  fa-reply"> In</i>
+                          </a>
+                          <a href="#" class="btn btn-xs btn-primary" data-target="#editcontinuedata" id="continue" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit lanjut" data-toggle="tooltip"><i class="fa   fa-fighter-jet"> Pass Through</i>
+                          </a>';
+                        else :
+                          echo '<a href="#" class="btn btn-xs btn-success disabled" data-target="#editindata" id="editincsa" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit masuk CSA" data-toggle="tooltip">
+                            <i class="fa  fa-reply"> In</i>
+                          </a>
+                          <a href="#" class="btn btn-xs btn-primary disabled" data-target="#editcontinuedata" id="continue" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit lanjut" data-toggle="tooltip"><i class="fa   fa-fighter-jet"> Pass Through</i>
+                          </a>';
+                        endif ;
+                      echo '</td>';
                     echo '</tr>';
                   }
                   ?>                   
@@ -75,7 +83,7 @@
 <div class="modal fade in" id="modal-addunit" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
-      <form method="POST" action="<?php echo base_url('Save/monitoring_operations_65');?>">
+      <form method="POST" action="<?php echo base_url('Save/monitoring_operations_65_kosongan');?>">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span></button>
@@ -93,7 +101,7 @@
                   <label>Position</label> 
                   <select class="form-control" name="position" id="position">
                     <?php foreach ($position as $value) {
-                      echo '<option value="'.$value['code'].'">'.$value['code'].'</option>';
+                      echo '<option value="'.$value['code'].'">'.$value['name'].'</option>';
                     }?>
                   </select> 
                 </div>                

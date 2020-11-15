@@ -102,9 +102,9 @@
                                 $timepassing = $value['operation'] == 0 ? '-' : date('H',strtotime($value['time_passing']));
                         echo '<td>'.$timepassing.'</td>
                               <td>'.$value['remark'].'</td>
-                              <td>CSA</td>
-                              <td>Time OS</td>
-                              <td>Regist / Unregist</td>';
+                              <td>'.$value['csa'].'</td>
+                              <td>'.$value['time'].'</td>
+                              <td>'.$value['register'].'</td>';
                         echo '<td>';
                         if($value['operation'] == 0 && strtolower($value['code_stby']) != 'l') : 
                           echo '<a href="#" class="btn btn-xs btn-success" id="ready" data-id="'.$value['id'].'" data-value="'.$value['operation'].'"data-original-title="Ready" data-toggle="tooltip"><i class="fa fa-check"></i>

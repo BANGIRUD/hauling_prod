@@ -91,10 +91,10 @@
                               <td>'.$value['cn_unit'].'</td>
                               <td>'.$value['position'].'</td>
                               <td>'.$value['cargo'].'</td>
-                              <td>'.date('H',strtotime($value['time_passing'])).'</td>
-                              <td>'.$value['remark'].'</td>
+                              <td>'.$value['time_passing'].'</td>
                               <td>'.$value['remark'].'</td>
                               <td>'.$value['csa'].'</td>
+                              <td>'.$value['time'].'</td>
                               <td>'.$value['time'].'</td>';
                         echo '<td>
                                 <a href="#" class="btn btn-xs btn-success" id="ready" data-id="'.$value['id'].'" data-value="'.$value['operation'].'" data-original-title="Ready" data-toggle="tooltip">
