@@ -133,9 +133,15 @@ class Monitoring_operations extends CI_Model
 	public function monitoring_operations_69()
 	{
 		$result = get_date_shift();
-		$this->db->select('table_monitoringoperations.*, table_shiftos.csa, table_shiftos.time');
+		$this->db->select('table_monitoringoperations.*, a.csa, a.time, IF(table_monitoringoperations.position = \'K\', \'Kosongan\',b.cargo) as cargo_awal, b.remark as remark_awal');
 		$this->db->from('table_monitoringoperations');
-		$this->db->join('table_shiftos','table_monitoringoperations.cn_unit = table_shiftos.no_id','LEFT');
+		$this->db->join('(SELECT table_shiftos.* FROM (SELECT MAX(id) as id FROM `table_shiftos` GROUP BY no_id) as a
+LEFT JOIN table_shiftos ON table_shiftos.id = a.id) as a','table_monitoringoperations.cn_unit = a.no_id','LEFT');
+
+		$this->db->join('(SELECT table_shiftoperations.* FROM (SELECT MAX(id) as id FROM `table_shiftoperations` WHERE date = \''.$result['date'].'\' GROUP BY cn_unit) as a
+LEFT JOIN table_shiftoperations ON table_shiftoperations.id = a.id) as b','table_monitoringoperations.cn_unit = b.cn_unit','LEFT');
+
+
 		$this->db->where('table_monitoringoperations.by_area', 12);
 		$this->db->where('DATE(table_monitoringoperations.time_in)', $result['date']);
 

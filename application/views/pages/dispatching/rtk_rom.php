@@ -81,7 +81,11 @@
                     <?php endforeach;?>
                   </tr>
                   <tr>
-                    <?php foreach ($table as $value) :?>
+                    <?php 
+                    $kosongan = array();
+                    foreach ($table as $value) :
+                      $kosongan[$value['rom_id']] = $this->shift_ops->achievement_rom_rtk($value['rom_id'])->row_array();
+                      ?>
                     <th>Plan</th>
                     <th>Act.K</th>
                     <th>Act.M</th>                    
@@ -91,21 +95,35 @@
                 <tbody>
                   <?php 
                     $no = 0;
-                  foreach ($table as $value) {
-                    $no++;
-                     $a = 4;
-                      if ($a >= 24) $a = $a - 24;
-                        $b = $a + 1;
-                      if ($b > 23) $b = ($b - 24);
-                      if ($a < 10) 
-                        $a = '0'.$a;
-                      if ($b < 10) 
-                        $b = '0'.$b;
-                        $c = $a . '-' . ($b) ;                        
-                    echo '<tr>';
-                      echo '<td>'.$c.'</td>';                     
-                    echo '</tr>';
-                  }?>
+                    for ($a=($hour-2) ,$i=1; $i <= 12; $i++, $a++) :
+                      if ($a >= 24) {
+                        $a = $a - 24;
+                      }
+
+                      $b = $a + 1;
+                      if ($b > 24) {
+                        $b = ($b - 24);
+                      }
+
+                      $x = $a < 10 ? '0'.$a.':00' : $a.':00';
+                      $y = $b < 10 ? '0'.$b.':00' : $b.':00';
+
+                      $c = $x. '-'.$y;
+
+                      echo '<tr>';
+                        echo '<td>' . $c . '</td>';
+                        foreach ($table as $value) :
+                          $callback_kosongan = $kosongan[$value['rom_id']];
+                          echo '<td>' . $value['jam_'.$i] . '</td>';
+                          // echo '<td>' . '</td>';
+                          $val = !empty(@$callback_kosongan['kosongan_'.$i]) ? @$callback_kosongan['kosongan_'.$i] : 0;
+                          echo '<td>' . @$val . '</td>';
+                          echo '<td>' . $value['actual_'.$i] . '</td>';
+                        endforeach;
+                      echo '<tr>';
+
+                    endfor;
+                  ?>
                 </tbody>
               </table>
 

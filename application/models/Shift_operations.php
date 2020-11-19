@@ -66,12 +66,20 @@ class Shift_operations extends CI_Model
 		$this->db->join('(SELECT table_romoperations.id, time_in, time_out, ref_id FROM (SELECT MAX(id) as id FROM table_romoperations WHERE deleted_at IS NULL GROUP BY ref_id) as a
 			LEFT JOIN table_romoperations ON table_romoperations.id = a.id
 			WHERE deleted_at IS NULL) as a','table_shiftoperations.id = a.ref_id ','LEFT');
-		if ($by_rom) {
-			$this->db->where('table_shiftoperations.to_rom', $by_rom);
-		}
+		
+		$this->db->where('table_shiftoperations.to_rom', $by_rom);
+		
 		$this->db->where('table_shiftoperations.deleted_at', NULL);
 		$this->db->where('table_shiftoperations.date',$result['date']);
 		$this->db->where('table_shiftoperations.position', 'K');
+
+
+
+		$this->db->where('table_shiftoperations.cn_unit NOT IN (SELECT table_monitoringoperations.cn_unit FROM (SELECT MAX(id) as id FROM `table_monitoringoperations` WHERE DATE(time_in) = \''.$result['date'].'\' GROUP BY cn_unit) as a
+LEFT JOIN table_monitoringoperations ON table_monitoringoperations.id = a.id
+ WHERE deleted_at IS NULL AND  time_out IS NULL) ', NULL, FALSE);
+
+
 		$this->db->order_by('table_shiftoperations.id asc');
 		$this->db->group_by('table_shiftoperations.id');
 		return $this->db->get();
@@ -87,13 +95,32 @@ class Shift_operations extends CI_Model
 		$this->db->join('(SELECT table_romoperations.id, time_in, time_out, ref_id FROM (SELECT MAX(id) as id FROM table_romoperations WHERE deleted_at IS NULL GROUP BY ref_id) as a
 			LEFT JOIN table_romoperations ON table_romoperations.id = a.id
 			WHERE deleted_at IS NULL) as a','table_shiftoperations.id = a.ref_id ','LEFT');
-		if ($by_rom) {
-			$this->db->where('table_shiftoperations.to_rom', $by_rom);
-		}
 		$this->db->where('table_shiftoperations.deleted_at', NULL);
+		$this->db->where('table_shiftoperations.to_rom', $by_rom);
 		$this->db->where('table_shiftoperations.date',$result['date']);
 		$this->db->order_by('table_shiftoperations.id asc');
 		$this->db->group_by('table_shiftoperations.id');
+		return $this->db->get();
+	}
+
+	public function achievement_rom_rtk($by_rom)
+	{
+		$result = get_date_shift();
+		$date = $result['date'];
+		$shift = $result['shift'];
+		if ($result['shift'] == 1) {
+			$hour = 6;
+		} else {
+			$hour = 18;
+		}
+		for ($a = 1, $i=$hour; $i < ($hour+12) ; $i++, $a++) { 
+			$this->db->select('SUM(IF(HOUR(DATE_ADD(CONCAT(table_shiftoperations.date, \' \', table_shiftoperations.time), INTERVAL 2 HOUR)) = '.$i.', 1, 0)) as kosongan_' . $a);
+		}
+		$this->db->from('table_shiftoperations');
+		$this->db->where('table_shiftoperations.deleted_at', NULL);
+		$this->db->where('table_shiftoperations.to_rom', $by_rom);
+		$this->db->where('DATE(DATE_ADD(CONCAT(table_shiftoperations.date, \' \', table_shiftoperations.time), INTERVAL 2 HOUR)) = \''.$result['date'].'\'', NULL, false);
+		$this->db->group_by('table_shiftoperations.to_rom');
 		return $this->db->get();
 	}
 }

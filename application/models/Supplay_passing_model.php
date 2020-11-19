@@ -13,8 +13,8 @@ class Supplay_passing_model extends CI_Model
 
 		$this->db->select('table_supplaypassing.*,table_enum.name as rom_spp');
 		$this->db->from('table_supplaypassing');
-		$this->db->where('table_supplaypassing.date',$result['date']);
 		$this->db->join('table_enum','table_supplaypassing.rom = table_enum.code','LEFT');
+		$this->db->where('table_supplaypassing.date',$result['date']);
 		$this->db->where('table_supplaypassing.shift',$result['shift']);
 		$this->db->where('table_supplaypassing.deleted_at',NULL);
 		$this->db->group_by('table_supplaypassing.material');

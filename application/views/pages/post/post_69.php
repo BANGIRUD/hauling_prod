@@ -90,9 +90,9 @@
                         echo '<td>'.$timestb.'</td>
                               <td>'.$value['cn_unit'].'</td>
                               <td>'.$value['position'].'</td>
-                              <td>'.$value['cargo'].'</td>
+                              <td>'.$value['cargo_awal'].'</td>
                               <td>'.$value['time_passing'].'</td>
-                              <td>'.$value['remark'].'</td>
+                              <td>'.$value['remark_awal'].'</td>
                               <td>'.$value['csa'].'</td>
                               <td>'.$value['time'].'</td>
                               <td>'.$value['time'].'</td>';

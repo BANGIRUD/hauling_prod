@@ -196,6 +196,7 @@ class Dash extends CI_Controller {
 		$shift = $this->input->get('shift') == '' ? $result['shift'] : $this->input->get('shift');
 		$hour = $this->input->get('time') == '' ? date('H') : $this->input->get('time');
 		$this->load->model('Monitoring_model', 'monitoring');
+		$this->load->model('Shift_operations', 'shift_ops');
 
 
 		$table = $this->monitoring->achievement_seam_series($date, $shift)->result_array();
@@ -223,7 +224,7 @@ class Dash extends CI_Controller {
 			'pos'			=> $pos,
 			'date'  		=> $date,
 			'shift'  		=> $shift,
-			'hour'  		=> $hour,
+			'jam'  			=> $hour,
 
 
 		);

@@ -49,7 +49,7 @@
                   <tr style="text-align: center;">
                     <td><?= $no;?></td>
                     <td><?= $value['cn_unit'];?></td>
-                    <?php echo '<td style="background-color:'. $color[0] . ';color:'.@$color[1].'">'. $value['cargo'] . '</td>';?>
+                    <?php echo '<td style="background-color:'. $color[0] . ';color:'.@$color[1].'">'. $value['cargo_awal'] . '</td>';?>
                   </tr>
                   <?php endforeach;?>
                 </tbody>
@@ -96,7 +96,7 @@
                   <tr style="text-align: center;">
                     <td><?= $no;?></td>
                     <td><?= $value['cn_unit'];?></td>
-                    <?php echo '<td style="background-color:'. $color[0] . ';color:'.@$color[1].'">'. $value['cargo'] . '</td>';?>
+                    <?php echo '<td style="background-color:'. $color[0] . ';color:'.@$color[1].'">'. $value['cargo_awal'] . '</td>';?>
                   </tr>
                   <?php endforeach;?>
                 </tbody>
@@ -144,7 +144,7 @@
                   <tr style="text-align: center;">
                     <td><?= $no;?></td>
                     <td><?= $value['cn_unit'];?></td>
-                    <?php echo '<td style="background-color:'. $color[0] . ';color:'.@$color[1].'">'. $value['cargo'] . '</td>';?>
+                    <?php echo '<td style="background-color:'. $color[0] . ';color:'.@$color[1].'">'. $value['cargo_awal'] . '</td>';?>
                     <td><?= date('H', strtotime($value['time_passing']));?></td>
                   </tr>
                   <?php endforeach;?>
@@ -192,7 +192,7 @@
                   <tr style="text-align: center;">
                     <td><?= $no;?></td>
                     <td><?= $value['cn_unit'];?></td>
-                    <?php echo '<td style="background-color:'. $color[0] . ';color:'.@$color[1].'">'. $value['cargo'] . '</td>';?>
+                    <?php echo '<td style="background-color:'. $color[0] . ';color:'.@$color[1].'">'. $value['cargo_awal'] . '</td>';?>
                   </tr>
                   <?php endforeach;?>
                 </tbody>
@@ -240,7 +240,7 @@
                   <tr style="text-align: center;">
                     <td><?= $no;?></td>
                     <td><?= $value['cn_unit'];?></td>
-                    <?php echo '<td style="background-color:'. $color[0] . ';color:'.@$color[1].'">'. $value['cargo'] . '</td>';?>
+                    <?php echo '<td style="background-color:'. $color[0] . ';color:'.@$color[1].'">'. $value['cargo_awal'] . '</td>';?>
                     <td><?= date('H', strtotime($value['time_passing']));?></td>
                   </tr>
                   <?php endforeach;?>
