@@ -89,11 +89,12 @@
 				                	$no = 0;
 				                	foreach ($data as $value) {
 				                		$no++;
+				                		$color = explode(',', $value['color']);
 				                		echo '<tr>
 					                		<td style="text-align: center; background-color: #f1f2f6">'.$no.'</td>
 					                		<td style="text-align: center; background-color: #f1f2f6">'.date('H:i', strtotime($value['time_out'])).'</td>
 					                		<td style="text-align: center; background-color: #f1f2f6">'.$value['cn_unit'].'</td>
-					                		<td style="text-align: center; background-color: #f1f2f6">'.$value['cargo'].'</td>
+					                		<td style="text-align: center; background-color:'. $color[0] . ';color:'.@$color[1].'">'.$value['cargo'].'</td>
 					                	</tr>';
 				                	}
 				                	?>

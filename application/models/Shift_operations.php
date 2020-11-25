@@ -66,9 +66,11 @@ class Shift_operations extends CI_Model
 		$this->db->join('(SELECT table_romoperations.id, time_in, time_out, ref_id FROM (SELECT MAX(id) as id FROM table_romoperations WHERE deleted_at IS NULL GROUP BY ref_id) as a
 			LEFT JOIN table_romoperations ON table_romoperations.id = a.id
 			WHERE deleted_at IS NULL) as a','table_shiftoperations.id = a.ref_id ','LEFT');
-		
-		$this->db->where('table_shiftoperations.to_rom', $by_rom);
-		
+
+		if ($by_rom) {
+			$this->db->where('table_shiftoperations.to_rom', $by_rom);
+		}
+				
 		$this->db->where('table_shiftoperations.deleted_at', NULL);
 		$this->db->where('table_shiftoperations.date',$result['date']);
 		$this->db->where('table_shiftoperations.position', 'K');
@@ -76,8 +78,8 @@ class Shift_operations extends CI_Model
 
 
 		$this->db->where('table_shiftoperations.cn_unit NOT IN (SELECT table_monitoringoperations.cn_unit FROM (SELECT MAX(id) as id FROM `table_monitoringoperations` WHERE DATE(time_in) = \''.$result['date'].'\' GROUP BY cn_unit) as a
-LEFT JOIN table_monitoringoperations ON table_monitoringoperations.id = a.id
- WHERE deleted_at IS NULL AND  time_out IS NULL) ', NULL, FALSE);
+			LEFT JOIN table_monitoringoperations ON table_monitoringoperations.id = a.id
+ 			WHERE deleted_at IS NULL AND  time_out IS NULL) ', NULL, FALSE);
 
 
 		$this->db->order_by('table_shiftoperations.id asc');
@@ -120,6 +122,23 @@ LEFT JOIN table_monitoringoperations ON table_monitoringoperations.id = a.id
 		$this->db->where('table_shiftoperations.deleted_at', NULL);
 		$this->db->where('table_shiftoperations.to_rom', $by_rom);
 		$this->db->where('DATE(DATE_ADD(CONCAT(table_shiftoperations.date, \' \', table_shiftoperations.time), INTERVAL 2 HOUR)) = \''.$result['date'].'\'', NULL, false);
+		$this->db->group_by('table_shiftoperations.to_rom');
+		return $this->db->get();
+	}
+
+
+
+	public function monitoring_operation_rom_data($date, $time, $by_rom)
+	{		
+		$this->db->select('table_shiftoperations.*, cargo.description as color,a.register, b.csa');
+		$this->db->from('table_shiftoperations');
+		$this->db->join('table_enum as cargo','table_shiftoperations.cargo = cargo.name','LEFT');
+		$this->db->join('(SELECT table_settingunit.* FROM (SELECT MAX(id) as id FROM `table_settingunit` group by unit_id ) AS a LEFT JOIN table_settingunit ON table_settingunit.id = a.id) as a','a.unit_id = table_shiftoperations.cn_unit','LEFT');
+		$this->db->join('(SELECT table_shiftos.* FROM (SELECT MAX(id) as id FROM `table_shiftos` GROUP BY no_unit) as a LEFT JOIN table_shiftos ON a.id = table_shiftos.id) as b','b.no_id = table_shiftoperations.cn_unit','LEFT');
+		$this->db->where('table_shiftoperations.deleted_at', NULL);
+		$this->db->where('table_shiftoperations.to_rom', $by_rom);
+		$this->db->where('DATE(DATE_ADD(CONCAT(table_shiftoperations.date, \' \', table_shiftoperations.time), INTERVAL 2 HOUR)) = \''.$date.'\'', NULL, false);
+		$this->db->where('HOUR(CONCAT(table_shiftoperations.date, \' \', table_shiftoperations.time)) = \''.$time.'\'', NULL, false);
 		$this->db->group_by('table_shiftoperations.to_rom');
 		return $this->db->get();
 	}

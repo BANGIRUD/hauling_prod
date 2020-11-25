@@ -101,6 +101,8 @@ class Dash extends CI_Controller {
 	public function monitoring_data_production()
 	{
 		$this->load->model('Monitoring_model', 'monitoring');
+		$this->load->model('Shift_operations', 'shift_ops');		
+		$this->load->model('Supplay_passing_model', 'spp');
 
 		$result = get_date_shift();
 		$date = $this->input->get('date') == '' ? $result['date'] : date('Y-m-d', strtotime($this->input->get('date')));
@@ -399,7 +401,7 @@ class Dash extends CI_Controller {
 		$result 		= get_date_shift();
 		$date  			= $result['date'];
 		$shift  		= $result['shift'];
-		$pos	= $this->Crud->search('table_enum', array('type' => 'area'))->result_array();
+		$pos			= $this->Crud->search('table_enum', array('type' => 'area'))->result_array();
 
 		$status_passing	= $this->Crud->search('table_enum', array('type' => 'status_passing'))->result_array();
 

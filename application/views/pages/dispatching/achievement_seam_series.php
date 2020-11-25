@@ -111,9 +111,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                  <?php foreach ($table as $value): ?>
+                  <?php foreach ($table as $value): $color = explode(',', $value['color']);?>
                     <tr nowrap style="text-align: center; vertical-align: middle;">
-                      <td nowrap><?= $value['material'];?></td>
+                      <td nowrap style="background-color: <?= $color['0'];?> ;color: <?= @$color['1'];?> " ><?= $value['material'];?></td>
                       <td nowrap><?= $value['rom_spp'];?></td>
 
                       <?php

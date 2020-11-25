@@ -65,6 +65,7 @@
                   <?php $no=0;
                     foreach ($data as $value) {
                       $no++;
+                      $color = explode(',', $value['color']);
                       echo '<tr style="text-align: center; font-size: 12px;">';
                         echo '<td>
                                 <a href="" class="btn btn-xs btn-warning" id="up" data-id="" data-column="cancel" data-text=" " data-original-title="Up" data-toggle="tooltip">
@@ -73,7 +74,7 @@
                                 <a href="" class="btn btn-xs btn-warning" id="down" data-id="" data-column="cancel" data-text=" " data-original-title="Down" data-toggle="tooltip">
                                   <i class="fa fa-arrow-down"></i>
                                 </a>
-                                <a href="#" class="btn btn-xs btn-primary" data-target="#editdata" id="edit" data-id="" data-original-title="Edit" data-toggle="tooltip">
+                                <a href="#" class="btn btn-xs btn-primary" data-target="#editdata" id="edit" data-id="'.$value['id'].'" data-original-title="Edit" data-toggle="tooltip">
                                   <i class="fa fa-edit"></i>
                                 </a>
                               </td>';
@@ -90,17 +91,22 @@
                         echo '<td>'.$timestb.'</td>
                               <td>'.$value['cn_unit'].'</td>
                               <td>'.$value['position'].'</td>
-                              <td>'.$value['cargo_awal'].'</td>
-                              <td>'.$value['time_passing'].'</td>
-                              <td>'.$value['remark_awal'].'</td>
+                              <td style="background-color:'. $color[0] . ';color:'.@$color[1].'" >'.$value['cargo_awal'].'</td>';
+                               $timepassing = $value['operation'] == 0 ? '-' : date('H',strtotime($value['time_passing']));
+                        echo  '<td>'.$timepassing.'</td>
+                              <td>'.$value['remark'].'</td>
                               <td>'.$value['csa'].'</td>
                               <td>'.$value['time'].'</td>
                               <td>'.$value['time'].'</td>';
-                        echo '<td>
-                                <a href="#" class="btn btn-xs btn-success" id="ready" data-id="'.$value['id'].'" data-value="'.$value['operation'].'" data-original-title="Ready" data-toggle="tooltip">
-                                  <i class="fa fa-check"></i>
-                                </a> 
-                                <a href="#" class="btn btn-xs btn-danger" data-target="#deletedata" id="delete" data-id="" data-original-title="delete" data-toggle="tooltip">
+                        echo '<td>';
+                          if($value['operation'] == 0 && strtolower($value['code_stby']) != 'l') : 
+                          echo '<a href="#" class="btn btn-xs btn-success" id="ready" data-id="'.$value['id'].'" data-value="'.$value['operation'].'"data-original-title="Ready" data-toggle="tooltip"><i class="fa fa-check"></i>
+                                </a>';
+                        else: 
+                          echo '<a href="#" class="btn btn-xs btn-warning" id="ready" data-id="'.$value['id'].'" data-value="'.$value['operation'].'" data-original-title="Cancel" data-toggle="tooltip"><i class="fa fa-remove"></i>
+                                  </a>';
+                        endif;
+                          echo' <a href="#" class="btn btn-xs btn-danger" data-target="#deletedata" id="delete" data-id="" data-original-title="delete" data-toggle="tooltip">
                                   <i class="fa fa-trash"></i>
                                 </a>                                          
                               </td>';
@@ -116,7 +122,7 @@
     </div>
   </section>
 </div>
-<!-- Modal Edit Masuk CSA 69-->
+<!-- Modal Masuk CSA 69-->
 <div class="modal fade in" id="modal-addunit" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -170,6 +176,28 @@
   </div>
 </div>
 
+<!-- Modal Edit Unit -->
+<div class="modal fade " id="modal-edit" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <form action="<?= base_url('Edit/');?>" method="post" enctype="multipart/form-data" class="form-horizontal">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title" id="mediumModalLabel">Edit Data</h4>
+        </div>
+        <div class="modal-body" id="modal-body-edit">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Confirm</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- End Modal Edit Unit -->
 
 <script type="text/javascript">
   $(function () {
@@ -186,51 +214,30 @@
     })
   });
 
-  $('#modal-addunit').on('shown.bs.modal', function () {
-    $('#id_unit').focus();
+  $(document).on('click','#edit', function() {
+  var id = $(this).attr('data-id');
+    $("#modal-body-edit").load("<?= base_url('View/edit/monitoring_operations_69/');?>" + id);
+    $('#modal-edit').modal('toggle');
   });
 
   $(document).on('click', '#add-unit', function(e) {
     $("#modal-addunit").modal('toggle');
   }); 
 
-  $(document).on('click','#editincsa', function() {   
+  $('#modal-addunit').on('shown.bs.modal', function () {
+    $('#id_unit').focus();
+  });
+
+  $(document).on('click','#ready', function() {
   var id = $(this).attr('data-id');
-  $("#modal-body-edit").load("<?= base_url('View/edit/monitoring_operations/');?>" + id);
-  $('#modal-edit').modal('toggle');
-  });
-
-  $(document).on('click','#editoutcsa', function() {
-    var id = $(this).attr('data-id');
-      $.ajax({
+  var val = $(this).attr('data-value') == 0 ? '1' : '0';
+    $.ajax({
       type: "GET",
-      url: "<?php echo base_url('Edit/monitoring_operations/');?>" + id , 
-        success: function(response) {
-          window.location.reload();
-        } 
-      });
-  });
-
-  $(document).on('click','#continue', function() {
-    var id = $(this).attr('data-id');
-      $.ajax({
-    type: "GET",
-    url: "<?php echo base_url('Edit/bypass_monitoring_operations/');?>" + id , 
+      url: "<?php echo base_url('Edit/ready_to_operation_69s/');?>" + id + "/" + val, 
       success: function(response) {
-        window.location.reload();
+      window.location.reload();
       } 
     });
   });
-
-  $(document).on('change','#position', function() {
-    var val = $(this).val();
-    if(val == "K") {
-    $('#cargo_muatan').val('Kosongan');
-    $('#cargo_muatan').attr('readonly','true');
-    } else {
-    $('#cargo_muatan').val();
-    $('#cargo_muatan').removeAttr('readonly');
-    }
-  });
-
+  
 </script>

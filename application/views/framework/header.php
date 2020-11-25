@@ -85,9 +85,11 @@
 <!-- Select2 -->
 <script src="<?php echo base_url('___/bower_components/select2/dist/js/select2.full.min.js');?>"></script>
 
-<!-- <script src="<?php echo 'http://'.$_SERVER['SERVER_NAME'];?>:9518/socket.io/socket.io.js"></script> -->
-
+<script src="<?php echo 'http://'.$_SERVER['SERVER_NAME'];?>:9518/socket.io/socket.io.js"></script>
 <script type="text/javascript">
+
+  var socket = io.connect("<?php echo 'http://'.$_SERVER['SERVER_NAME'];?>:9518");
+
   $(document).ready(function() {
       $(".alert-dismissible").fadeTo(3000, 500).slideUp(800, function(){
         $(".alert-dismissible").slideUp(800);
@@ -95,7 +97,5 @@
     });
 
 
-  // var socket = io.connect("<?php echo 'http://'.$_SERVER['SERVER_NAME'];?>:9518");
-  // socket.emit('connect');
 </script>
 </head>

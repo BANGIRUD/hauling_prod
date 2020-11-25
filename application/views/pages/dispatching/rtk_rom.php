@@ -69,72 +69,86 @@
           </div>
         </div>
         <div class="col-md-12">
-        <div class="box ">
-          <div class="box-body">  
-            <div class="table-responsive">
-              <table class="table table-bordered table-striped passing" id="" >
-                <thead style="background-color: #74b9ff;">
-                  <tr>
-                    <th rowspan="2" style="text-align: center; vertical-align: middle;">Time</th>
-                    <?php foreach ($table as $value) :?>
-                    <th colspan="3"><?=$value['rom_spp'];?></th>
-                    <?php endforeach;?>
-                  </tr>
-                  <tr>
+          <div class="box ">
+            <div class="box-body">  
+              <div class="table-responsive">
+                <table class="table table-bordered table-striped passing" id="" >
+                  <thead>
+                    <tr>
+                      <th rowspan="2" style="text-align: center; vertical-align: middle; background-color: #bdc3c7;">Time</th>
+                      <?php foreach ($table as $value) :?>
+                      <th colspan="3"  style="background-color: #74b9ff; text-align: center; vertical-align: middle;"><?=$value['rom_spp'];?></th>
+                      <?php endforeach;?>
+                      <th rowspan="2" style="text-align: center; vertical-align: middle; background-color: #bdc3c7;">A.Kos</th>
+                      <th rowspan="2" style="text-align: center; vertical-align: middle; background-color: #bdc3c7;">A.Mua</th>
+                      <th rowspan="2" style="text-align: center; vertical-align: middle; background-color: #bdc3c7;">PLAN</th>
+                      <th rowspan="2" style="text-align: center; vertical-align: middle; background-color: #bdc3c7;">Prosentase</th>
+                    </tr>
+                    <tr>
+                      <?php 
+                      $kosongan = array();
+                      foreach ($table as $value) :
+                        $kosongan[$value['rom_id']] = $this->shift_ops->achievement_rom_rtk($value['rom_id'])->row_array();
+                        ?>
+                      <th style="background-color: #74b9ff;">Plan</th>
+                      <th style="background-color: #74b9ff;">Act.K</th>
+                      <th style="background-color: #74b9ff;">Act.M</th>                    
+                      <?php endforeach;?>
+                    </tr>
+                  </thead>
+                  <tbody>
                     <?php 
-                    $kosongan = array();
-                    foreach ($table as $value) :
-                      $kosongan[$value['rom_id']] = $this->shift_ops->achievement_rom_rtk($value['rom_id'])->row_array();
-                      ?>
-                    <th>Plan</th>
-                    <th>Act.K</th>
-                    <th>Act.M</th>                    
-                    <?php endforeach;?>
-                  </tr>
-                </thead>
-                <tbody>
-                  <?php 
-                    $no = 0;
-                    for ($a=($hour-2) ,$i=1; $i <= 12; $i++, $a++) :
-                      if ($a >= 24) {
-                        $a = $a - 24;
-                      }
+                      $no = 0;
+                      for ($a=($hour-2) ,$i=1; $i <= 12; $i++, $a++) :
+                        if ($a >= 24) {
+                          $a = $a - 24;
+                        }
 
-                      $b = $a + 1;
-                      if ($b > 24) {
-                        $b = ($b - 24);
-                      }
+                        $b = $a + 1;
+                        if ($b > 24) {
+                          $b = ($b - 24);
+                        }
 
-                      $x = $a < 10 ? '0'.$a.':00' : $a.':00';
-                      $y = $b < 10 ? '0'.$b.':00' : $b.':00';
+                        $x = $a < 10 ? '0'.$a.'' : $a.'';
+                        $y = $b < 10 ? '0'.$b.'' : $b.'';
 
-                      $c = $x. '-'.$y;
+                        $c = $x. ':'.$y;
 
-                      echo '<tr>';
-                        echo '<td>' . $c . '</td>';
-                        foreach ($table as $value) :
+
+                        echo '<tr>';
+                          echo '<td>' . $c . '</td>';
+                          foreach ($table as $value) :
+                            // print_r($value['jam_'.$i] );
+                            $callback_kosongan = $kosongan[$value['rom_id']];
+                            $val = !empty(@$callback_kosongan['kosongan_'.$i]) ? @$callback_kosongan['kosongan_'.$i] : 0;
+                            echo '<td style="text-align: center; vertical-align: middle;">' . $value['jam_'.$i] . '</td>';
+                            // echo '<td>' . '</td>';
+                            echo '<td style="text-align: center; vertical-align: middle;">' . @$val . '</td>';
+                            echo '<td style="text-align: center; vertical-align: middle;">' . $value['actual_'.$i] . '</td>';
+                          endforeach;
                           $callback_kosongan = $kosongan[$value['rom_id']];
-                          echo '<td>' . $value['jam_'.$i] . '</td>';
-                          // echo '<td>' . '</td>';
                           $val = !empty(@$callback_kosongan['kosongan_'.$i]) ? @$callback_kosongan['kosongan_'.$i] : 0;
-                          echo '<td>' . @$val . '</td>';
-                          echo '<td>' . $value['actual_'.$i] . '</td>';
-                        endforeach;
-                      echo '<tr>';
+                          echo '<td>'.@$val.'</td>';
+                          echo '<td>'.$value['actual_'.$i].'</td>';
+                          echo '<td>'.$value['actual_'.$i].'</td>';
+                          echo '<td>'.$value['actual_'.$i].'</td>';
+                        echo '<tr>';
+                      endfor;
+                        echo '<tr style="background-color: white; color: white;">
+                                <td></td>
+                              </tr>';
 
-                    endfor;
-                  ?>
-                </tbody>
-              </table>
+                        echo '<tr>
+                                <td>Total</td>';
 
+                        echo '</tr>';      
+                    ?>
+                  </tbody>
+                </table>
+
+              </div>
             </div>
           </div>
-        </div>
-        </div>
-        <div class="col-md-12">
-          <div id="container" >
-            <canvas id="canvas"></canvas>
-          </div>  
         </div>
     </section>
 </div>

@@ -60,10 +60,11 @@ class Monitoring_operations extends CI_Model
 	public function monitoring_operations_34_muatan($position = 'M')
 	{
 		$result = get_date_shift();
-		$this->db->select('table_shiftoperations.*, cargo.description as color');
+		$this->db->select('table_shiftoperations.*, cargo.description as color, rom.name as name_rom');
 		$this->db->from('table_romoperations');
 		$this->db->join('table_shiftoperations','table_romoperations.ref_id = table_shiftoperations.id','LEFT');
 		$this->db->join('table_enum as cargo','table_shiftoperations.cargo = cargo.name','LEFT');
+		$this->db->join('table_enum as rom','table_shiftoperations.to_rom = rom.id','LEFT');
 		$this->db->where('table_shiftoperations.deleted_at', NULL);
 		$this->db->where('table_shiftoperations.id IN (SELECT ref_id FROM `table_monitoringoperations` WHERE deleted_at IS NULL AND time_out IS NOT NULL AND by_area = 11)');
 		$this->db->where('table_shiftoperations.id NOT IN (SELECT ref_id FROM `table_monitoringoperations` WHERE deleted_at IS NULL AND by_area = 10)');
@@ -74,9 +75,11 @@ class Monitoring_operations extends CI_Model
 	public function monitoring_operations_34_standby()
 	{	
 		$result = get_date_shift();
-		$this->db->select('table_monitoringoperations.*, cargo.description as color');
+		$this->db->select('table_monitoringoperations.*, cargo.description as color, table_shiftos.csa , table_shiftos.time,table_settingunit.register`');
 		$this->db->from('table_monitoringoperations');
 		$this->db->join('table_enum as cargo','table_monitoringoperations.cargo = cargo.name','LEFT');
+		$this->db->join('table_shiftos','table_monitoringoperations.cn_unit = table_shiftos.no_id','LEFT');
+		$this->db->join('table_settingunit','table_monitoringoperations.cn_unit = table_settingunit.unit_id','LEFT');
 		$this->db->where('table_monitoringoperations.deleted_at', NULL);
 		$this->db->where('table_monitoringoperations.by_area', 10);
 		$this->db->where('DATE(table_monitoringoperations.time_in)', $result['date']);
@@ -102,6 +105,7 @@ class Monitoring_operations extends CI_Model
 		$this->db->join('table_enum as rom','table_shiftoperations.to_rom = rom.id','LEFT');
 		$this->db->where('table_shiftoperations.deleted_at', NULL);
 		$this->db->where('table_shiftoperations.id NOT IN (SELECT ref_id FROM `table_monitoringoperations` WHERE deleted_at IS NULL AND by_area = 11)');
+		$this->db->where('table_shiftoperations.id IN (SELECT ref_id FROM `table_romoperations` WHERE deleted_at IS NULL AND time_out IS NOT NULL)');
 		$this->db->where('table_shiftoperations.date', $result['date']);
 		return $this->db->get();
 	}
@@ -130,18 +134,23 @@ class Monitoring_operations extends CI_Model
 		return $this->db->get();
 	}
 
+	public function detail_operations_69_standby($id)
+	{	
+		$this->db->select('table_monitoringoperations.*, cargo.description as color');
+		$this->db->from('table_monitoringoperations');
+		$this->db->join('table_enum as cargo','table_monitoringoperations.cargo = cargo.name','LEFT');
+		$this->db->where('table_monitoringoperations.id = \''.$id.'\'');
+		return $this->db->get();
+	}
+
 	public function monitoring_operations_69()
 	{
 		$result = get_date_shift();
-		$this->db->select('table_monitoringoperations.*, a.csa, a.time, IF(table_monitoringoperations.position = \'K\', \'Kosongan\',b.cargo) as cargo_awal, b.remark as remark_awal');
+		$this->db->select('table_monitoringoperations.*, cargo.description as color, a.csa, a.time, IF(table_monitoringoperations.position = \'K\', \'Kosongan\',b.cargo) as cargo_awal, b.remark as remark_awal');
 		$this->db->from('table_monitoringoperations');
-		$this->db->join('(SELECT table_shiftos.* FROM (SELECT MAX(id) as id FROM `table_shiftos` GROUP BY no_id) as a
-LEFT JOIN table_shiftos ON table_shiftos.id = a.id) as a','table_monitoringoperations.cn_unit = a.no_id','LEFT');
-
-		$this->db->join('(SELECT table_shiftoperations.* FROM (SELECT MAX(id) as id FROM `table_shiftoperations` WHERE date = \''.$result['date'].'\' GROUP BY cn_unit) as a
-LEFT JOIN table_shiftoperations ON table_shiftoperations.id = a.id) as b','table_monitoringoperations.cn_unit = b.cn_unit','LEFT');
-
-
+		$this->db->join('(SELECT table_shiftos.* FROM (SELECT MAX(id) as id FROM `table_shiftos` GROUP BY no_id) as a LEFT JOIN table_shiftos ON table_shiftos.id = a.id) as a','table_monitoringoperations.cn_unit = a.no_id','LEFT');
+		$this->db->join('(SELECT table_shiftoperations.* FROM (SELECT MAX(id) as id FROM `table_shiftoperations` WHERE date = \''.$result['date'].'\' GROUP BY cn_unit) as a LEFT JOIN table_shiftoperations ON table_shiftoperations.id = a.id) as b','table_monitoringoperations.cn_unit = b.cn_unit','LEFT');
+		$this->db->join('table_enum as cargo','table_monitoringoperations.cargo = cargo.name','LEFT');
 		$this->db->where('table_monitoringoperations.by_area', 12);
 		$this->db->where('DATE(table_monitoringoperations.time_in)', $result['date']);
 

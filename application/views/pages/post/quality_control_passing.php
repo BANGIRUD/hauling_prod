@@ -88,9 +88,9 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <?php foreach ($data as $value):?>
-                    <tr>
-                      <td nowrap style="background-color:'. $color[0] . ';color:'.@$color[1].'"><?= $value['material'];?></td>
+                    <?php foreach ($data as $value): $color = explode(',', $value['color'])?>
+                    <tr style="text-align: center;">
+                      <td nowrap style="background-color: <?= $color['0'];?>;color: <?= @$color['1'];?>"><?= $value['material'];?></td>
                       <?php for ($a=$jam, $i = 1; $i <= 12; $i++, $a++):
                         $total[$i][] = $value['jam_'.$i];
 

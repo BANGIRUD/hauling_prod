@@ -18,7 +18,7 @@
       <div class="col-md-12">
         <div class="box box-primary">
           <div class="box-header with-border">
-            <!-- <div class="row">
+            <div class="row">
               <?php if ($this->session->userdata('level') == 'administrator' || $this->session->userdata('level') == 'dispatcher'):?>
                <p style="padding: 0 15px">Click tombol untuk filter ROM:</p>
                 <?php $no=0;
@@ -31,8 +31,10 @@
                   }
                 ?>
                 <?php endforeach;?>
+              <?php else :?>
+                <h1 style="padding: 0 15px"> WELCOME BACK ... !!!</h1>
               <?php endif;?>
-            </div> -->
+            </div>
           </div>
         </div>
       </div>
@@ -41,8 +43,8 @@
           <div class="box-body">
             <div class="table-responsive">
               <table id="example1" class="table table-bordered table-striped">
-                <thead>
-                  <tr style="background-color: #2e86de ; color: #ffffff ">
+                <thead style="background-color: #2e86de ; color: #ffffff ; font-size: 12px;">
+                  <tr>
                     <th style="text-align: center;">No</th>
                     <th style="text-align: center;">C/N</th>
                     <th style="text-align: center;">Cargo Muatan</th>
@@ -50,8 +52,42 @@
                     <th style="text-align: center;">Action</th>
                   </tr>                  
                 </thead>
-                <tbody>
-                  
+                <tbody style=" font-size: 12px;">
+                  <?php 
+                    $no = 0;
+                    foreach ($data as $value) {
+                      $no++; 
+                      $color = explode(',', $value['color']);
+                      echo '<tr style="text-align: center;">';
+                        echo '<td>'.$no.'</td>
+                              <td>'.$value['cn_unit'].'</td>
+                              <td style="background-color:'. $color[0] . ';color:'.@$color[1].'" >'.$value['cargo'].'</td>
+                              <td>'.$value['rom_name'].'</td>';
+                        echo '<td nowrap>';
+                        if($by_level != 'dispatcher'&& $by_level != 'administrator') :
+                          $time_in = $value['time_in'];
+                          $time_out = $value['time_out'];
+                          $btn_in = " disabled";
+                          if($time_in == NULL && $time_out == NULL)
+                            $btn_in = "";
+                          echo '<a href="#" class="btn btn-xs btn-success'.$btn_in.'"  id="edit_in_rom" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit masuk ROM" data-toggle="tooltip"><i class="fa  fa-reply"> In</i>
+                                </a>';
+
+                          $btn_out = " disabled";
+                          if($time_in != NULL && $time_out == NULL)
+                            $btn_out = "";
+                          echo ' <a href="#" class="btn btn-xs btn-danger'.$btn_out.'"  id="edit_out_rom" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit keluar ROM" data-toggle="tooltip"><i class="fa  fa-share"> Out</i>  
+                              </a>';
+                        else :
+                          echo ' <p nowarp style="color: red;">cannot be operated because you are an administrator</p> <a href="#" class="btn btn-xs btn-success disabled"  id="edit_in_rom" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit masuk ROM" data-toggle="tooltip"><i class="fa  fa-reply"> In</i>
+                                </a>';
+                          echo ' <a href="#" class="btn btn-xs btn-danger disabled"  id="edit_out_rom" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit keluar ROM" data-toggle="tooltip"><i class="fa  fa-share"> Out</i>  
+                              </a>';
+                        endif;
+                        echo '</td>';
+                      echo '</tr>';
+                    }
+                  ?>
                 </tbody>  
               </table>
             </div>  
@@ -65,6 +101,8 @@
 
 
 <script type="text/javascript">
+  
+  socket.emit('request_pos');
   $(document).ready(function () {
     var table = $('#example1').DataTable({
       'paging'      : true,
@@ -76,13 +114,13 @@
         buttons: [
       'print'
         ],
-      "ajax": '<?= base_url('Ajax/record_rom/' . $by_rom);?>'
+      // "ajax": '<?= base_url('Ajax/record_rom/' . $by_rom);?>'
     });
 
 
-    setInterval(function () {
-        table.ajax.reload();
-    }, 5000);
+    socket.on('reload_record_rom', function(e) {
+      window.location.reload();
+    });
   });
 
 

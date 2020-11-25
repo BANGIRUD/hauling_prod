@@ -19,10 +19,16 @@
         <div class="box box-primary">
           <div class="box-header with-border">
             <div class="row">
-              <div class="col-xs-6">              
+              <div class="col-xs-6">  
+              <?php if ($this->session->userdata('level') != 'dispatcher'): ?>
                 <button class="btn btn-success  " data-toggle="modal" id="add-unit">
                   <i class="fa fa-plus"> Add Unit Kosongan</i>
+                </button>            
+              <?php else : ?>            
+                <button class="btn btn-success  disabled" data-toggle="modal" id="add-unit">
+                  <i class="fa fa-plus"> Add Unit Kosongan</i>
                 </button>
+              <?php endif ?>
               </div>
               <div class="col-xs-6 text-right">
               </div>
@@ -53,6 +59,7 @@
                     $no++;
                     $color = explode(',', $value['color']);
                     echo '<tr style="text-align: center; font-size: 12px;">';
+                    if($this->session->userdata('level') != 'dispatcher'):
                       echo '<td>
                               <a href="#" class="btn btn-xs btn-primary" data-target="#editdata" id="edit" data-id="" data-original-title="Edit" data-toggle="tooltip">
                                 <i class="fa fa-edit"></i>
@@ -61,10 +68,21 @@
                                 <i class="fa fa-trash"></i>
                               </a>  
                             </td>';
+                    else :
+                      echo '<td>
+                              <a href="#" class="btn btn-xs btn-primary disabled" data-target="#editdata" id="edit" data-id="" data-original-title="Edit" data-toggle="tooltip">
+                                <i class="fa fa-edit"></i>
+                              </a>
+                              <a href="#" class="btn btn-xs btn-danger disabled" data-target="#deletedata" id="delete" data-id="" data-original-title="delete" data-toggle="tooltip">
+                                <i class="fa fa-trash"></i>
+                              </a>  
+                            </td>';
+                    endif;
                       echo '<td>'.$no.'</td>
                             <td>'.$value['cn_unit'].'</td>
                             <td style="background-color:'. $color[0] . ';color:'.@$color[1].'" >'.$value['cargo'].'</td>
-                            <td>To ROM</td>';
+                            <td>'.$value['name_rom'].'</td>';
+                      if($this->session->userdata('level') != 'dispatcher'):
                       echo '<td>
                               <a href="#" class="btn btn-xs btn-success" data-target="#editindata" id="editincsa" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit masuk CSA" data-toggle="tooltip">
                                 <i class="fa  fa-reply"> In</i>
@@ -72,6 +90,15 @@
                               <a href="#" class="btn btn-xs btn-primary" data-target="#editcontinuedata" id="continue" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit lanjut" data-toggle="tooltip"><i class="fa   fa-fighter-jet"> Pass Through</i>
                               </a>
                             </td>';
+                      else :
+                      echo '<td> <p nowarp style="color: red;">cannot be operated because you are an administrator</p>
+                              <a href="#" class="btn btn-xs btn-success disabled" data-target="#editindata" id="editincsa" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit masuk CSA" data-toggle="tooltip">
+                                <i class="fa  fa-reply"> In</i>
+                              </a>
+                              <a href="#" class="btn btn-xs btn-primary disabled" data-target="#editcontinuedata" id="continue" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit lanjut" data-toggle="tooltip"><i class="fa   fa-fighter-jet"> Pass Through</i>
+                              </a>
+                            </td>';
+                      endif;
                     echo '</tr>';
                   }
                   ?>                 

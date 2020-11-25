@@ -79,8 +79,9 @@ LEFT JOIN table_shiftoperations ON table_shiftoperations.id = a.id) as b','table
 		for ($a=$jam, $i = 1; $i <= 12; $i++, $a++) { 
 			$this->db->select('SUM(IF(HOUR(time_passing) = ' . $a . ', 1, 0)) as actual_' . $i);
 		}
-		$this->db->select('table_supplaypassing.*');
+		$this->db->select('table_supplaypassing.*,cargo.description as color,');
 		$this->db->from('table_supplaypassing');
+		$this->db->join('table_enum as cargo','table_supplaypassing.material = cargo.name','LEFT');
 		$this->db->join('(
 			SELECT table_shiftoperations.*, a.time_out, a.time_passing FROM `table_shiftoperations`
 		LEFT JOIN (SELECT table_monitoringoperations.* FROM (SELECT MAX(id) as id FROM `table_monitoringoperations` GROUP BY ref_id) as a
@@ -150,12 +151,13 @@ LEFT JOIN table_shiftoperations ON table_shiftoperations.id = a.id) as b','table
 		} else {
 			$hour = 18;
 		}
-		$this->db->select('table_supplaypassing.*,table_enum.name as rom_spp,table_enum.id as rom_id');
+		$this->db->select('table_supplaypassing.*,table_enum.name as rom_spp,cargo.description as color,table_enum.id as rom_id');
 		for ($a = 1, $i=$hour; $i < ($hour+12) ; $i++, $a++) { 
 			$this->db->select('SUM(IF(HOUR(DATE_ADD(table_romoperations.time_out, INTERVAL 2 HOUR)) = '.$i.', 1, 0)) as actual_' . $a);
 		}
 		$this->db->from('table_supplaypassing');
 		$this->db->join('table_enum','table_supplaypassing.rom = table_enum.code','LEFT');
+		$this->db->join('table_enum as cargo','table_supplaypassing.material = cargo.name','LEFT');
 		$this->db->join('table_romoperations','table_enum.id = table_romoperations.by_rom AND DATE(DATE_ADD(table_romoperations.time_out, INTERVAL 2 HOUR)) = table_supplaypassing.date','LEFT');
 		$this->db->where('table_supplaypassing.date',$date);
 		$this->db->where('table_supplaypassing.shift',$shift);
@@ -166,7 +168,7 @@ LEFT JOIN table_shiftoperations ON table_shiftoperations.id = a.id) as b','table
 
 	public function rom_supplaypassing($date, $shift)
 	{
-		$this->db->select('table_supplaypassing.*,table_enum.name as rom_spp');
+		$this->db->select('table_supplaypassing.*,table_enum.name as rom_spp,table_enum.id as rom_id');
 		$this->db->from('table_supplaypassing');
 		$this->db->join('table_enum','table_supplaypassing.rom = table_enum.code','LEFT');
 		$this->db->where('table_supplaypassing.date',$date);

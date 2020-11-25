@@ -73,6 +73,7 @@
                       $no++;
                       $color = explode(',', $value['color']);
                       echo '<tr style="text-align: center; font-size: 12px;">';
+                      if($this->session->userdata('level') != 'dispatcher'):
                         echo '<td>
                                 <a href="" class="btn btn-xs btn-warning" id="up" data-id="" data-column="cancel" data-text=" " data-original-title="Up" data-toggle="tooltip">
                                   <i class="fa fa-arrow-up"></i>
@@ -84,6 +85,19 @@
                                   <i class="fa fa-edit"></i>
                                 </a>
                               </td>';
+                      else :
+                         echo '<td>
+                                <a href="" class="btn btn-xs btn-warning disabled" id="up" data-id="" data-column="cancel" data-text=" " data-original-title="Up" data-toggle="tooltip">
+                                  <i class="fa fa-arrow-up"></i>
+                                </a> 
+                                <a href="" class="btn btn-xs btn-warning disabled" id="down" data-id="" data-column="cancel" data-text=" " data-original-title="Down" data-toggle="tooltip">
+                                  <i class="fa fa-arrow-down"></i>
+                                </a>
+                                <a href="#" class="btn btn-xs btn-primary disabled" data-target="#editdata" id="edit" data-id="'.$value['id'].'" data-original-title="Edit" data-toggle="tooltip">
+                                  <i class="fa fa-edit"></i>
+                                </a>
+                              </td>';
+                        endif;
                         echo '<td>'.$no.'</td>
                               <td>10/08/2020</td>
                               <td>'.date('H:i',strtotime($value['time_in'])).'</td>';
@@ -106,15 +120,27 @@
                               <td>'.$value['time'].'</td>
                               <td>'.$value['register'].'</td>';
                         echo '<td>';
-                        if($value['operation'] == 0 && strtolower($value['code_stby']) != 'l') : 
-                          echo '<a href="#" class="btn btn-xs btn-success" id="ready" data-id="'.$value['id'].'" data-value="'.$value['operation'].'"data-original-title="Ready" data-toggle="tooltip"><i class="fa fa-check"></i>
-                                </a>';
-                        else: 
-                          echo '<a href="#" class="btn btn-xs btn-warning" id="ready" data-id="'.$value['id'].'" data-value="'.$value['operation'].'" data-original-title="Cancel" data-toggle="tooltip"><i class="fa fa-remove"></i>
+                        if($this->session->userdata('level') != 'dispatcher'):
+                          if($value['operation'] == 0 && strtolower($value['code_stby']) != 'l') : 
+                            echo '<a href="#" class="btn btn-xs btn-success" id="ready" data-id="'.$value['id'].'" data-value="'.$value['operation'].'"data-original-title="Ready" data-toggle="tooltip"><i class="fa fa-check"></i>
                                   </a>';
-                        endif;
-                          echo ' <a href="#" class="btn btn-xs btn-danger" data-target="#deletedata" id="delete" data-id="" data-original-title="delete" data-toggle="tooltip"><i class="fa fa-trash"></i>
-                                </a>';                                        
+                          else: 
+                            echo '<a href="#" class="btn btn-xs btn-warning" id="ready" data-id="'.$value['id'].'" data-value="'.$value['operation'].'" data-original-title="Cancel" data-toggle="tooltip"><i class="fa fa-remove"></i>
+                                    </a>';
+                          endif;
+                            echo ' <a href="#" class="btn btn-xs btn-danger" data-target="#deletedata" id="delete" data-id="" data-original-title="delete" data-toggle="tooltip"><i class="fa fa-trash"></i>
+                                </a>';  
+                        else :
+                           if($value['operation'] == 0 && strtolower($value['code_stby']) != 'l') : 
+                            echo '<a href="#" class="btn btn-xs btn-success disabled" id="ready" data-id="'.$value['id'].'" data-value="'.$value['operation'].'"data-original-title="Ready" data-toggle="tooltip"><i class="fa fa-check"></i>
+                                  </a>';
+                          else: 
+                            echo '<a href="#" class="btn btn-xs btn-warning disabled" id="ready" data-id="'.$value['id'].'" data-value="'.$value['operation'].'" data-original-title="Cancel" data-toggle="tooltip"><i class="fa fa-remove"></i>
+                                    </a>';
+                          endif;
+                            echo ' <p nowarp style="color: red;">cannot be operated because you are an administrator</p><a href="#" class="btn btn-xs btn-danger disabled" data-target="#deletedata" id="delete" data-id="" data-original-title="delete" data-toggle="tooltip"><i class="fa fa-trash"></i>
+                                </a>'; 
+                        endif;                                       
                         echo '</td>';
                       echo '</tr>';
                     }

@@ -15,10 +15,16 @@
         <div class="box box-primary">
           <div class="box-header with-border">
             <div class="row">
-              <div class="col-xs-6">              
+              <div class="col-xs-6">       
+              <?php if ($this->session->userdata('level') != 'dispatcher'): ?>       
                 <button class="btn btn-success  " data-toggle="modal" id="add-unit">
                   <i class="fa fa-plus"> Add Unit Kosongan</i>
                 </button>
+              <?php else:?>
+                <button class="btn btn-success  disabled" data-toggle="modal" id="add-unit">
+                  <i class="fa fa-plus"> Add Unit Kosongan</i>
+                </button>    
+              <?php endif ?>
               </div>
               <div class="col-xs-6 text-right">
               </div>
@@ -60,7 +66,7 @@
                           <a href="#" class="btn btn-xs btn-primary" data-target="#editcontinuedata" id="continue" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit lanjut" data-toggle="tooltip"><i class="fa   fa-fighter-jet"> Pass Through</i>
                           </a>';
                         else :
-                          echo '<a href="#" class="btn btn-xs btn-success disabled" data-target="#editindata" id="editincsa" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit masuk CSA" data-toggle="tooltip">
+                          echo '<p nowarp style="color: red;">cannot be operated because you are an administrator</p> <a href="#" class="btn btn-xs btn-success disabled" data-target="#editindata" id="editincsa" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit masuk CSA" data-toggle="tooltip">
                             <i class="fa  fa-reply"> In</i>
                           </a>
                           <a href="#" class="btn btn-xs btn-primary disabled" data-target="#editcontinuedata" id="continue" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit lanjut" data-toggle="tooltip"><i class="fa   fa-fighter-jet"> Pass Through</i>
@@ -160,6 +166,10 @@
 
 
 <script type="text/javascript">
+  socket.on('reload_pos', function(e) {
+    window.location.reload();
+  });
+  
   $(function () {
     $('#example1').DataTable({
       'paging'      : false,

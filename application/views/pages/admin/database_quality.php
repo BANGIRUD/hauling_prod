@@ -35,19 +35,19 @@
               <table class="table table-bordered table-striped" id="populasi">
                 <thead class="text-center border" style="background-color: #2e86de ; color: #ffffff ">
                   <tr>
-                    <th width="5">#</th>
-                    <th width="45">Raw Material</th>
-                    <th width="10">TM</th>
-                    <th width="10">TS</th>
-                    <th width="10">ASH</th>
-                    <th width="10">IM</th>
-                    <th width="10">Cal (ar)</th>
-                    <th width="10">HGI</th>
+                    <th style="text-align: center; vertical-align: middle;">#</th>
+                    <th style="text-align: center; vertical-align: middle;">Raw Material</th>
+                    <th style="text-align: center; vertical-align: middle;">TM</th>
+                    <th style="text-align: center; vertical-align: middle;">TS</th>
+                    <th style="text-align: center; vertical-align: middle;">ASH</th>
+                    <th style="text-align: center; vertical-align: middle;">IM</th>
+                    <th style="text-align: center; vertical-align: middle;">Cal (ar)</th>
+                    <th style="text-align: center; vertical-align: middle;">HGI</th>
                   </tr>
                 </thead>
                 <tbody>
                   <?php $no = 0; foreach ($table as $data) : $no++;?>
-                  <tr>
+                  <tr style="text-align: center; vertical-align: middle;">
                     <td><?= $no;?></td>
                     <td><?= $data['series'];?></td>
                     <td><?= $data['tm'];?></td>

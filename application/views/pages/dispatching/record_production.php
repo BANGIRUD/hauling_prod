@@ -226,6 +226,8 @@
 </div>
 
 <script type="text/javascript">
+  socket.emit('request_record_rom');
+
   $(function () {
     $('#example1').DataTable({
       'paging'      : false,
