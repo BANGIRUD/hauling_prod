@@ -61,6 +61,7 @@ LEFT JOIN table_shiftoperations ON table_shiftoperations.id = a.id) as b','table
 		$this->db->join('table_enum','table_monitoringoperations.cargo = table_enum.name AND table_enum.type = \'cargo_muatan\'','LEFT');
 		$this->db->where('table_shiftoperations.date', $result['date']);
 		$this->db->where('HOUR(table_monitoringoperations.time_passing)', $time_passing);
+		
 		// if ($by_area) {
 		// 	$this->db->where('table_monitoringoperations.by_area', $by_area);
 		// }

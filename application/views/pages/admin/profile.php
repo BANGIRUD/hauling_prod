@@ -26,10 +26,6 @@
 
     <!-- Main content -->
     <section class="content">
-      <?php if ($this->session->flashdata('msg') != '') {
-        echo $this->session->flashdata('msg');
-      }
-      ?>
 
       <div class="row">
         <div class="col-md-3">
@@ -49,8 +45,11 @@
             </div>
             <!-- /.box-body -->
           </div>
-          <!-- /.box -->
-
+          <!-- /.box -->          
+          <?php if ($this->session->flashdata('msg') != '') {
+            echo $this->session->flashdata('msg');
+          }
+          ?>
           <!-- About Me Box -->
           <div class="box box-primary">
             <div class="box-header with-border">

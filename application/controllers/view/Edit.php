@@ -373,6 +373,7 @@ class Edit extends CI_Controller {
 		
 		$data = $this->operations->detail_operations_69_standby($id)->result();
 		$data = $data[0];
+		print_r($data);
 		?>
 		
 		<input type="hidden" class="form-control pull-right" name="id" value="<?=$data->id ;?>">
@@ -411,7 +412,7 @@ class Edit extends CI_Controller {
 	                  		<label>Cargo Muatan</label> 
 	                  		<select class="form-control" name="cargo_muatan" id="cargo_muatan">
 							<?php foreach ($cargo_muatan as $value) {
-								$selected = $data->cargo == $value['name'] ? ' selected' : '';
+								$selected = $data->cargo_awal == $value['name'] ? ' selected' : '';
 								echo '<option'.$selected.' value="'.$value['name'].'">'.$value['name'].'</option>';
 							}
 							?>

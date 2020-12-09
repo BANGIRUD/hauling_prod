@@ -25,6 +25,9 @@
         </div>
         </div>
       </div>
+      <div class="col-md-12">      
+      <?=$this->session->flashdata('msg');?>
+      </div>
       <div class="col-md-12">
         <div class="box">
           <div class="box-header with-border">
@@ -46,10 +49,10 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <?php $no = 0; foreach ($table as $data) : $no++;?>
+                  <?php $no = 0; foreach ($table as $data) : $no++; $color = explode(',', $data['color']);?>
                   <tr style="text-align: center; vertical-align: middle;">
                     <td><?= $no;?></td>
-                    <td><?= $data['series'];?></td>
+                    <td style="background-color: <?=$color[0]?>; color: <?=@$color[1]?>"><?= $data['series'];?></td>
                     <td><?= $data['tm'];?></td>
                     <td><?= $data['ts_ar'];?></td>
                     <td><?= $data['ash_ar'];?></td>
@@ -69,7 +72,7 @@
 </div>
 
 <div class="modal fade" id="modal-add" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true" tabindex="-1"><!-- Modal Edit Unit -->
-  <div class="modal-dialog modal-lg" role="document">
+  <div class="modal-dialog modal-xs" role="document">
     <div class="modal-content">
       <form action="<?= base_url('Save/quality');?>" method="post" enctype="multipart/form-data" class="form-horizontal">
         <div class="modal-header">
@@ -81,7 +84,7 @@
         <div class="modal-body ">
           <div class="form-group">
             <div class="form-body">
-              <div class="col-xs-3">
+              <div class="col-xs-6">
                 <label>Date</label>
                 <div class="input-group date">
                   <div class="input-group-addon">
@@ -90,7 +93,7 @@
                   <input type="text" class="form-control pull-right datepicker"  name="date" value="<?= date('m/d/Y');?>" placeholder="Enter Date Here ...">
                 </div>
               </div>
-              <div class="col-xs-3">
+              <div class="col-xs-6">
                 <label>Series / Raw Material</label>
                   <select class="form-control select" name="series" id="series">
                           <?php foreach ($material_new as $value) {
@@ -99,36 +102,44 @@
                           ?>
                   </select>                  
               </div>
-              <div class="col-xs-3">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="form-body">
+              <div class="col-xs-6">
                 <label>TM</label>
                 <input class="form-control" type="text" name="tm" id="tm" placeholder="Enter Mining Here ...">
               </div>
-              <div class="col-xs-3">
+              <div class="col-xs-6">
                 <label>IM</label>
                 <input class="form-control" type="text" name="im" id="im" placeholder="Enter Hauling Here ...">
+              </div>
+            </div>
+          </div>              
+          <div class="form-group">
+            <div class="form-body">
+              <div class="col-xs-6">
+                <label>ASH AR</label>
+                <input class="form-control" type="text" name="ash_ar" id="ash_ar" placeholder="Enter TM Here ...">
+              </div>
+              <div class="col-xs-6">
+                <label>TS AR</label>
+                <input class="form-control" type="text" name="ts_ar" id="ts_ar" placeholder="Enter TS AR Here ...">
               </div>
             </div>
           </div>
           <div class="form-group">
             <div class="form-body">
-              <div class="col-xs-3">
-                <label>ASH AR</label>
-                <input class="form-control" type="text" name="ash_ar" id="ash_ar" placeholder="Enter TM Here ...">
-              </div>
-              <div class="col-xs-3">
-                <label>TS AR</label>
-                <input class="form-control" type="text" name="ts_ar" id="ts_ar" placeholder="Enter TS AR Here ...">
-              </div>
-              <div class="col-xs-3">
+              <div class="col-xs-6">
                 <label>CV AR</label>
                 <input class="form-control" type="text" name="cv_ar" id="cv_ar" placeholder="Enter CV AR Here ...">
               </div>
-              <div class="col-xs-3">
+              <div class="col-xs-6">
                 <label>HGI</label>
                 <input class="form-control" type="text" name="hgi" id="hgi" placeholder="Enter HGI Here ...">
               </div>
             </div>
-          </div>
+          </div>              
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>

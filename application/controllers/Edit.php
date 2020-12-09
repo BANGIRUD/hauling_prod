@@ -351,7 +351,8 @@ class Edit extends CI_Controller {
 			$refer = "";
 		}
 		
-		redirect(base_url($refer));
+		// redirect(base_url($refer));
+		redirect($_SERVER['HTTP_REFERER']);
 	}
 
 	public function ready_to_operation_34($id, $val)
@@ -376,5 +377,42 @@ class Edit extends CI_Controller {
 		$time_passing = date('i') > 50 ? date('H:00:00', strtotime('+1 Hour')) : date('H:00:00');
 		$this->db->where('id', $id);
 		$this->db->update('table_monitoringoperations', array('operation' => $val, 'time_out' => $time_out, 'time_passing' => $time_passing));
+	}
+
+	public function pos_69()
+	{
+		$id 					= trim($this->input->post('id'));
+		$unit 					= trim($this->input->post('unit'));
+		$cargo 					= trim($this->input->post('cargo_muatan'));
+		$rom 					= trim($this->input->post('rom'));
+		$datetime				= trim($this->input->post('datetime'));
+
+		$src 	= $this->Crud->search('table_shiftoperations', array('id' => $id))->num_rows();
+		if ($src > 0) {
+			$data = array(
+				'created_at'		=> $datetime,
+				'updated_at' 		=> date('Y-m-d H:i:s'),
+				'deleted_at' 		=> NULL,
+				'cn_unit' 			=> $unit,
+				'cargo' 			=> $cargo,
+				'to_rom'			=> $rom
+			);
+			$this->db->where('id', $id);
+			$this->db->update('table_shiftoperations',$data);
+
+
+			$this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissible">
+		        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+		        <h4><i class="icon fa fa-check"></i> Sukses!</h4>
+		        Data telah berhasil di edit!.
+		      </div>');
+		}else{
+			$this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissible">
+		        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+		        <h4><i class="icon fa fa-check"></i> Error!</h4>
+		        Check kembali data anda!.
+		      </div>');
+		}
+		redirect($_SERVER['HTTP_REFERER']);
 	}
 }

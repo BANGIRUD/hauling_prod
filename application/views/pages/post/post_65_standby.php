@@ -109,7 +109,7 @@
                         echo '<td>'.$timeout.'</td>';
                                $timestb = $value['operation'] == 0 ? '-' : date('H:i',strtotime(selisih_hour($value['time_in'],$value['time_out'])));
                         echo '<td>'.$timestb.'</td>
-                              <td>'.$value['cn_unit'].'</td>
+                              <th style="text-align : center;">'.$value['cn_unit'].'</th>
                               <td>'.$value['position'].'</td>
                               <td style="background-color:'. $color[0] . ';color:'.@$color[1].'" >'.$value['cargo'].'</td>
                               <td>'.$value['code_stby'].'</td>';
@@ -118,7 +118,7 @@
                               <td>'.$value['remark'].'</td>
                               <td>'.$value['csa'].'</td>
                               <td>'.$value['time'].'</td>
-                              <td>'.$value['register'].'</td>';
+                              <td style="text-align: center; background-color: '. colors_setting_unit(strtolower($value['register']))['bg'] .'; color: '. colors_setting_unit(strtolower($value['register']))['color'].'">'.$value['register'].'</td>';
                         echo '<td>';
                         if($this->session->userdata('level') != 'dispatcher'):
                           if($value['operation'] == 0 && strtolower($value['code_stby']) != 'l') : 
@@ -138,7 +138,7 @@
                             echo '<a href="#" class="btn btn-xs btn-warning disabled" id="ready" data-id="'.$value['id'].'" data-value="'.$value['operation'].'" data-original-title="Cancel" data-toggle="tooltip"><i class="fa fa-remove"></i>
                                     </a>';
                           endif;
-                            echo ' <p nowarp style="color: red;">cannot be operated because you are an administrator</p><a href="#" class="btn btn-xs btn-danger disabled" data-target="#deletedata" id="delete" data-id="" data-original-title="delete" data-toggle="tooltip"><i class="fa fa-trash"></i>
+                            echo ' <a href="#" class="btn btn-xs btn-danger disabled" data-target="#deletedata" id="delete" data-id="" data-original-title="delete" data-toggle="tooltip"><i class="fa fa-trash"></i>
                                 </a>'; 
                         endif;                                       
                         echo '</td>';
@@ -249,6 +249,9 @@
 </div>
 <!-- End Modal Edit Unit -->
 <script type="text/javascript">
+  socket.on('reload_65', function(e) {
+    window.location.reload();
+  });
 $(function () {
   $('#example1').DataTable({
       'paging'      : false,

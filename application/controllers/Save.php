@@ -339,7 +339,7 @@ class Save extends CI_Controller {
 					'time_out'			=> NULL,
 					'cn_unit' 			=> $id_unit,
 					'position' 			=> $position,
-					'cargo' 			=> '-',
+					'cargo' 			=> NULL,
 					'code_stby' 		=> $code_standby,
 					'time_passing'		=> NULL,
 					'remark'			=> $remark,
@@ -474,5 +474,48 @@ class Save extends CI_Controller {
 		}
 		
 		redirect($_SERVER['HTTP_REFERER']);
+	}
+
+	public function quality()
+	{
+		// $result 	= get_date_shift();	
+		$by_user	= $this->session->userdata('id');
+
+		$this->form_validation->set_rules('date','date','required');
+		$this->form_validation->set_rules('series','series','required');
+		if( $this->form_validation->run() != false ) {			
+				$data = array(
+					'created_at' 		=> date('Y-m-d H:i:s'),
+					'updated_at' 		=> date('Y-m-d H:i:s'),
+					'deleted_at' 		=> NULL,
+					'date' 				=> date('Y-m-d'),
+					'series' 		 	=> trim($this->input->post('series')),
+					'tm' 				=> trim($this->input->post('tm')),
+					'im' 				=> trim($this->input->post('im')),					
+					'ash_ar' 			=> trim($this->input->post('ash_ar')),
+					'ts_ar' 			=> trim($this->input->post('ts_ar')),
+					'cv_ar' 			=> trim($this->input->post('cv_ar')),
+					'hgi' 				=> trim($this->input->post('hgi')),
+					'by_user'			=> $by_user
+				);
+
+
+				$this->Crud->insert('table_quality', $data);
+
+				$this->session->set_flashdata('msg', '<div class="alert  alert-success alert-dismissible fade show" role="alert">
+	            <span class="badge badge-pill badge-success">Success</span> <b>"' . $this->input->post('series') . '"</b> has been added.
+	            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	                <span aria-hidden="true">&times;</span>
+	            </button>
+	        </div>');
+		} else {
+			$this->session->set_flashdata('msg', '<div class="alert  alert-danger alert-dismissible fade show" role="alert">
+            <span class="badge badge-pill badge-danger">Error</span> ' . validation_errors() . '
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>');
+		 }
+		 redirect($_SERVER['HTTP_REFERER']);
 	}
 }

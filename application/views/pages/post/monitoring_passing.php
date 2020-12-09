@@ -10,6 +10,7 @@
     			<div class="form-group">
     				<label>Area :</label>
     				<select class="form-control" name="pos" id="pos">
+    					<option value="">ALL</option>
                     <?php foreach ($pos as $key) {
                       echo '<option value="'.$key['id'].'">'.$key['name'].' </option>';
                     }?>

@@ -13,6 +13,12 @@ io.on('connection',function(socket){
   socket.on('request_pos', function(data) {
     io.emit('reload_pos', data);
   });
+
+   socket.on('request_65', function(data) {
+    io.emit('reload_65', data);
+  });
+
+
 });
 
 http.listen(9518,function(){

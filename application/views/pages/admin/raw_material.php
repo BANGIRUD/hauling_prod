@@ -31,9 +31,9 @@
             <table class="table table-bordered">
               <thead class="text-center border" >
                 <tr>
-                  <th style="width: 10px">#</th>
-                  <th >Cargo Muatan</th>
-                  <th style="width: 60px">Action</th>
+                  <th style="width: 10px ;text-align: center;">#</th>
+                  <th style="text-align: center;">Cargo Muatan</th>
+                  <th style="width: 60px ;text-align: center;">Action</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -44,9 +44,9 @@
                     $no++;
                     echo 
                     '<tr class  = totodo>
-                       <th >' . $no .'.</th>
-                       <td style="background-color:'. $color[0] . ';color:'.@$color[1].'">' . $data['name'] .'</td>
-                       <td class="tools">
+                       <th style="text-align: center;">' . $no .'.</th>
+                       <td style="background-color:'. $color[0] . ';color:'.@$color[1].';padding: 12px;">' . $data['name'] .'</td>
+                       <td class="tools" style="text-align: center;">
                         <i class="fa fa-edit" data-toggle="modal" data-target="#modal-cargo" id="editcargo" data-id="' . $data['id'] . '"></i>
                         <i class="fa fa-trash-o" id="delete" data-id="' . $data['id'] . '"></i>
                        </td>

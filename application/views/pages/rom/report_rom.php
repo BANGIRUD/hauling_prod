@@ -18,7 +18,7 @@
       <div class="col-md-12">
         <div class="box box-primary">
           <div class="box-header with-border"> 
-              <h4><p style="padding: 0 15px">Report ROM:</p></h4>
+              <!-- <h4><p style="padding: 0 15px">Report ROM:</p></h4>
               <?php $no=0;
                 echo '<a class="btn btn-app bg-maroon" href="'.base_url('Dash/report_rom/').'"><i class="fa fa-list"></i>ALL</a>';
                 echo '<a class="btn btn-app bg-green pull-right" href="'.base_url('Dash/daily_rom_operations/').'"><i class="fa fa-file-excel-o"></i>Export to Excel</a>';
@@ -29,7 +29,37 @@
                     echo '<a class="btn btn-app bg-orange" href="'.base_url('Dash/report_rom/'.$value['id']).'"><i class="fa fa-inbox"></i>'.$value['name'].'</a>';
                   }
                 ?>
-                <?php endforeach;?> 
+                <?php endforeach;?>  -->
+            <div class="row">
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label>Date :</label>
+                <div class="input-group date">
+                  <div class="input-group-addon" style="background-color: #e9ecef"> <i class="fa fa-calendar"></i></div>
+                  <input  type="text" name="date" class="form-control datepicker" value=" <?= date('m/d/Y', strtotime($date));?>">
+                </div>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label>Shift :</label>
+                  <select class="form-control" name="rom" id="rom">                    
+                    <option value=""> ALL </option>
+                    <?php foreach ($rom as $value) {
+                      $select = $key['code'] == $shift ? ' selected': '';
+                        echo '<option value="'.$value['name'].'"'.$select.'>'.$value['name'].' </option>';
+                    }?>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>&nbsp;</label></br>
+                  <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
+                  <a href="#" id="export_report_rom" class="btn btn-success"><i class="fa fa-file-excel-o"></i> Export</a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -38,7 +68,7 @@
         <div class="box box-primary">
           <div class="box-header with-border"> 
             <a href="<?php echo base_url("exports/populasi");?>" class="btn btn-success">
-              <i class="fa  fa-file-excel-o"> Export to Excel</i>
+              <i class="fa fa-file-excel-o"> Export to Excel</i>
             </a>
           </div>
         </div>
@@ -102,5 +132,15 @@
     })
   });
 
+  $('.datepicker').datepicker({
+    autoclose: true
+  });
+
+  $(document).on('click', '#export_report_rom', function(e) {
+  var date  = $("#filter_date").val();
+  var shift = $("#page-shift.active").attr('data-id');
+  var pit   = $('#filter_pit').val();
+  window.open('<?php echo base_url('Exports/Export_prodproblem/save');?>/'+ date + '/' + shift + '/' + pit);
+});
 
 </script>

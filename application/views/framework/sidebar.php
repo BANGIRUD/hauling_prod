@@ -164,10 +164,7 @@
             <li <?php if($this->uri->segment(2) == 'post_34_standby') { echo' class="active"';} ?>><a href="<?php echo base_url('dash/post_34_standby');?>"><i class="fa fa-circle-o"></i>Standby</a></li>
           </ul>
         </li>
-        <li <?php if($this->uri->segment(2) == 'monitoring_passing') { echo' class="active"';} ?>>
-          <a href="<?php echo base_url('dash/monitoring_passing');?>">
-            <i class="fa fa-space-shuttle"></i>Monitoring Passing
-          </a>
+        <li <?php if($this->uri->segment(2) == 'monitoring_passing') { echo' class="active"';} ?>><a href="<?php echo base_url('dash/monitoring_passing');?>"><i class="fa fa-space-shuttle"></i><span>Monitoring Passing</span></a>
         </li>
         <li <?php if($this->uri->segment(2) == 'quality_control_passing') { echo' class="active"';} ?>>
           <a href="<?php echo base_url('dash/quality_control_passing');?>">

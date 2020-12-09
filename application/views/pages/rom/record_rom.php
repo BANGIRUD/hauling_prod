@@ -32,7 +32,7 @@
                 ?>
                 <?php endforeach;?>
               <?php else :?>
-                <h1 style="padding: 0 15px"> WELCOME BACK ... !!!</h1>
+                <h3 style="padding: 0 15px" align="center"><?php echo date('d F Y');?></h3>
               <?php endif;?>
             </div>
           </div>
@@ -79,7 +79,7 @@
                           echo ' <a href="#" class="btn btn-xs btn-danger'.$btn_out.'"  id="edit_out_rom" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit keluar ROM" data-toggle="tooltip"><i class="fa  fa-share"> Out</i>  
                               </a>';
                         else :
-                          echo ' <p nowarp style="color: red;">cannot be operated because you are an administrator</p> <a href="#" class="btn btn-xs btn-success disabled"  id="edit_in_rom" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit masuk ROM" data-toggle="tooltip"><i class="fa  fa-reply"> In</i>
+                          echo '<a href="#" class="btn btn-xs btn-success disabled"  id="edit_in_rom" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit masuk ROM" data-toggle="tooltip"><i class="fa  fa-reply"> In</i>
                                 </a>';
                           echo ' <a href="#" class="btn btn-xs btn-danger disabled"  id="edit_out_rom" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit keluar ROM" data-toggle="tooltip"><i class="fa  fa-share"> Out</i>  
                               </a>';

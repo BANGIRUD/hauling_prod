@@ -107,4 +107,29 @@ class Api extends CI_Controller {
 		echo json_encode($response);
 	}
 
+	public function shiftos($id ='') {
+		$sql = $this->Crud->search('table_shiftos', array('id' => $id))->result_array();
+		if(count($sql) > 0 ){
+		  $response = array();
+		  $response["data"] = array();
+		  foreach ($sql as $x) {
+		    $h['id'] 				= $x["id"];
+		    $h['created_at'] 		= $x["created_at"];
+		    $h['updated_at'] 		= $x["updated_at"];
+			$h['deleted_at'] 		= $x["deleted_at"];
+		    $h['date'] 				= $x["date"];
+		    $h['code_number'] 		= $x["code_number"];
+		    $h['no_unit'] 			= $x["no_unit"];
+		    $h['no_id'] 			= $x["no_id"];
+		    $h['time'] 				= $x["time"];
+		    $h['csa'] 				= $x["csa"];
+		    $h['by_user'] 			= $x["by_user"];
+		    array_push($response["data"], $h);
+		  }
+		}else {
+		  $response["data"]="empty";  
+		}
+		echo json_encode($response);
+	}
+
 }

@@ -192,6 +192,10 @@
 
 
 <script type="text/javascript">
+  socket.on('reload_65', function(e) {
+    window.location.reload();
+  });
+
   $(function () {
     $('#example1').DataTable({
         'paging'      : false,

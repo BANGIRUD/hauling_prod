@@ -145,6 +145,35 @@ function colors_bd_code($value='') {
 	return $result;
 }
 
+function colors_setting_unit($value='') {
+	switch ( strtolower($value) ) {
+		case 'floating':
+			$bg = '#f1c40f';
+			$color = '#000000';
+			break;
+
+		case 'register':
+			$bg = '#BBFFB4';
+			$color = '#000000';
+			break;
+
+		case 'unregister':
+			$bg = '#FFB4B4';
+			$color = '#000000';
+			
+			break;
+
+		default:
+			$bg = '#ecf0f1';
+			$color = '#000000';
+			break;
+	}
+	$result = array();
+	$result['bg'] = $bg;
+	$result['color'] = $color;
+	return $result;
+}
+
 
 function sendMessage($id, $message_text) {
     //group teknisi = 

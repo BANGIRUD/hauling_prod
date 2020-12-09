@@ -326,14 +326,14 @@ class Dash extends CI_Controller {
 		$this->load->view('framework/footer');
 	}
 
-	public function post_69()
+	public function post_69($code = '')
 	{
 		$position	  	= $this->Crud->search('table_enum', array('type' => 'position'))->result_array();
 		$code_standby	= $this->Crud->search('table_enum', array('type' => 'code_standby'))->result_array();
 
 		$this->load->model('Monitoring_operations', 'operations');
 		
-		$data = $this->operations->monitoring_operations_69()->result_array();
+		$data = $this->operations->monitoring_operations_69($code)->result_array();
 
 		$data 		= array (
 			'position'		=> $position,
@@ -366,6 +366,7 @@ class Dash extends CI_Controller {
 			'shift_code'	=> $shift_code,
 			'monitoring'	=> $model_monitoring
 		);
+		
 		$this->load->view('framework/header', array('title' => 'Monitoring Passing'));
 		$this->load->view('framework/sidebar');
 		$this->load->view('pages/post/monitoring_passing',$data);
@@ -455,12 +456,13 @@ class Dash extends CI_Controller {
 		$result 			= get_date_shift();
 		$by_rom				= $by_rom == '' ?$this->session->userdata('rom') : $by_rom;
 		$rom	  			= $this->Crud->search('table_enum', array('type' => 'rom'))->result_array();
-
+		$date = $this->input->get('date') == '' ? $result['date'] : date('Y-m-d', strtotime($this->input->get('date')));
 		$this->load->model('Shift_operations', 'operations');
 		$data = $this->operations->report_rom_monitoring_shift_operations($by_rom)->result_array();
 
 		$data 		= array (
 			'rom'			=> $rom,
+			'date'			=> $date,
 			'data'			=> $data,
 		);
 
@@ -581,8 +583,9 @@ class Dash extends CI_Controller {
 		$result =  get_date_shift();
 		$material_new	= $this->Crud->search('enum', array('type' => 'material_new'))->result_array();
 
-		$this->db->select('table_quality.*');
+		$this->db->select('table_quality.*,cargo.description as color');
 		$this->db->from('table_quality');
+		$this->db->join('table_enum as cargo','table_quality.series = cargo.name','LEFT');
 		$this->db->where('table_quality. deleted_at is NULL');
 		$this->db->where('table_quality. date = \''.$result['date'].'\'');
 		$table = $this->db->get()->result_array();

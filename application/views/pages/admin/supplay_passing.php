@@ -48,10 +48,10 @@
                   <?php 
                   $no = 0; 
                   $total = array();
-                  foreach ($table as $data) : $no++;?>
+                  foreach ($table as $data) : $no++; $color = explode(',', $data['color']);?>
                   <tr>
                     <td style="text-align:center;"><?= $no;?></td>
-                    <td style="text-align:center;"><?= $data['material'];?></td>
+                    <td style="text-align:center; background-color: <?=$color[0]?>; color: <?=@$color[1]?>"><?= $data['material'];?></td>
                      <td style="text-align:center;"><?= $data['rom_spp'];?></td>
                       <?php
                         for ($i=1; $i <= 12 ; $i++) { 

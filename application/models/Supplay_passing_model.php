@@ -11,9 +11,10 @@ class Supplay_passing_model extends CI_Model
 		
 		$result = get_date_shift();
 
-		$this->db->select('table_supplaypassing.*,table_enum.name as rom_spp');
+		$this->db->select('table_supplaypassing.*,table_enum.name as rom_spp, cargo.description as color');
 		$this->db->from('table_supplaypassing');
 		$this->db->join('table_enum','table_supplaypassing.rom = table_enum.code','LEFT');
+		$this->db->join('table_enum as cargo','table_supplaypassing.material = cargo.name','LEFT');
 		$this->db->where('table_supplaypassing.date',$result['date']);
 		$this->db->where('table_supplaypassing.shift',$result['shift']);
 		$this->db->where('table_supplaypassing.deleted_at',NULL);
