@@ -69,21 +69,21 @@
                       <tr>
                         <th style="background-color: blue; color: white;" colspan="3"><?= $a_jam . '-' . $b_jam;?></th>
                       </tr>
-                      <tr style="background-color: blue; color: white;">
+                      <tr>
                         <?php foreach ($table_rom->result_array() as $key) {
-                          echo '<th style="background-color: blue; color: white;" colspan="5" align="center">'.$key['rom_spp'].'</th>';
+                          echo '<th style="background-color: blue; color: #ffffff; text-align:center;" colspan="5">'.$key['rom_spp'].'</th>';
                           echo '<th  style="background-color: white; color: white;" width="5">&nbsp;</th>';
                         }
                         ?>
                       </tr>
                       <tr>
                         <?php foreach ($table_rom->result_array() as $key) {
-                          echo '<th style="background-color: blue; color: white;">Time</th>
-                            <th nowrap style="background-color: blue; color: white;">Truck No</th>
-                            <th style="background-color: blue; color: white;">Material</th>
-                            <th style="background-color: blue; color: white;">Area</th>
-                            <th style="background-color: blue; color: white;">Status</th>';
-                          echo '<th  style="background-color: white; color: white;">&nbsp;</th>';
+                          echo '<th style="background-color: blue; color: #ffffff; text-align:center;">Time</th>
+                            <th nowrap style="background-color: blue; color: #ffffff; text-align:center;">Truck No</th>
+                            <th style="background-color: blue; color: #ffffff; text-align:center;">Material</th>
+                            <th style="background-color: blue; color: #ffffff; text-align:center;">Area</th>
+                            <th style="background-color: blue; color: #ffffff; text-align:center;">Status</th>';
+                          echo '<th>&nbsp;</th>';
                           // $dd = $shift_ops->report_rom_monitoring_shift_operations($key['id']);
                           // if ($dd->num_rows() > 0) {
                           //   foreach ($dd->result_array() as $value) {
@@ -100,9 +100,9 @@
                           $data_rom = $this->shift_ops->monitoring_operation_rom_data($date, $a, $key['rom_id'])->result_array();
                           
 
-                          echo '<td>';
+                          echo '<td style = "text-align:center;">';
                           foreach ($data_rom as $value) {
-                            echo '<div>'.$value['time'].'</div>';
+                            echo '<div>'.date('H:i', strtotime($value['time'])).'</div>';
                           }
                           echo '</td>';
                           echo '<td>';
@@ -110,23 +110,23 @@
                             echo '<div>'.$value['cn_unit'].'</div>';
                           }
                           echo '</td>';
-                          echo '<td>';
+                          echo '<td nowrap>';
                           foreach ($data_rom as $value) {
                             $color = explode(',', $value['color']);
                             echo '<div style="background-color:'. $color[0] . ';color:'.@$color[1].'" >'.$value['cargo'].'</div>';
                           }
                           echo '</td>';
-                          echo '<td>';
+                          echo '<td nowrap>';
                           foreach ($data_rom as $value) {
                             echo '<div>'.$value['csa'].'</div>';
                           }
                           echo '</td>';
                           echo '<td>';
                           foreach ($data_rom as $value) {
-                            echo '<div>'.$value['register'].'</div>';
+                            echo '<div style="background-color:'. colors_setting_unit(strtolower($value['register']))['bg'] . ';color:'.colors_setting_unit(strtolower($value['register']))['color'].'">'.$value['register'].'</div>';
                           }
                           echo '</td>';
-                          echo '<td>';
+                          echo '<td style="background-color:white;">';
                           foreach ($data_rom as $value) {
                             echo '&nbsp;';
                           }
@@ -136,9 +136,9 @@
 
                       </tr>
 
-                      <tr style="background-color: grey; color: white;">
+                      <tr style="background-color: grey; color: white; text-align: center;">
                         <?php foreach ($table_rom->result_array() as $key) {
-                          echo '<td>Cargo</td><td>Plan</td><td>Actual</td><td></td><td>Kurang</td><td style="background-color: white; color: white;">&nbsp;</td>';
+                          echo '<th>Cargo</th><th>Plan</th><th>Actual</th><td></td><th>Kurang</th><td style="background-color: white; color: white;">&nbsp;</td>';
                         }
                         ?>
                       </tr>
@@ -152,14 +152,15 @@
                           $total_per_rom['actual_product_' . $key['rom_id']] = array();
 
 
-                          echo '<td nowrap>';
+                          echo '<td nowrap style="text-align:center;">';
 
                           foreach ($cargo_per_rom['rom_'.$key['rom']] as $val) {
-                            echo '<div style="border-bottom: 1px solid #fff;margin: -8px;padding: 8px;">'.$val['material'].'</div>';
+                            // $color = explode(',', $val['color']);
+                            echo '<div style="border-bottom: 1px solid #fff;margin: -8px;padding: 8px; " >'.$val['material'].'</div>';
                           }
                           echo '</td>';
 
-                          echo '<td nowrap>';
+                          echo '<td nowrap style="text-align:center;">';
                           foreach ($cargo_per_rom['rom_'.$key['rom']] as $val) {
                             $tot = $val['plan_' . $h_jam];
                             $product = ($val['plan_' . $h_jam]*$val['cv_ar']);
@@ -175,7 +176,7 @@
                           }
                           echo '</td>';
                           
-                          echo '<td nowrap>';
+                          echo '<td nowrap style="text-align:center;">';
                           foreach ($cargo_per_rom['rom_'.$key['rom']] as $val) {
                             if ($val['table_'] == 'spp') {
                               $tot = $val['actual_' . $h_jam];
@@ -194,7 +195,7 @@
                           
                           echo '<td></td>';
                           
-                          echo '<td>';
+                          echo '<td style="text-align:center;">';
                           foreach ($cargo_per_rom['rom_'.$key['rom']] as $val) {
                             if ($val['table_'] == 'spp') {
                               echo '<div style="border-bottom: 1px solid #fff;margin: -8px;padding: 8px;">'.($val['plan_' . $h_jam]-$val['actual_' . $h_jam]).'</div>';
@@ -224,13 +225,13 @@
                           array_push($total_actual_all_rom, $actual);
                           array_push($total_plan_product_all_rom, $plan_product);
                           array_push($total_actual_product_all_rom, $actual_product);
-                          echo '<td nowrap>Total</td>';
+                          echo '<th nowrap style="background-color: blue; color: #ffffff; text-align:center;">Total</th>';
 
-                          echo '<td nowrap>'.$plan.'</td>';
+                          echo '<th nowrap style="background-color: blue; color: #ffffff; text-align:center;">'.$plan.'</th>';
                           
-                          echo '<td nowrap>'.$actual.'</td>';
+                          echo '<th nowrap style="background-color: blue; color: #ffffff; text-align:center;">'.$actual.'</th>';
                           
-                          echo '<td colspan="3" style="background-color: white; color: white;"></td>';
+                          echo '<td colspan="3" style="background-color:white;"></td>';
                         }
 
                         $total_plan_product_all_rom = array_sum($total_plan_product_all_rom);
@@ -241,6 +242,9 @@
 
                         $plan = $total_plan_product_all_rom != 0 || $total_plan != 0 ? $total_plan_product_all_rom/$total_plan : 0;
                         $actual = $total_actual_product_all_rom != 0 || $total_actual != 0 ? $total_actual_product_all_rom/$total_actual : 0;
+
+                        $hasil = @number_format($actual-$plan,0);
+                        $warna = colored_deviasi($hasil);
                         ?>
                       </tr>
                       <tr>
@@ -250,12 +254,19 @@
                         <td colspan="2">Total Actual</td><td><?= $total_actual;?></td>
                       </tr>
                       <tr>
-                        <td>PRODUCT</td>
-                        <td>Cal (ar)</td>
-                        <td>Deviasi</td>
+                        <th style="background-color: blue; color: white; text-align: center;">Product</th>
+                        <th style="background-color: blue; color: white; text-align: center;">Cal (ar)</th>
+                        <th style="background-color: blue; color: white; text-align: center;">Deviasi</th>
                       </tr>
-                      <tr><td>PLAN</td><td><?= number_format($plan,0);?></td><td rowspan="2"><?= number_format($actual-$plan,0);?></td></tr>
-                      <tr><td>Actual</td><td><?= number_format($actual,0);?></td></tr>
+                      <tr>
+                        <td>PLAN</td>
+                        <td><?= number_format($plan,0);?></td>
+                        <td rowspan="2" style="text-align: center; <?=$warna;?>"><?=$hasil;?></td>
+                      </tr>
+                      <tr> 
+                        <td>Actual</td>
+                        <td><?= number_format($actual,0);?></td>
+                      </tr>
                     </tbody>
                   </table>
                 </div>

@@ -1,3 +1,7 @@
+<style type="text/css">
+  .select2-container .select2-selection--single {height: auto;}
+  .select2-container {max-width: 200px;}
+</style>
 <?php
   $by_area   = $this->session->userdata('area');
 ?>
@@ -100,7 +104,7 @@
   </section>
 </div>
 <!-- Modal add Unit -->
-<div class="modal fade" id="modal-addunit" role="dialog"  aria-hidden="true" tabindex="-1"><!-- Modal Edit Unit -->
+<div class="modal fade" id="modal-addunit" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"><!-- Modal Edit Unit -->
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <form action="<?= base_url('Save/shift_operation');?>" method="post" enctype="multipart/form-data" class="form-horizontal">
@@ -128,7 +132,7 @@
               </div>
               <div class="col-xs-3">
                 <label>Cargo Muatan</label> 
-                  <select class="form-control" name="cargo_muatan" id="cargo_muatan">
+                  <select class="form-control select2" name="cargo_muatan" id="cargo_muatan">
                     <?php foreach ($cargo_muatan as $value) {
                       echo '<option value="'.$value['name'].'">'.$value['name'].' </option>';
                     }?>
@@ -136,7 +140,7 @@
               </div>
               <div class="col-xs-3">
                 <label>ROM</label> 
-                  <select class="form-control" name="rom">
+                  <select class="form-control select2" name="rom" id="rom">
                     <?php foreach ($rom as $value) {
                       echo '<option value="'.$value['id'].'">'.$value['name'].' </option>';
                     }?>
@@ -144,6 +148,8 @@
               </div>
             </div>
           </div>
+          <div id="history_unit"></div>
+
         </div>  
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -226,7 +232,6 @@
 </div>
 
 <script type="text/javascript">
-  $('.select2').select2();
 
   socket.emit('request_record_rom');
 
@@ -258,6 +263,8 @@
 
   $('#modal-addunit').on('shown.bs.modal', function () {
     $('#id_unit').focus();
+
+    $('.select2').select2();
   });
 
   $(document).on('click','#edit', function() {
@@ -280,4 +287,27 @@
         }
       });
   });
+
+  $(document).ready(function(){
+  $("button").click(function(){
+    $("#div2").load("demo_test.txt");
+  });
+});
+
+  $(document).on('change', '#id_unit', function(e){
+    e.preventDefault();
+    var unit = $(this).val();
+    $.ajax({
+        type: "POST",
+        data:'unit=' + unit,
+        url: "<?php echo base_url('Ajax/history_unit');?>",
+        success: function(response) {
+          $("#history_unit").html(response);
+        },
+        error: function () {
+          console.log("errr");
+        }
+      });
+  });
+
 </script>

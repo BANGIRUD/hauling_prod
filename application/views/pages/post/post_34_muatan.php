@@ -25,7 +25,7 @@
                   <i class="fa fa-plus"> Add Unit Kosongan</i>
                 </button>            
               <?php else : ?>            
-                <button class="btn btn-success  disabled" data-toggle="modal" id="add-unit">
+                <button class="btn btn-success  disabled" data-toggle="modal" id="">
                   <i class="fa fa-plus"> Add Unit Kosongan</i>
                 </button>
               <?php endif ?>
@@ -91,7 +91,7 @@
                               </a>
                             </td>';
                       else :
-                      echo '<td> <p nowarp style="color: red;">cannot be operated because you are an administrator</p>
+                      echo '<td>
                               <a href="#" class="btn btn-xs btn-success disabled" data-target="#editindata" id="editincsa" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit masuk CSA" data-toggle="tooltip">
                                 <i class="fa  fa-reply"> In</i>
                               </a>

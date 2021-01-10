@@ -229,3 +229,15 @@ function get_enum($id, $tp = '', $type = 'id')
     
     return $value;
 }
+
+function colored_deviasi($total)
+{
+	if ( $total > 50) {
+		$warna = 'background-color: red; color: #FFFFFF';
+	}elseif ( $total < '-50'){
+		$warna = 'background-color: red; color: #FFFFFF';
+	}else {
+		$warna = 'background-color: transparent';
+	}
+	return $warna;
+}

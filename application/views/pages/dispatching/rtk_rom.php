@@ -112,34 +112,34 @@
                         $x = $a < 10 ? '0'.$a.'' : $a.'';
                         $y = $b < 10 ? '0'.$b.'' : $b.'';
 
-                        $c = $x. ':'.$y;
-
+                        $c = $x.  ' : '  .$y;
 
                         echo '<tr>';
-                          echo '<td>' . $c . '</td>';
+                          echo '<td nowrap>' . $c . '</td>';
                           foreach ($table as $value) :
                             // print_r($value['jam_'.$i] );
                             $callback_kosongan = $kosongan[$value['rom_id']];
                             $val = !empty(@$callback_kosongan['kosongan_'.$i]) ? @$callback_kosongan['kosongan_'.$i] : 0;
-                            echo '<td style="text-align: center; vertical-align: middle;">' . $value['jam_'.$i] . '</td>';
+                            echo '<td style="text-align: center; vertical-align: middle; background-color: #ffffff">' . $value['jam_'.$i] . '</td>';
                             // echo '<td>' . '</td>';
-                            echo '<td style="text-align: center; vertical-align: middle;">' . @$val . '</td>';
-                            echo '<td style="text-align: center; vertical-align: middle;">' . $value['actual_'.$i] . '</td>';
+                            echo '<td style="text-align: center; vertical-align: middle; background-color: #ffffff">' . @$val . '</td>';
+                            echo '<td style="text-align: center; vertical-align: middle; background-color: #ffffff">' . $value['actual_'.$i] . '</td>';
                           endforeach;
                           $callback_kosongan = $kosongan[$value['rom_id']];
                           $val = !empty(@$callback_kosongan['kosongan_'.$i]) ? @$callback_kosongan['kosongan_'.$i] : 0;
-                          echo '<td>'.@$val.'</td>';
-                          echo '<td>'.$value['actual_'.$i].'</td>';
-                          echo '<td>'.$value['actual_'.$i].'</td>';
-                          echo '<td>'.$value['actual_'.$i].'</td>';
+                          echo '<td style="text-align:center;">'.@$val.'</td>';
+                          echo '<td style="text-align:center;">'.$value['actual_'.$i].'</td>';
+                          echo '<td style="text-align:center;">'.$value['actual_'.$i].'</td>';
+                          echo '<td style="text-align:center;">'.$value['actual_'.$i].'</td>';
                         echo '<tr>';
                       endfor;
-                        echo '<tr style="background-color: white; color: white;">
-                                <td></td>
-                              </tr>';
+                        // echo '<tr style="background-color: white; color: white;">
+                        //         <td></td>
+                        //       </tr>';
 
                         echo '<tr>
-                                <td>Total</td>';
+                                <th style="text-align:center; background-color : #74b9ff;">Total</th>
+                                <th style="text-align:center; background-color : #74b9ff;">1</th>';
 
                         echo '</tr>';      
                     ?>

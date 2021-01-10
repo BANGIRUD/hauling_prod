@@ -21,7 +21,7 @@
                   <i class="fa fa-plus"> Add Unit Kosongan</i>
                 </button>
               <?php else:?>
-                <button class="btn btn-success  disabled" data-toggle="modal" id="add-unit">
+                <button class="btn btn-success  disabled" data-toggle="modal" id="">
                   <i class="fa fa-plus"> Add Unit Kosongan</i>
                 </button>    
               <?php endif ?>
@@ -40,6 +40,7 @@
               <table id="example1" class="table table-bordered table-striped">
                 <thead style="background-color: #2e86de ; color: #ffffff ; font-size: 12px;">
                   <tr>
+                    <th rowspan="2" style="text-align: center;">#</th>
                     <th rowspan="2" style="text-align: center;">No</th>
                     <th rowspan="2" style="text-align: center;">CN Unit</th>
                     <th rowspan="2" style="text-align: center;">Cargo Muatan</th>
@@ -54,6 +55,25 @@
                     $no++;
                     $color = explode(',', $value['color']);
                     echo '<tr style="text-align: center; font-size: 12px;">';
+                    if($this->session->userdata('level') != 'dispatcher'):
+                      echo '<td>
+                              <a href="#" class="btn btn-xs btn-primary" data-target="#editdata" id="edit" data-id="" data-original-title="Edit" data-toggle="tooltip">
+                                <i class="fa fa-edit"></i>
+                              </a>
+                              <a href="#" class="btn btn-xs btn-danger" data-target="#deletedata" id="delete" data-id="" data-original-title="delete" data-toggle="tooltip">
+                                <i class="fa fa-trash"></i>
+                              </a>  
+                            </td>';
+                    else :
+                      echo '<td>
+                              <a href="#" class="btn btn-xs btn-primary disabled" data-target="#editdata" id="edit" data-id="" data-original-title="Edit" data-toggle="tooltip">
+                                <i class="fa fa-edit"></i>
+                              </a>
+                              <a href="#" class="btn btn-xs btn-danger disabled" data-target="#deletedata" id="delete" data-id="" data-original-title="delete" data-toggle="tooltip">
+                                <i class="fa fa-trash"></i>
+                              </a>  
+                            </td>';
+                    endif;
                       echo '<td>'.$no.'</td>
                             <td>'.$value['cn_unit'].'</td>
                             <td style="background-color:'. $color[0] . ';color:'.@$color[1].'" >'.$value['cargo'].'</td>

@@ -54,7 +54,7 @@
                     <th rowspan="2" style="text-align: center;">Position</th>
                     <th rowspan="2" style="text-align: center;">Cargo Muatan</th>
                     <th rowspan="2" style="text-align: center;">Code Standby</th>
-                    <th rowspan="2" style="text-align: center;">Time Passing</th>
+                    <!-- <th rowspan="2" style="text-align: center;">Time Passing</th> -->
                     <th rowspan="2" style="text-align: center;">Remarks</th>
                     <th rowspan="2" style="text-align: center;">CSA</th>
                     <th rowspan="2" style="text-align: center;">Time OS</th>
@@ -114,8 +114,7 @@
                               <td style="background-color:'. $color[0] . ';color:'.@$color[1].'" >'.$value['cargo'].'</td>
                               <td>'.$value['code_stby'].'</td>';
                                 $timepassing = $value['operation'] == 0 ? '-' : date('H',strtotime($value['time_passing']));
-                        echo '<td>'.$timepassing.'</td>
-                              <td>'.$value['remark'].'</td>
+                        echo '<td>'.$value['remark'].'</td>
                               <td>'.$value['csa'].'</td>
                               <td>'.$value['time'].'</td>
                               <td style="text-align: center; background-color: '. colors_setting_unit(strtolower($value['register']))['bg'] .'; color: '. colors_setting_unit(strtolower($value['register']))['color'].'">'.$value['register'].'</td>';

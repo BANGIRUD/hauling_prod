@@ -104,7 +104,7 @@
                               <td>'.$value['remark'].'</td>
                               <td>'.$value['csa'].'</td>
                               <td>'.$value['time'].'</td>
-                              <td>'.$value['register'].'</td>';
+                              <td style="text-align: center; background-color: '. colors_setting_unit(strtolower($value['register']))['bg'] .'; color: '. colors_setting_unit(strtolower($value['register']))['color'].'">'.$value['register'].'</td>';
                         echo '<td>';
                         if($value['operation'] == 0 && strtolower($value['code_stby']) != 'l') : 
                           echo '<a href="#" class="btn btn-xs btn-success" id="ready" data-id="'.$value['id'].'" data-value="'.$value['operation'].'"data-original-title="Ready" data-toggle="tooltip"><i class="fa fa-check"></i>

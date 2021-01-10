@@ -63,4 +63,15 @@ class Ajax extends CI_Controller {
 		echo json_encode($response);
 	}
 
+	public function history_unit($value='')
+	{
+		$this->load->model('Shift_operations', 'operations');
+		$by_level   = $this->session->userdata('level');
+		print_r($_POST);
+		$unit 	= trim($this->input->post('unit'));
+		if ($unit) {
+			$data['listData'] 		= $this->operations->history_record_prod($unit);
+			$this->load->view('ajax/history_unit', $data); 
+		}
+	}
 }

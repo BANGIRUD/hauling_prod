@@ -53,7 +53,7 @@ LEFT JOIN table_shiftoperations ON table_shiftoperations.id = a.id) as b','table
 	public function monitoring_muatan($time_passing='')
 	{
 		$result 			= get_date_shift();
-		// $by_area			= $this->session->userdata('area');
+		$by_area			= $this->session->userdata('area');
 		$this->db->select('table_monitoringoperations.*, table_enum.description as color');
 		$this->db->from('(SELECT MAX(id) as id FROM table_monitoringoperations GROUP BY ref_id) as a');
 		$this->db->join('table_monitoringoperations','a.id = table_monitoringoperations.id','LEFT');
@@ -61,17 +61,17 @@ LEFT JOIN table_shiftoperations ON table_shiftoperations.id = a.id) as b','table
 		$this->db->join('table_enum','table_monitoringoperations.cargo = table_enum.name AND table_enum.type = \'cargo_muatan\'','LEFT');
 		$this->db->where('table_shiftoperations.date', $result['date']);
 		$this->db->where('HOUR(table_monitoringoperations.time_passing)', $time_passing);
-		
-		// if ($by_area) {
-		// 	$this->db->where('table_monitoringoperations.by_area', $by_area);
-		// }
+		$this->db->where('table_monitoringoperations.by_area', $by_area);
+		if ($by_area) {
+			$this->db->where('table_monitoringoperations.by_area', $by_area);
+		}
 		return $this->db->get();
 	}
 
 	public function supplay_passing()
 	{
-		$result = get_date_shift();
-
+		$result 	= get_date_shift();
+		$by_area	= $this->session->userdata('area');
 		$jam = 6;
 		if ($result['shift'] == 2) {
 			$jam = 18;
@@ -89,7 +89,9 @@ LEFT JOIN table_shiftoperations ON table_shiftoperations.id = a.id) as b','table
 		LEFT JOIN table_monitoringoperations ON a.id = table_monitoringoperations.id) as a ON a.ref_id = table_shiftoperations.id
 		) as a', 'table_supplaypassing.material = a.cargo AND table_supplaypassing.date = a.date AND a.position = \'M\' AND a.time_out IS NOT NULL', 'LEFT');
 		$this->db->where('table_supplaypassing.date',$result['date']);
-
+		// if ($by_area) {
+		// 	$this->db->where('table_monitoringoperations.by_area', $by_area);
+		// }
 		$this->db->where('table_supplaypassing.shift',$result['shift']);
 		$this->db->where('table_supplaypassing.deleted_at',NULL);
 		$this->db->group_by('table_supplaypassing.material');
@@ -163,7 +165,8 @@ LEFT JOIN table_shiftoperations ON table_shiftoperations.id = a.id) as b','table
 		$this->db->where('table_supplaypassing.date',$date);
 		$this->db->where('table_supplaypassing.shift',$shift);
 		$this->db->where('table_supplaypassing.deleted_at',NULL);
-		$this->db->group_by('table_supplaypassing.material');
+		$this->db->group_by('table_supplaypassing.material');		
+		$this->db->order_by('table_supplaypassing.id');
 		return $this->db->get();
 	}
 
@@ -175,7 +178,8 @@ LEFT JOIN table_shiftoperations ON table_shiftoperations.id = a.id) as b','table
 		$this->db->where('table_supplaypassing.date',$date);
 		$this->db->where('table_supplaypassing.shift',$shift);
 		$this->db->where('table_supplaypassing.deleted_at',NULL);
-		$this->db->group_by('table_supplaypassing.rom');
+		$this->db->group_by('table_supplaypassing.rom');		
+		$this->db->order_by('table_supplaypassing.id');
 		return $this->db->get();
 	}
 	

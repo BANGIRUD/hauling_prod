@@ -18,7 +18,8 @@ class Supplay_passing_model extends CI_Model
 		$this->db->where('table_supplaypassing.date',$result['date']);
 		$this->db->where('table_supplaypassing.shift',$result['shift']);
 		$this->db->where('table_supplaypassing.deleted_at',NULL);
-		$this->db->group_by('table_supplaypassing.material');
+		// $this->db->group_by('table_supplaypassing.material');
+		$this->db->order_by('table_supplaypassing.id');
 		return $this->db->get();
 	}
 
@@ -46,13 +47,15 @@ class Supplay_passing_model extends CI_Model
 
 			SELECT a.*, table_quality.cv_ar FROM (
 			SELECT `table_supplaypassing`.material, ".$sel_spp." FROM `table_supplaypassing`
-			LEFT JOIN (SELECT table_shiftoperations.cargo, COUNT(*) as total, HOUR(time) as hour FROM `table_shiftoperations` 
+			LEFT JOIN (SELECT table_shiftoperations.cargo, COUNT(*) as total, HOUR(
+			DATE_ADD(CONCAT(table_shiftoperations.date, ' ', table_shiftoperations.time), INTERVAL 2 HOUR)
+			) as hour FROM `table_shiftoperations` 
 			LEFT JOIN table_enum ON table_shiftoperations.to_rom = table_enum.id 
 			WHERE `table_shiftoperations`.`deleted_at` IS NULL AND `table_enum`.`code` = '{$by_rom}' AND `table_shiftoperations`.`date` = '{$date}' 
 			GROUP BY HOUR(time),cargo) as a ON table_supplaypassing.material = a.cargo			
 			WHERE `table_supplaypassing`.`date` = '{$date}' AND `table_supplaypassing`.`shift` = {$shift} AND `table_supplaypassing`.`rom` = '{$by_rom}' AND `table_supplaypassing`.`deleted_at` IS NULL
 			UNION ALL
-			SELECT cargo, ".$sel_ops." FROM `table_shiftoperations` 
+			SELECT cargo as material, ".$sel_ops." FROM `table_shiftoperations` 
 			LEFT JOIN table_enum ON table_shiftoperations.to_rom = table_enum.id 
 			WHERE `table_shiftoperations`.`deleted_at` IS NULL AND `table_enum`.`code` = '{$by_rom}' AND `table_shiftoperations`.`date` = '{$date}' AND cargo NOT IN (SELECT `table_supplaypassing`.material FROM `table_supplaypassing` WHERE `table_supplaypassing`.`date` = '{$date}' AND `table_supplaypassing`.`shift` = {$shift} AND `table_supplaypassing`.`rom` = '{$by_rom}' AND `table_supplaypassing`.`deleted_at` IS NULL) 
 			) as a 

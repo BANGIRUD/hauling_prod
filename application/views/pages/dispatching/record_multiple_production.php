@@ -71,7 +71,7 @@
 </div>
 
 <script type="text/javascript">
-  function append() {
+  function append(time='') {
     $('#shiftOperation').append('<tr>' +
         '<td><input type="text" name="id_unit[]" class="form-control" value="" required  autofocus placeholder="Enter Id Unit Here..."></td>' +
         '<td>' +
@@ -90,7 +90,7 @@
             ?>
           '</select>' +
         '</td>' +
-        '<td><input type="text" name="time[]" class="form-control" id="input-time" value="<?php echo date('H:i');?>" placeholder="Enter Time Here..." >'+
+        '<td><input type="text" name="time[]" class="form-control" id="input-time" value="'+time+'" placeholder="Enter Time Here..." >'+
         '<td><button type="button" class="btn btn-primary" id="add"><i class="fa fa-plus"></i></button>' +
         '<button type="button" class="btn btn-danger" id="remove"><i class="fa fa-remove"></i></button></td>' +
       '</tr>');
@@ -99,7 +99,10 @@
   }
   $(document).ready(function() {
     $(document).on('click', '#add', function() {
-      append();
+      var d = new Date();
+      var time = (d.getHours()<10?'0':'') + d.getHours()+":"+(d.getMinutes()<10?'0':'') + d.getMinutes();
+      append(time);
+      // $("#input-time2").val(time);
     });
 
     $(document).on('keypress', '#shiftOperation',function(e) {

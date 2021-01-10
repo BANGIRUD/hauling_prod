@@ -205,17 +205,17 @@
       <?php if ($area == '' || $area == '107') :?>
         <li <?php if($this->uri->segment(2) == 'monitoring_passing') { echo' class="active"';} ?>>
           <a href="<?php echo base_url('dash/monitoring_passing');?>">
-            <i class="fa fa-space-shuttle"></i>Monitoring Passing
+            <i class="fa fa-space-shuttle"></i><span>Monitoring Passing</span>
           </a>
         </li>
         <li <?php if($this->uri->segment(2) == 'quality_control_passing') { echo' class="active"';} ?>>
           <a href="<?php echo base_url('dash/quality_control_passing');?>">
-            <i class="fa fa-star"></i>Quality Control Passing
+            <i class="fa fa-star"></i><span>Quality Control Passing</span>
           </a>
         </li>           
         <li <?php if($this->uri->segment(2) == 'achievement_passing') { echo' class="active"';} ?>>
           <a href="<?php echo base_url('dash/achievement_passing');?>">
-            <i class="fa fa-feed"></i>Achievement Passing
+            <i class="fa fa-feed"></i><span>Achievement Passing</span>
           </a>
         </li>
       <?php endif;?>

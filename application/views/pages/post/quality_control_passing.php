@@ -117,19 +117,6 @@
                       <td nowrap><?= number_format($sum_percent, 1);?> %</td>
                     <?php endfor;?>
                     </tr>
-                    <tr>
-                      <td>CV</td>
-                      <?php for ($a=$jam, $i = 1; $i <= 12; $i++, $a++):
-                        $sum_plan = @array_sum($total[$i]);
-
-                        $sum_actual = @array_sum($total_act[$i]);
-                        $sum_percent = $sum_plan != 0 || $sum_actual != 0 ? $sum_actual/$sum_plan*100 : 0;
-                        ?>
-                      <td>...</td>
-                      <td>...</td>
-                      <td nowrap>... %</td>
-                    <?php endfor;?>
-                    </tr>
                   </tbody>
                 </table>
               </div>
