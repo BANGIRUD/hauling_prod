@@ -147,7 +147,7 @@
             </div>
             <div class="box-body">
               <div class="container">
-                <canvas id="canvas" style="height:250px"></canvas>
+                <canvas id="canvas" style="width: 100px;"></canvas>
               </div>
             </div>
             <!-- /.box-body -->

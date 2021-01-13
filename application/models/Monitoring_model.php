@@ -55,8 +55,9 @@ LEFT JOIN table_shiftoperations ON table_shiftoperations.id = a.id) as b','table
 		$result 			= get_date_shift();
 		$by_area			= $this->session->userdata('area');
 		$this->db->select('table_monitoringoperations.*, table_enum.description as color');
-		$this->db->from('(SELECT MAX(id) as id FROM table_monitoringoperations GROUP BY ref_id) as a');
-		$this->db->join('table_monitoringoperations','a.id = table_monitoringoperations.id','LEFT');
+		$this->db->from('table_monitoringoperations');	
+		// $this->db->from('(SELECT MAX(id) as id FROM table_monitoringoperations GROUP BY ref_id) as a');
+		// $this->db->join('table_monitoringoperations','a.id = table_monitoringoperations.id','LEFT');
 		$this->db->join('table_shiftoperations','table_monitoringoperations.ref_id = table_shiftoperations.id','LEFT');
 		$this->db->join('table_enum','table_monitoringoperations.cargo = table_enum.name AND table_enum.type = \'cargo_muatan\'','LEFT');
 		$this->db->where('table_shiftoperations.date', $result['date']);
@@ -85,9 +86,9 @@ LEFT JOIN table_shiftoperations ON table_shiftoperations.id = a.id) as b','table
 		$this->db->join('table_enum as cargo','table_supplaypassing.material = cargo.name','LEFT');
 		$this->db->join('(
 			SELECT table_shiftoperations.*, a.time_out, a.time_passing FROM `table_shiftoperations`
-		LEFT JOIN (SELECT table_monitoringoperations.* FROM (SELECT MAX(id) as id FROM `table_monitoringoperations` GROUP BY ref_id) as a
-		LEFT JOIN table_monitoringoperations ON a.id = table_monitoringoperations.id) as a ON a.ref_id = table_shiftoperations.id
-		) as a', 'table_supplaypassing.material = a.cargo AND table_supplaypassing.date = a.date AND a.position = \'M\' AND a.time_out IS NOT NULL', 'LEFT');
+			LEFT JOIN (SELECT table_monitoringoperations.* FROM (SELECT MAX(id) as id FROM `table_monitoringoperations` GROUP BY ref_id) as a
+			LEFT JOIN table_monitoringoperations ON a.id = table_monitoringoperations.id where table_monitoringoperations.by_area = 10) as a ON a.ref_id = table_shiftoperations.id
+			) as a', 'table_supplaypassing.material = a.cargo AND table_supplaypassing.date = a.date AND a.position = \'M\' AND a.time_out IS NOT NULL', 'LEFT');
 		$this->db->where('table_supplaypassing.date',$result['date']);
 		// if ($by_area) {
 		// 	$this->db->where('table_monitoringoperations.by_area', $by_area);
@@ -131,7 +132,7 @@ LEFT JOIN table_shiftoperations ON table_shiftoperations.id = a.id) as b','table
 		$this->db->join('(
 			SELECT table_shiftoperations.date, table_shiftoperations.position, a.time_out, a.time_passing FROM `table_shiftoperations`
 		LEFT JOIN (SELECT table_monitoringoperations.* FROM (SELECT MAX(id) as id FROM `table_monitoringoperations` GROUP BY ref_id) as a
-		LEFT JOIN table_monitoringoperations ON a.id = table_monitoringoperations.id) as a ON a.ref_id = table_shiftoperations.id
+		LEFT JOIN table_monitoringoperations ON a.id = table_monitoringoperations.id where table_monitoringoperations.by_area = 10 ) as a ON a.ref_id = table_shiftoperations.id
 		) as c', 'b.date = c.date AND c.position = \'M\' AND c.time_out IS NOT NULL', 'LEFT');
 
 
