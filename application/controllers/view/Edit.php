@@ -232,6 +232,57 @@ class Edit extends CI_Controller {
         <?php
 	}
 
+	public function monitoring_operations_65_data($id = 1)
+	{
+		$this->load->model('Monitoring_operations', 'operation');
+
+		$cargo_muatan	= $this->Crud->search('table_enum', array('type' => 'cargo_muatan'))->result_array();
+		$rom			= $this->Crud->search('table_enum', array('type' => 'rom'))->result_array();
+		$data = $this->operation->monitoring_operations_65_muatan_edit($id)->result();
+		$data = $data[0];
+		?>
+		<input type="hidden" class="form-control pull-right" name="id" value="<?=$data->id ;?>">
+		<div class="modal-body ">
+          <div class="form-group">
+            <div class="form-body">
+            	<div class="row">
+	              	<div class="col-xs-4">
+                		<label>ID Unit</label> 
+		            	<input class="form-control" type="text" name="unit" placeholder="Enter Id Unit Here" id="id_unit" value="<?= $data->cn_unit ;?>" readonly>
+              		</div>
+	              	<div class="col-xs-4">
+	                <label>Cargo Muatan</label> 
+	                  	<select class="form-control" name="cargo_muatan" id="cargo_muatan">
+							<?php foreach ($cargo_muatan as $value) {
+								$selected = $data->cargo == $value['name'] ? ' selected' : '';
+								echo '<option value="'.$value['name'].'"'.$selected.'>'.$value['name'].'</option>';
+							}
+							?>
+						</select>                
+	              	</div>
+          			<div class="col-xs-4">
+	                	<label>Rom</label> 
+		              	<select class="form-control" name="rom" id="rom">
+							<?php foreach ($rom as $value) {
+								$selected = $data->to_rom == $value['id'] ? ' selected' : '';
+								echo '<option'.$selected.' value="'.$value['id'].'">'.$value['name'].'</option>';
+							}
+							?>
+						</select>
+	              	</div>
+          		</div>
+          	</div>		
+          </div>
+        </div>
+
+        <script type="text/javascript">
+				$('.datepicker').datepicker({
+				      autoclose: true
+				    })
+			</script>
+        <?php
+	}
+
 	public function monitoring_operations_65($id = 1)
 	{
 		$code_standby	= $this->Crud->search('table_enum', array('type' => 'code_standby'))->result_array();

@@ -345,15 +345,20 @@ class Dash extends CI_Controller {
 		$this->load->view('framework/footer');
 	}
 
-	public function monitoring_passing()
+	public function monitoring_passing($by_area='')
 	{
 		$result = get_date_shift();
 		$shift  = $result['shift'];
-		if ($this->session->userdata('level') == '') {
-			# code...
+		$by_area = $by_area != '' ? $by_area : '';
+		$area_name = get_enum($this->session->userdata('area') );
+		if ( $area_name != 'KM 67') {
+			$this->db->where_in("name", $area_name );
+			$by_area_id = $this->session->userdata('area');
+		} else {
+			$this->db->where("name IN ('KM 65', 'KM 34')", NULL);
+			$by_area_id = $by_area;
 		}
-		$this->db->where("name IN ('KM 65', 'KM 34')", NULL);
-		$pos	= $this->Crud->search('table_enum', array('type' => 'area'))->result_array();
+		$pos	= $this->Crud->search('table_enum', array('type' => 'area'));
 		$shift_code	  	= $this->Crud->search('table_enum', array('type' => 'shift'))->result_array();
 
 		$model_monitoring = $this->load->model('Monitoring_model', 'monitoring');
@@ -362,7 +367,10 @@ class Dash extends CI_Controller {
 			'shift' 		=> $shift,
 			'pos'			=> $pos,
 			'shift_code'	=> $shift_code,
-			'monitoring'	=> $model_monitoring
+			'monitoring'	=> $model_monitoring,
+			'by_area'		=> $by_area,
+			'by_area_name'	=> $area_name,
+			'by_area_id'	=> $by_area_id
 		);
 		
 		$this->load->view('framework/header', array('title' => 'Monitoring Passing'));

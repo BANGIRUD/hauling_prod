@@ -103,6 +103,21 @@ LEFT JOIN table_settingunit ON a.id = table_settingunit.id) st','table_monitorin
 		return $this->db->get();
 	}
 
+	public function monitoring_operations_65_muatan_edit($id)
+	{	
+		$result = get_date_shift();
+		$this->db->select('table_shiftoperations.*, cargo.description as color, rom.name as name_rom');
+		$this->db->from('table_romoperations');
+		$this->db->join('table_shiftoperations','table_romoperations.ref_id = table_shiftoperations.id','LEFT');
+		$this->db->join('table_enum as cargo','table_shiftoperations.cargo = cargo.name','LEFT');
+		$this->db->join('table_enum as rom','table_shiftoperations.to_rom = rom.id','LEFT');
+		$this->db->where('table_shiftoperations.deleted_at', NULL);
+		$this->db->where('table_shiftoperations.id NOT IN (SELECT ref_id FROM `table_monitoringoperations` WHERE deleted_at IS NULL AND by_area = 11)');
+		$this->db->where('table_shiftoperations.id IN (SELECT ref_id FROM `table_romoperations` WHERE deleted_at IS NULL AND time_out IS NOT NULL)');
+		$this->db->where('table_shiftoperations.date = \''.$id.'\'');
+		return $this->db->get();
+	}
+
 	public function monitoring_operations_65_muatan()
 	{
 		$result = get_date_shift();

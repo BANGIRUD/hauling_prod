@@ -87,8 +87,15 @@
                     <tr>
                       <?php 
                       $kosongan = array();
+                      $sum_total['a_kos_'] = array();
+                      $sum_total['a_mua_'] = array();
+                      $sum_total['total_plan_'] = array();
                       foreach ($table as $value) :
                         $kosongan[$value['rom_id']] = $this->shift_ops->achievement_rom_rtk($value['rom_id'])->row_array();
+
+                        $sum_total['plan_'.$value['rom_id']] = array();
+                        $sum_total['actual_kosongan_'.$value['rom_id']] = array();
+                        $sum_total['actual_muatan_'.$value['rom_id']] = array();
                         ?>
                       <th style="background-color: #74b9ff;">Plan</th>
                       <th style="background-color: #74b9ff;">Act.K</th>
@@ -104,6 +111,7 @@
                           $a = $a - 24;
                         }
 
+
                         $b = $a + 1;
                         if ($b > 24) {
                           $b = ($b - 24);
@@ -116,32 +124,63 @@
 
                         echo '<tr>';
                           echo '<td nowrap>' . $c . '</td>';
+                          $a_kos = array();
+                          $a_mua = array();
+                          $a_plan = array();
                           foreach ($table as $value) :
+                            $val = !empty(@$callback_kosongan['kosongan_'.$i]) ? @$callback_kosongan['kosongan_'.$i] : 0;
+
+                            array_push($a_kos, @$val );
+                            array_push($a_mua, @$value['actual_'.$i] );
+                            array_push($a_plan, @$value['jam_'.$i] );
                             // print_r($value['jam_'.$i] );
                             $callback_kosongan = $kosongan[$value['rom_id']];
-                            $val = !empty(@$callback_kosongan['kosongan_'.$i]) ? @$callback_kosongan['kosongan_'.$i] : 0;
                             echo '<td style="text-align: center; vertical-align: middle; background-color: #ffffff">' . $value['jam_'.$i] . '</td>';
                             // echo '<td>' . '</td>';
                             echo '<td style="text-align: center; vertical-align: middle; background-color: #ffffff">' . @$val . '</td>';
                             echo '<td style="text-align: center; vertical-align: middle; background-color: #ffffff">' . $value['actual_'.$i] . '</td>';
+
+
+                            array_push($sum_total['plan_' . $value['rom_id']], $value['jam_'.$i]);
+                            array_push($sum_total['actual_kosongan_' . $value['rom_id']], @$val );
+                            array_push($sum_total['actual_muatan_' . $value['rom_id']], $value['actual_'.$i] );
                           endforeach;
-                          $callback_kosongan = $kosongan[$value['rom_id']];
-                          $val = !empty(@$callback_kosongan['kosongan_'.$i]) ? @$callback_kosongan['kosongan_'.$i] : 0;
-                          echo '<td style="text-align:center;">'.@$val.'</td>';
-                          echo '<td style="text-align:center;">'.$value['actual_'.$i].'</td>';
-                          echo '<td style="text-align:center;">'.$value['actual_'.$i].'</td>';
-                          echo '<td style="text-align:center;">'.$value['actual_'.$i].'</td>';
+                          $presentase = 0;
+                          if (array_sum($a_mua) != 0 || array_sum($a_plan) != 0 ) {
+                            $presentase = number_format(array_sum($a_mua)/array_sum($a_plan)*100, 1);
+                          }
+                          // $callback_kosongan = $kosongan[$value['rom_id']];
+                          // $val = !empty(@$callback_kosongan['kosongan_'.$i]) ? @$callback_kosongan['kosongan_'.$i] : 0;
+                          echo '<td style="text-align:center;">'.array_sum($a_kos).'</td>';
+                          echo '<td style="text-align:center;">'.array_sum($a_mua).'</td>';
+                          echo '<td style="text-align:center;">'.array_sum($a_plan).'</td>';
+                          echo '<td style="text-align:center;">'.$presentase.'%</td>';
+
+
+
+                          array_push($sum_total['a_kos_'], array_sum($a_kos) );
+                          array_push($sum_total['a_mua_'], array_sum($a_mua) );
+                          array_push($sum_total['total_plan_'], array_sum($a_plan) );
                         echo '<tr>';
                       endfor;
-                        // echo '<tr style="background-color: white; color: white;">
-                        //         <td></td>
-                        //       </tr>';
+                      echo '<tr>
+                      <td>Total</td>';
+                        foreach ($table as $value) :
+                          echo '<td style="text-align:center;">' .array_sum($sum_total['plan_'.$value['rom_id']]). '</td>';
+                          echo '<td style="text-align:center;">' .array_sum($sum_total['actual_kosongan_'.$value['rom_id']]). '</td>';
+                          echo '<td style="text-align:center;">' .array_sum($sum_total['actual_muatan_'.$value['rom_id']]). '</td>';
+                        endforeach;
+                        $presentase = 0;
+                        if (array_sum($sum_total['a_mua_']) != 0 || array_sum($sum_total['total_plan_']) != 0 ) {
+                          $presentase = number_format(array_sum($sum_total['a_mua_'])/array_sum($sum_total['total_plan_'])*100, 1);
+                        }
 
-                        echo '<tr>
-                                <th style="text-align:center; background-color : #74b9ff;">Total</th>
-                                <th style="text-align:center; background-color : #74b9ff;">1</th>';
-
-                        echo '</tr>';      
+                        echo '<td style="text-align:center;">' .array_sum($sum_total['a_kos_']). '</td>';
+                        echo '<td style="text-align:center;">' .array_sum($sum_total['a_mua_']). '</td>';
+                        echo '<td style="text-align:center;">' .array_sum($sum_total['total_plan_']). '</td>';
+                        echo '<td style="text-align:center;">'.$presentase.'%</td>';
+                      echo '</tr>';  
+                        // endforeach;    
                     ?>
                   </tbody>
                 </table>

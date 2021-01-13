@@ -257,8 +257,10 @@
                 onComplete : function() {
                     var chartInstance = this.chart,
                     ctx = chartInstance.ctx;
-
+                    ctx.fillStyle = '#000'
+                    // Chart.defaults.global.defaultFontColor = '#000';
                     ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+                    ctx.fontColor = 'red';
                     ctx.textAlign = 'center';
                     ctx.textBaseline = 'bottom';
 

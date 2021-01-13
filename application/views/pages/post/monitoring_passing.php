@@ -1,19 +1,25 @@
 <div class="content-wrapper"><!-- Content Header (Page header) -->
   	<section class="content-header">
-    	<h1>Monitoring Passing <?=get_enum($this->session->userdata('area'))?><small></small></h1>
+    	<h1>Monitoring Passing <?=$by_area_name?><small></small></h1>
     		<ol class="breadcrumb">
       			<li><a href="#"><i class="fa fa-home"></i> Home</a></li>
-      			<li class="active">Monitoring Passing <?=get_enum($this->session->userdata('area'))?></li>
+      			<li class="active">Monitoring Passing <?=$by_area_name?></li>
     		</ol></br>
     	<div class="row">
     		<div class="col-md-2">
     			<div class="form-group">
     				<label>Area :</label>
-    				<select class="form-control" name="pos" id="pos">
-    					<option value="">ALL</option>
-                    <?php foreach ($pos as $key) {
-                      echo '<option value="'.$key['id'].'">'.$key['name'].' </option>';
-                    }?>
+    				<select class="form-control" name="pos" id="area">
+
+                    	<?php 
+                    	if ($pos->num_rows() > 1) {
+                    		echo '<option value="">ALL</option>';
+                    	}
+                    	
+                    	foreach ($pos->result_array() as $key) {
+                    		$selected = $key['id'] == $by_area_id ? ' selected':'';
+                      		echo '<option value="'.$key['id'].'"'.$selected.'>'.$key['name'].' </option>';
+                    	}?>
                   </select>
     			</div>
     		</div>
@@ -22,7 +28,7 @@
     				<label>Date :</label>
 					<div class="input-group date">
                       <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                      <input  type="text" name="date" class="form-control datepicker" value=" <?= date('m/d/Y');?>">
+                      <input  type="text" name="date" id="date" class="form-control datepicker" value=" <?= date('m/d/Y');?>">
                     </div>
     			</div>
     		</div>
@@ -39,7 +45,7 @@
     		<div class="col-md-4">
     			<div class="form-group">
     				<label>&nbsp;</label></br>
-    				<button type="button" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
+    				<button type="button" id="filter" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
     				<a href="#" class="btn btn-success"><i class="fa fa-file-excel-o"></i> Export</a>
     			</div>
     		</div>
@@ -67,8 +73,8 @@
 				}else{
 					$c = $a . ':00 - ' . ($b) . ':00';
 				}
-				$data = $this->monitoring->monitoring_muatan($a)->result_array();
-		?>
+				$data = $this->monitoring->monitoring_muatan($a, $by_area_id)->result_array();
+			?>
   			<div class="col-md-3">
         		<div class="box">
       				<div class="box-body">
@@ -128,4 +134,11 @@
 	$('.datepicker').datepicker({
 		autoclose: true
 	});
+
+
+	$(document).on("click", "#filter", function(e) {
+		e.preventDefault();
+		var area = $("#area").val();
+		window.location = "<?= base_url('dash/monitoring_passing/');?>" + area;
+	})
 </script>

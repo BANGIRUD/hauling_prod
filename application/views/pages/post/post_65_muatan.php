@@ -184,6 +184,28 @@
   </div>
 </div>
 
+<!-- Modal Edit Unit -->
+<div class="modal fade in" id="modal-edit-2" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form action="<?= base_url('Save/');?>" method="post" enctype="multipart/form-data" class="form-horizontal">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title" id="mediumModalLabel">Edit</h4>
+        </div>
+        <div class="modal-body" id="modal-body-edit-2">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Confirm</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 
 <script type="text/javascript">
 
@@ -205,6 +227,12 @@
       'print'
         ]
     })
+  });
+
+  $(document).on('click','#edit', function() {   
+    var id = $(this).attr('data-id');
+      $("#modal-body-edit-2").load("<?= base_url('View/edit/monitoring_operations_65_data/');?>" + id);
+      $('#modal-edit-2').modal('toggle');
   });
 
   $(document).on('click','#editincsa', function() {   

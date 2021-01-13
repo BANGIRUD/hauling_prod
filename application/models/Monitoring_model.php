@@ -50,22 +50,27 @@ LEFT JOIN table_shiftoperations ON table_shiftoperations.id = a.id) as b','table
 		return $this->db->get();
 	}
 
-	public function monitoring_muatan($time_passing='')
+	public function monitoring_muatan($time_passing, $by_area = '')
 	{
 		$result 			= get_date_shift();
-		$by_area			= $this->session->userdata('area');
-		$this->db->select('table_monitoringoperations.*, table_enum.description as color');
-		$this->db->from('table_monitoringoperations');	
+		$src = "";
+		if ($by_area) {
+			$src .= " AND by_area = '$by_area'";
+		}
+		// $by_area			= $this->session->userdata('area');
+		$this->db->select('monitoring.*, table_enum.description as color');
+		$this->db->from('(SELECT * FROM `table_monitoringoperations` 
+WHERE table_monitoringoperations.deleted_at IS NULL AND DATE( table_monitoringoperations.time_in ) = \''.$result['date'].'\' '.$src.') as monitoring');	
 		// $this->db->from('(SELECT MAX(id) as id FROM table_monitoringoperations GROUP BY ref_id) as a');
 		// $this->db->join('table_monitoringoperations','a.id = table_monitoringoperations.id','LEFT');
-		$this->db->join('table_shiftoperations','table_monitoringoperations.ref_id = table_shiftoperations.id','LEFT');
-		$this->db->join('table_enum','table_monitoringoperations.cargo = table_enum.name AND table_enum.type = \'cargo_muatan\'','LEFT');
-		$this->db->where('table_shiftoperations.date', $result['date']);
-		$this->db->where('HOUR(table_monitoringoperations.time_passing)', $time_passing);
-		$this->db->where('table_monitoringoperations.by_area', $by_area);
-		if ($by_area) {
-			$this->db->where('table_monitoringoperations.by_area', $by_area);
-		}
+		$this->db->join('table_shiftoperations','monitoring.ref_id = table_shiftoperations.id','LEFT');
+		$this->db->join('table_enum','monitoring.cargo = table_enum.name AND table_enum.type = \'cargo_muatan\'','LEFT');
+		// $this->db->where('table_shiftoperations.date', );
+		$this->db->where('HOUR(monitoring.time_passing)', $time_passing);
+		// $this->db->where('table_monitoringoperations.by_area', $by_area);
+		// if ($by_area) {
+		// 	$this->db->where('table_monitoringoperations.by_area', $by_area);
+		// }
 		return $this->db->get();
 	}
 
