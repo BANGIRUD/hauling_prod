@@ -87,7 +87,7 @@ class Upload extends CI_Controller {
 	            </button>
 	        </div>');
 
-			// unlink($uploader['full_path']);
+			unlink($uploader['full_path']);
 		}
 		redirect($_SERVER['HTTP_REFERER']);
 	}
@@ -165,7 +165,7 @@ class Upload extends CI_Controller {
 	            </button>
 	        </div>');
 
-			// unlink($uploader['full_path']);
+			unlink($uploader['full_path']);
 		}
 		redirect($_SERVER['HTTP_REFERER']);
 	}
@@ -275,7 +275,7 @@ class Upload extends CI_Controller {
 	            </button>
 	        </div>');
 
-			// unlink($uploader['full_path']);
+			unlink($uploader['full_path']);
 		}
 		redirect($_SERVER['HTTP_REFERER']);
 	}
@@ -382,7 +382,7 @@ class Upload extends CI_Controller {
 	            </button>
 	        </div>');
 
-			// unlink($uploader['full_path']);
+			unlink($uploader['full_path']);
 		}
 		redirect($_SERVER['HTTP_REFERER']);
 	}
@@ -446,7 +446,7 @@ class Upload extends CI_Controller {
 	            </button>
 	        </div>');
 
-			// unlink($uploader['full_path']);
+			unlink($uploader['full_path']);
 		}
 		redirect($_SERVER['HTTP_REFERER']);
 	}
@@ -525,7 +525,7 @@ class Upload extends CI_Controller {
 	            </button>
 	        </div>');
 
-			// unlink($uploader['full_path']);
+			unlink($uploader['full_path']);
 		}
 		redirect($_SERVER['HTTP_REFERER']);
 	}
