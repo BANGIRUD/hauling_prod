@@ -123,7 +123,7 @@
                         $c = $x.  ' : '  .$y;
 
                         echo '<tr>';
-                          echo '<td nowrap>' . $c . '</td>';
+                          echo '<th nowrap>' . $c . '</th>';
                           $a_kos = array();
                           $a_mua = array();
                           $a_plan = array();
@@ -164,11 +164,11 @@
                         echo '<tr>';
                       endfor;
                       echo '<tr>
-                      <td>Total</td>';
+                      <th style="text-align:center;">Total</th>';
                         foreach ($table as $value) :
-                          echo '<td style="text-align:center;">' .array_sum($sum_total['plan_'.$value['rom_id']]). '</td>';
-                          echo '<td style="text-align:center;">' .array_sum($sum_total['actual_kosongan_'.$value['rom_id']]). '</td>';
-                          echo '<td style="text-align:center;">' .array_sum($sum_total['actual_muatan_'.$value['rom_id']]). '</td>';
+                          echo '<th style="text-align:center;">' .array_sum($sum_total['plan_'.$value['rom_id']]). '</th>';
+                          echo '<th style="text-align:center;">' .array_sum($sum_total['actual_kosongan_'.$value['rom_id']]). '</th>';
+                          echo '<th style="text-align:center;">' .array_sum($sum_total['actual_muatan_'.$value['rom_id']]). '</th>';
                         endforeach;
                         $presentase = 0;
                         if (array_sum($sum_total['a_mua_']) != 0 || array_sum($sum_total['total_plan_']) != 0 ) {

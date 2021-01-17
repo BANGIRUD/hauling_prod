@@ -50,9 +50,10 @@ LEFT JOIN table_shiftoperations ON table_shiftoperations.id = a.id) as b','table
 		return $this->db->get();
 	}
 
-	public function monitoring_muatan($time_passing, $by_area = '')
+	public function monitoring_muatan($time_passing, $by_area = '', $date = '')
 	{
 		$result 			= get_date_shift();
+		$date = $date != '' ? $date : $result['date'];
 		$src = "";
 		if ($by_area) {
 			$src .= " AND by_area = '$by_area'";
@@ -60,7 +61,7 @@ LEFT JOIN table_shiftoperations ON table_shiftoperations.id = a.id) as b','table
 		// $by_area			= $this->session->userdata('area');
 		$this->db->select('monitoring.*, table_enum.description as color');
 		$this->db->from('(SELECT * FROM `table_monitoringoperations` 
-WHERE table_monitoringoperations.deleted_at IS NULL AND DATE( table_monitoringoperations.time_in ) = \''.$result['date'].'\' '.$src.') as monitoring');	
+WHERE table_monitoringoperations.deleted_at IS NULL AND DATE( table_monitoringoperations.time_in ) = \''.$date.'\' '.$src.') as monitoring');	
 		// $this->db->from('(SELECT MAX(id) as id FROM table_monitoringoperations GROUP BY ref_id) as a');
 		// $this->db->join('table_monitoringoperations','a.id = table_monitoringoperations.id','LEFT');
 		$this->db->join('table_shiftoperations','monitoring.ref_id = table_shiftoperations.id','LEFT');

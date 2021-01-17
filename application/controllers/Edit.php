@@ -365,7 +365,7 @@ class Edit extends CI_Controller {
 
 	public function ready_to_operation_65($id, $val)
 	{
-		$time_out = $val == 0 ? '' : date('Y-m-d H:i:s');
+		$time_out = $val == 0 ? NULL : date('Y-m-d H:i:s');
 		$time_passing = date('i') > 50 ? date('H:00:00', strtotime('+1 Hour')) : date('H:00:00');
 		$this->db->where('id', $id);
 		$this->db->update('table_monitoringoperations', array('operation' => $val, 'time_out' => $time_out, 'time_passing' => $time_passing));

@@ -302,7 +302,8 @@ class Upload extends CI_Controller {
 			$uploader = $this->upload->data();
 			$datas = new Spreadsheet_Excel_Reader($uploader['full_path']);
 			$baris = $datas->rowcount($sheet_index=0);
-			for ($i=7; $i <= $baris; $i++) {				
+			for ($i=7; $i <= $baris; $i++) {
+				echo $i;
 				$date 				= date("Y-m-d", strtotime( trim( $datas->val($i, 2) ) ));
 				$shift 				= trim( $datas->val($i, 3) );
 				$material 			= trim( $datas->val($i, 4) );

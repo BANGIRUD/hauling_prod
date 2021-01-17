@@ -308,11 +308,11 @@ class Dash extends CI_Controller {
 		$this->load->view('framework/footer');
 	}
 
-	public function post_65_standby()
+	public function post_65_standby($code = '')
 	{
 		$this->load->model('Monitoring_operations', 'operations');
 		
-		$data = $this->operations->monitoring_operations_65_standby()->result_array();
+		$data = $this->operations->monitoring_operations_65_standby($code)->result_array();
 
 		$data 		= array (
 			'data'				=> $data
@@ -345,11 +345,12 @@ class Dash extends CI_Controller {
 		$this->load->view('framework/footer');
 	}
 
-	public function monitoring_passing($by_area='')
+	public function monitoring_passing($by_area='ALL', $date = '')
 	{
 		$result = get_date_shift();
 		$shift  = $result['shift'];
-		$by_area = $by_area != '' ? $by_area : '';
+		$by_area = $by_area != 'ALL' ? $by_area : '';
+		$by_date = $date != '' ? $date : $result['date'];
 		$area_name = get_enum($this->session->userdata('area') );
 		if ( $area_name != 'KM 67') {
 			$this->db->where_in("name", $area_name );
@@ -369,6 +370,7 @@ class Dash extends CI_Controller {
 			'shift_code'	=> $shift_code,
 			'monitoring'	=> $model_monitoring,
 			'by_area'		=> $by_area,
+			'by_date'		=> $by_date,
 			'by_area_name'	=> $area_name,
 			'by_area_id'	=> $by_area_id
 		);

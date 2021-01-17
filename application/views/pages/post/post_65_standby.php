@@ -248,6 +248,8 @@
 </div>
 <!-- End Modal Edit Unit -->
 <script type="text/javascript">
+  // socket.emit('request_65');
+  
   socket.on('reload_65', function(e) {
     window.location.reload();
   });

@@ -66,10 +66,12 @@ class Monitoring_operations extends CI_Model
 		$this->db->join('table_enum as cargo','table_shiftoperations.cargo = cargo.name','LEFT');
 		$this->db->join('table_enum as rom','table_shiftoperations.to_rom = rom.id','LEFT');
 		$this->db->where('table_shiftoperations.deleted_at', NULL);
-		// $this->db->where('table_shiftoperations.id IN (SELECT ref_id FROM `table_monitoringoperations` WHERE deleted_at IS NULL AND time_out IS NOT NULL AND by_area = 11)');
-		$this->db->where('table_shiftoperations.id IN (SELECT ref_id FROM `table_monitoringoperations` WHERE deleted_at IS NULL AND time_out IS NOT NULL
-			UNION 
-		SELECT ref_id FROM `table_romoperations` WHERE deleted_at IS NULL AND time_out IS NOT NULL)');
+		$this->db->where('table_shiftoperations.id NOT IN (SELECT ref_id FROM (SELECT table_monitoringoperations.* FROM (SELECT MAX(id) as id FROM `table_monitoringoperations`
+WHERE deleted_at IS NULL AND date(time_in) = \''.$result['date'].'\' AND by_area = 11
+GROUP BY cn_unit) as a
+LEFT JOIN table_monitoringoperations ON a.id = table_monitoringoperations.id WHERE time_out IS NULL) as a)');
+		// $this->db->where('table_shiftoperations.id IN (
+		// 	)');
 		$this->db->where('table_shiftoperations.id NOT IN (SELECT ref_id FROM `table_monitoringoperations` WHERE deleted_at IS NULL AND by_area = 10)');
 
 		// $this->db->where('table_shiftoperations.id IN ()');
@@ -133,7 +135,7 @@ LEFT JOIN table_settingunit ON a.id = table_settingunit.id) st','table_monitorin
 		return $this->db->get();
 	}
 
-	public function monitoring_operations_65_standby()
+	public function monitoring_operations_65_standby($code = '')
 	{
 		$result = get_date_shift();
 		$this->db->select('table_monitoringoperations.*, cargo.description as color, os.csa , os.time,st.register`');
@@ -147,6 +149,19 @@ LEFT JOIN table_settingunit ON a.id = table_settingunit.id) st','table_monitorin
 		$this->db->where('table_monitoringoperations.by_area', 11);
 		$this->db->where('DATE(table_monitoringoperations.time_in)', $result['date']);
 		$this->db->group_by('table_monitoringoperations.id');
+
+		if (strtolower($code) == 'l') {
+			$this->db->group_start();
+ 			$this->db->where('code_stby', 'L');
+			$this->db->or_where('operation !=', '0');
+			$this->db->group_end();
+		} elseif (strtolower($code) != '') {
+			$this->db->group_start();
+			$this->db->where('code_stby !=', 'L');
+			$this->db->where('operation', '0');
+			$this->db->group_end();
+		}
+
 		return $this->db->get();
 	}
 

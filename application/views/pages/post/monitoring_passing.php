@@ -28,7 +28,7 @@
     				<label>Date :</label>
 					<div class="input-group date">
                       <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                      <input  type="text" name="date" id="date" class="form-control datepicker" value=" <?= date('m/d/Y');?>">
+                      <input  type="date" name="date" id="date" class="form-control" style="padding: 0;" value="<?= date('Y-m-d', strtotime($by_date));?>">
                     </div>
     			</div>
     		</div>
@@ -73,7 +73,7 @@
 				}else{
 					$c = $a . ':00 - ' . ($b) . ':00';
 				}
-				$data = $this->monitoring->monitoring_muatan($a, $by_area_id)->result_array();
+				$data = $this->monitoring->monitoring_muatan($a, $by_area_id, $by_date)->result_array();
 			?>
   			<div class="col-md-3">
         		<div class="box">
@@ -139,6 +139,9 @@
 	$(document).on("click", "#filter", function(e) {
 		e.preventDefault();
 		var area = $("#area").val();
-		window.location = "<?= base_url('dash/monitoring_passing/');?>" + area;
+		var date = $("#date").val();
+		area = area != '' ? area : 'ALL';
+		date = date != '' ? date : 'ALL';
+		window.location = "<?= base_url('dash/monitoring_passing/');?>" + area + '/' + date;
 	})
 </script>
