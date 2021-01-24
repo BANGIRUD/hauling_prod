@@ -216,7 +216,7 @@ window.location.reload();
 
 $(document).on('click','#edit', function() {
 var id = $(this).attr('data-id');
-$("#modal-body-edit").load("<?= base_url('View/edit/shift_operations/');?>" + id);
+$("#modal-body-edit").load("<?= base_url('view/edit/shift_operations/');?>" + id);
 $('#modal-edit').modal('toggle');
 
 });

@@ -74,16 +74,17 @@
                       $color = explode(',', $value['color']);
                       echo '<tr style="text-align: center; font-size: 12px;">';
                         echo '<td>
-                                <a href="" class="btn btn-xs btn-warning" id="up" data-id="" data-column="cancel" data-text=" " data-original-title="Up" data-toggle="tooltip">
-                                  <i class="fa fa-arrow-up"></i>
-                                </a> 
-                                <a href="" class="btn btn-xs btn-warning" id="down" data-id="" data-column="cancel" data-text=" " data-original-title="Down" data-toggle="tooltip">
-                                  <i class="fa fa-arrow-down"></i>
-                                </a>
                                 <a href="#" class="btn btn-xs btn-primary" data-target="#editdata" id="edit" data-id="'.$value['id'].'" data-original-title="Edit" data-toggle="tooltip">
                                   <i class="fa fa-edit"></i>
-                                </a>
-                              </td>';
+                                </a>';
+                        if($value['operation'] == 0 && strtolower($value['code_stby']) != 'l') : 
+                          echo ' <a href="#" class="btn btn-xs btn-success" id="ready" data-id="'.$value['id'].'" data-value="'.$value['operation'].'"data-original-title="Ready" data-toggle="tooltip"><i class="fa fa-check"></i>
+                                </a>';
+                        else: 
+                          echo ' <a href="#" class="btn btn-xs btn-warning" id="ready" data-id="'.$value['id'].'" data-value="'.$value['operation'].'" data-original-title="Cancel" data-toggle="tooltip"><i class="fa fa-remove"></i>
+                                  </a>';
+                        endif;
+                        echo '</td>';
                         echo '<td>'.$no.'</td>
                               <td>10/08/2020</td>
                               <td>'.date('H:i',strtotime($value['time_in'])).'</td>';
@@ -106,14 +107,7 @@
                               <td>'.$value['time'].'</td>
                               <td style="text-align: center; background-color: '. colors_setting_unit(strtolower($value['register']))['bg'] .'; color: '. colors_setting_unit(strtolower($value['register']))['color'].'">'.$value['register'].'</td>';
                         echo '<td>';
-                        if($value['operation'] == 0 && strtolower($value['code_stby']) != 'l') : 
-                          echo '<a href="#" class="btn btn-xs btn-success" id="ready" data-id="'.$value['id'].'" data-value="'.$value['operation'].'"data-original-title="Ready" data-toggle="tooltip"><i class="fa fa-check"></i>
-                                </a>';
-                        else: 
-                          echo '<a href="#" class="btn btn-xs btn-warning" id="ready" data-id="'.$value['id'].'" data-value="'.$value['operation'].'" data-original-title="Cancel" data-toggle="tooltip"><i class="fa fa-remove"></i>
-                                  </a>';
-                        endif;
-                          echo ' <a href="#" class="btn btn-xs btn-danger" data-target="#deletedata" id="delete" data-id="" data-original-title="delete" data-toggle="tooltip"><i class="fa fa-trash"></i>
+                          echo ' <a href="#" class="btn btn-xs btn-danger" data-target="#deletedata" id="delete" data-id="'.$value['id'].'" data-original-title="delete" data-toggle="tooltip"><i class="fa fa-trash"></i>
                                 </a>';                                        
                         echo '</td>';
                       echo '</tr>';
@@ -243,7 +237,7 @@ autoclose: true
 
 $(document).on('click','#edit', function() {
   var id = $(this).attr('data-id');
-    $("#modal-body-edit").load("<?= base_url('View/edit/monitoring_operations_34_standby/');?>" + id);
+    $("#modal-body-edit").load("<?= base_url('view/edit/monitoring_operations_34_standby/');?>" + id);
     $('#modal-edit').modal('toggle');
 });
 
@@ -252,7 +246,7 @@ $(document).on('click', '#delete', function() {
   $.ajax({
     type: "POST",
     data:'del=' + ai,
-    url: "<?php echo base_url('Delete/add_unit');?>",
+    url: "<?php echo base_url('Delete/monitoring_operation_34_standby');?>",
     success: function(response) {
       location.reload();
     },

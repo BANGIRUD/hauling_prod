@@ -49,7 +49,7 @@
             <div class="form-group">
               <label>&nbsp;</label></br>
               <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
-              <a href="#" class="btn btn-success"><i class="fa fa-file-excel-o"></i> Export</a>
+              <a href="<?php echo base_url("Exports/achievement_seam_series");?>" class="btn btn-success"><i class="fa fa-file-excel-o"></i> Export</a>
             </div>
           </div>
         </div>

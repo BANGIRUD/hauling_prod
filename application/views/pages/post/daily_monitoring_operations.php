@@ -145,7 +145,7 @@
 
   $(document).on('click','#editincsa', function() {   
   var id = $(this).attr('data-id');
-  $("#modal-body-edit").load("<?= base_url('View/edit/monitoring_operations/');?>" + id);
+  $("#modal-body-edit").load("<?= base_url('view/edit/monitoring_operations/');?>" + id);
   $('#modal-edit').modal('toggle');
   });
 

@@ -65,12 +65,12 @@ class Ajax extends CI_Controller {
 
 	public function history_unit($value='')
 	{
-		$this->load->model('Shift_operations', 'operations');
+		$this->load->model('Dispatching', 'history_unit');
 		$by_level   = $this->session->userdata('level');
 		print_r($_POST);
 		$unit 	= trim($this->input->post('unit'));
 		if ($unit) {
-			$data['listData'] 		= $this->operations->history_record_prod($unit);
+			$data['listData'] 		= $this->history_unit->history_record_prod($unit);
 			$this->load->view('ajax/history_unit', $data); 
 		}
 	}

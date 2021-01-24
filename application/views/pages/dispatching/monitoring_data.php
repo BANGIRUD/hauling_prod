@@ -18,7 +18,7 @@
       <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
       <li class="active">Monitoring Data <?=get_enum($by_area)?></li>
     </ol></br>
-    <div class="row">
+    <!-- <div class="row">
       <div class="col-md-2">        
           <div class="form-group">
             <label>Rom Filter :</label>
@@ -39,7 +39,7 @@
             </select>
           </div>
       </div>
-    </div>
+    </div> -->
   </section>
   <section class="content">
     <div class="row">
@@ -100,30 +100,34 @@
                           $data_rom = $this->shift_ops->monitoring_operation_rom_data($date, $a, $key['rom_id'])->result_array();
                           
 
-                          echo '<td style = "text-align:center;">';
+                          echo '<td style = "text-align:center; padding: 0;">';
                           foreach ($data_rom as $value) {
-                            echo '<div>'.date('H:i', strtotime($value['time'])).'</div>';
+                            echo '<div style="padding: 8px">'.date('H:i', strtotime($value['time'])).'</div>';
                           }
                           echo '</td>';
-                          echo '<td>';
+                          echo '<td style="text-align:center; padding: 0;">';
                           foreach ($data_rom as $value) {
-                            echo '<div>'.$value['cn_unit'].'</div>';
+                            echo '<div style="padding: 8px">'.$value['cn_unit'].'</div>';
                           }
                           echo '</td>';
-                          echo '<td nowrap>';
+                          echo '<td nowrap style="padding: 0;">';
                           foreach ($data_rom as $value) {
                             $color = explode(',', $value['color']);
-                            echo '<div style="background-color:'. $color[0] . ';color:'.@$color[1].'" >'.$value['cargo'].'</div>';
+                            echo '<div style="background-color:'. $color[0] . ';color:'.@$color[1].';padding: 8px" >'.$value['cargo'].'</div>';
                           }
                           echo '</td>';
-                          echo '<td nowrap>';
+                          echo '<td nowrap style="padding: 0;">';
                           foreach ($data_rom as $value) {
-                            echo '<div>'.$value['csa'].'</div>';
+                            echo '<div style="padding: 8px">'.$value['csa'].'</div>';
                           }
                           echo '</td>';
-                          echo '<td>';
+                          echo '<td style="padding: 0;">';
                           foreach ($data_rom as $value) {
-                            echo '<div style="background-color:'. colors_setting_unit(strtolower($value['register']))['bg'] . ';color:'.colors_setting_unit(strtolower($value['register']))['color'].'">'.$value['register'].'</div>';
+                            if ($value['register'] == '') {
+                              echo '<div style = "padding:8px;">&nbsp;</div>';
+                            }else{
+                              echo '<div style="background-color:'. colors_setting_unit(strtolower($value['register']))['bg'] . ';color:'.colors_setting_unit(strtolower($value['register']))['color'].';padding: 8px;text-align:center;">'.$value['register'].'</div>';
+                            }
                           }
                           echo '</td>';
                           echo '<td style="background-color:white;">';
@@ -156,7 +160,9 @@
 
                           foreach ($cargo_per_rom['rom_'.$key['rom']] as $val) {
                             // $color = explode(',', $val['color']);
-                            echo '<div style="border-bottom: 1px solid #fff;margin: -8px;padding: 8px; " >'.$val['material'].'</div>';
+                            if ($val['plan_' . $h_jam] != 0 || $val['actual_' . $h_jam] != 0) {
+                              echo '<div style="border-bottom: 1px solid #fff;margin: -8px;padding: 8px; " >'.$val['material'].'</div>';
+                            }
                           }
                           echo '</td>';
 
@@ -164,10 +170,8 @@
                           foreach ($cargo_per_rom['rom_'.$key['rom']] as $val) {
                             $tot = $val['plan_' . $h_jam];
                             $product = ($val['plan_' . $h_jam]*$val['cv_ar']);
-                            if ($val['table_'] == 'spp') {
+                            if ($val['plan_' . $h_jam] != 0 || $val['actual_' . $h_jam] != 0) {
                               echo '<div style="border-bottom: 1px solid #fff;margin: -8px;padding: 8px;">'.$tot.'</div>';
-                            } else {
-                              echo '<div style="border-bottom: 1px solid #fff;margin: -8px;padding: 8px;">0</div>';
                             }
 
                             array_push($total_per_rom['plan_' . $key['rom_id']],$tot);
@@ -178,13 +182,10 @@
                           
                           echo '<td nowrap style="text-align:center;">';
                           foreach ($cargo_per_rom['rom_'.$key['rom']] as $val) {
-                            if ($val['table_'] == 'spp') {
-                              $tot = $val['actual_' . $h_jam];
-                              $product = ($val['actual_' . $h_jam]*$val['cv_ar']);
-                              echo '<div style="border-bottom: 1px solid #fff;margin: -8px;padding: 8px;">'.$tot.'</div>';
-                            } else {
-                              $tot = $val['plan_' . $h_jam];
-                              $product = ($val['plan_' . $h_jam]*$val['cv_ar']);
+
+                            $tot = $val['actual_' . $h_jam];
+                            $product = ($val['actual_' . $h_jam]*$val['cv_ar']);
+                            if ($val['plan_' . $h_jam] != 0 || $val['actual_' . $h_jam] != 0) {
                               echo '<div style="border-bottom: 1px solid #fff;margin: -8px;padding: 8px;">'.$tot.'</div>';
                             }
 
@@ -197,10 +198,8 @@
                           
                           echo '<td style="text-align:center;">';
                           foreach ($cargo_per_rom['rom_'.$key['rom']] as $val) {
-                            if ($val['table_'] == 'spp') {
+                            if ($val['plan_' . $h_jam] != 0 || $val['actual_' . $h_jam] != 0) {
                               echo '<div style="border-bottom: 1px solid #fff;margin: -8px;padding: 8px;">'.($val['plan_' . $h_jam]-$val['actual_' . $h_jam]).'</div>';
-                            } else {
-                              echo '<div style="border-bottom: 1px solid #fff;margin: -8px;padding: 8px;">'.(0-$val['plan_' . $h_jam]).'</div>';
                             }
                           }
                           echo '</td>';

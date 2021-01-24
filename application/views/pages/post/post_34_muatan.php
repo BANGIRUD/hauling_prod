@@ -21,7 +21,7 @@
             <div class="row">
               <div class="col-xs-6">  
               <?php if ($this->session->userdata('level') != 'dispatcher'): ?>
-                <button class="btn btn-success  " data-toggle="modal" id="add-unit">
+                <button class="btn btn-success" data-toggle="modal" id="add-unit">
                   <i class="fa fa-plus"> Add Unit Kosongan</i>
                 </button>            
               <?php else : ?>            
@@ -61,20 +61,14 @@
                     echo '<tr style="text-align: center; font-size: 12px;">';
                     if($this->session->userdata('level') != 'dispatcher'):
                       echo '<td>
-                              <a href="#" class="btn btn-xs btn-primary" data-target="#editdata" id="edit" data-id="" data-original-title="Edit" data-toggle="tooltip">
+                              <a href="#" class="btn btn-xs btn-warning" data-target="#editdata" id="edit" data-id="" data-original-title="Edit" data-toggle="tooltip">
                                 <i class="fa fa-edit"></i>
-                              </a>
-                              <a href="#" class="btn btn-xs btn-danger" data-target="#deletedata" id="delete" data-id="" data-original-title="delete" data-toggle="tooltip">
-                                <i class="fa fa-trash"></i>
-                              </a>  
+                              </a> 
                             </td>';
                     else :
                       echo '<td>
-                              <a href="#" class="btn btn-xs btn-primary disabled" data-target="#editdata" id="edit" data-id="" data-original-title="Edit" data-toggle="tooltip">
+                              <a href="#" class="btn btn-xs btn-warning disabled" data-target="#editdata" id="edit" data-id="" data-original-title="Edit" data-toggle="tooltip">
                                 <i class="fa fa-edit"></i>
-                              </a>
-                              <a href="#" class="btn btn-xs btn-danger disabled" data-target="#deletedata" id="delete" data-id="" data-original-title="delete" data-toggle="tooltip">
-                                <i class="fa fa-trash"></i>
                               </a>  
                             </td>';
                     endif;
@@ -115,7 +109,7 @@
 <div class="modal fade in" id="modal-addunit" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
-      <form method="POST" action="<?php echo base_url('Save/monitoring_operations_34');?>">
+      <form method="POST" action="<?php echo base_url('Save/monitoring_operations_34_kosongan');?>">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span></button>
@@ -172,12 +166,12 @@
 <div class="modal fade in" id="modal-edit" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <form action="<?= base_url('Save/monitoring_operations');?>" method="post" enctype="multipart/form-data" class="form-horizontal">
+      <form action="<?= base_url('Save/monitoring_operations_muatan_in_csa34');?>" method="post" enctype="multipart/form-data" class="form-horizontal">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
-          <h4 class="modal-title" id="mediumModalLabel">Form In</h4>
+          <h4 class="modal-title" id="mediumModalLabel">In Csa 34</h4>
         </div>
         <div class="modal-body" id="modal-body-edit">
         </div>
@@ -212,26 +206,15 @@
 
   $(document).on('click','#editincsa', function() {   
     var id = $(this).attr('data-id');
-      $("#modal-body-edit").load("<?= base_url('View/edit/monitoring_operations_34/');?>" + id);
+      $("#modal-body-edit").load("<?= base_url('view/edit/monitoring_operations_34_muatan/');?>" + id);
       $('#modal-edit').modal('toggle');
-  });
-
-  $(document).on('click','#editoutcsa', function() {
-    var id = $(this).attr('data-id');
-      $.ajax({
-      type: "GET",
-      url: "<?php echo base_url('Edit/monitoring_operations/');?>" + id , 
-        success: function(response) {
-          window.location.reload();
-        } 
-      });
   });
 
   $(document).on('click','#continue', function() {
     var id = $(this).attr('data-id');
       $.ajax({
     type: "GET",
-    url: "<?php echo base_url('Edit/bypass_monitoring_operations/');?>" + id , 
+    url: "<?php echo base_url('Save/bypass_monitoring_operations_34/');?>" + id , 
       success: function(response) {
         window.location.reload();
       } 

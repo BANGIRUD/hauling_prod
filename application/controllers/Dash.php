@@ -19,31 +19,31 @@ class Dash extends CI_Controller {
 	
 	public function index()
 	{	
-		$this->load->model('Monitoring_model', 'monitoring');
-		$csa_69		 = $this->monitoring->monitoring_csa(12);
-		$csa_65 	 = $this->monitoring->monitoring_csa(11);
-		$l_csa_65 	 = $this->monitoring->monitoring_csa(11, 'L');
-		$csa_34 	 = $this->monitoring->monitoring_csa(10);
-		$l_csa_34 	 = $this->monitoring->monitoring_csa(10, 'L');
+		$this->load->model('Dashboard', 'monitoring');
+		$csa_69		 = $this->monitoring->monitoring_unit_csa(12);
+		$csa_65 	 = $this->monitoring->monitoring_unit_csa(11);
+		$l_csa_65 	 = $this->monitoring->monitoring_unit_csa(11, 'L');
+		$csa_34 	 = $this->monitoring->monitoring_unit_csa(10);
+		$l_csa_34 	 = $this->monitoring->monitoring_unit_csa(10, 'L');
 
 
 		$total_csa_69 = $this->monitoring->total_monitoring(12)->row_array();
 		$total_csa_65 = $this->monitoring->total_monitoring(11)->row_array();
 		$total_csa_34 = $this->monitoring->total_monitoring(10)->row_array();
 
-		print_r($_SESSION);
+		// print_r($_SESSION);
 
 		$data = array(
-			'csa_69' 	=> $csa_69,
-			'csa_65' 	=> $csa_65,
-			'l_csa_65' 	=> $l_csa_65,
-			'csa_34' 	=> $csa_34,
-			'l_csa_34' 	=> $l_csa_34,
-			'total_csa_69' => $total_csa_69,
-			'total_csa_65' => $total_csa_65,
-			'total_csa_34' => $total_csa_34
+			'csa_69' 		=> $csa_69,
+			'csa_65' 		=> $csa_65,
+			'l_csa_65' 		=> $l_csa_65,
+			'csa_34' 		=> $csa_34,
+			'l_csa_34' 		=> $l_csa_34,
+			'total_csa_69' 	=> $total_csa_69,
+			'total_csa_65' 	=> $total_csa_65,
+			'total_csa_34' 	=> $total_csa_34
 		);
-		$this->load->view('framework/header', array('title' => 'Monitoring'));
+		$this->load->view('framework/header', array('title' => 'Dashboard Monitoring Unit'));
 		$this->load->view('framework/sidebar');
 		$this->load->view('pages/dashboard/monitoring_unit_csa', $data);
 		$this->load->view('framework/footer');
@@ -52,16 +52,16 @@ class Dash extends CI_Controller {
 
 	public function record_production()
 	{
-		$result 			= get_date_shift();	
-		$by_area			= $this->session->userdata('area');
-		$date  				= $result['date'];
-		$cargo_muatan		= $this->Crud->search('table_enum', array('type' => 'cargo_muatan'))->result_array();
-		$rom	  			= $this->Crud->search('table_enum', array('type' => 'rom'))->result_array();
+		$result 		= get_date_shift();	
+		$by_area		= $this->session->userdata('area');
+		$date  			= $result['date'];
+		$cargo_muatan	= $this->Crud->search('table_enum', array('type' => 'cargo_muatan'))->result_array();
+		$rom	  		= $this->Crud->search('table_enum', array('type' => 'rom'))->result_array();
 
-		$this->load->model('Shift_operations', 'operations');
-		$data = $this->operations->record_production()->result_array();
-
-		$data 		= array (
+		$this->load->model('Dispatching', 'record_prod');
+		$data = $this->record_prod->record_production()->result_array();
+		// print_r($data);
+		$data 			= array (
 			'dateid' 			=> $result['date'],
 			'cargo_muatan'		=> $cargo_muatan,
 			'rom'				=> $rom,
@@ -76,14 +76,14 @@ class Dash extends CI_Controller {
 
 	public function multiple_record_production()
 	{
-		$result 			= get_date_shift();	
-		$by_area			= $this->session->userdata('area');
-		$date  				= $result['date'];
-		$cargo_muatan		= $this->Crud->search('table_enum', array('type' => 'cargo_muatan'))->result_array();
-		$rom	  			= $this->Crud->search('table_enum', array('type' => 'rom'))->result_array();
+		$result 		= get_date_shift();	
+		$by_area		= $this->session->userdata('area');
+		$date  			= $result['date'];
+		$cargo_muatan	= $this->Crud->search('table_enum', array('type' => 'cargo_muatan'))->result_array();
+		$rom	  		= $this->Crud->search('table_enum', array('type' => 'rom'))->result_array();
 
-		$this->load->model('Shift_operations', 'operations');
-		$data = $this->operations->record_production()->result_array();
+		$this->load->model('Dispatching', 'multiple_record_prod');
+		$data = $this->multiple_record_prod->record_production()->result_array();
 
 		$data 		= array (
 			'dateid' 			=> $result['date'],
@@ -92,7 +92,7 @@ class Dash extends CI_Controller {
 			'data'				=> $data,
 		);
 			
-		$this->load->view('framework/header', array('title' => 'Add Multiple Unit'));
+		$this->load->view('framework/header', array('title' => 'Record Multiple Unit'));
 		$this->load->view('framework/sidebar');
 		$this->load->view('pages/dispatching/record_multiple_production', $data);
 		$this->load->view('framework/footer');	
@@ -100,9 +100,9 @@ class Dash extends CI_Controller {
 
 	public function monitoring_data_production()
 	{
-		$this->load->model('Monitoring_model', 'monitoring');
-		$this->load->model('Shift_operations', 'shift_ops');		
-		$this->load->model('Supplay_passing_model', 'spp');
+		$this->load->model('Dispatching', 'monitoring');
+		$this->load->model('Dispatching', 'shift_ops');		
+		$this->load->model('Dispatching', 'spp');
 
 		$result = get_date_shift();
 		$date = $this->input->get('date') == '' ? $result['date'] : date('Y-m-d', strtotime($this->input->get('date')));
@@ -156,15 +156,56 @@ class Dash extends CI_Controller {
 			$limit = 12;
 		}
 
-
 		$date = $this->input->get('date') == '' ? $result['date'] : date('Y-m-d', strtotime($this->input->get('date')));
 		$hour = $this->input->get('time') == '' ? date('H') : $this->input->get('time');
-		$this->load->model('Monitoring_model', 'monitoring');
+		$this->load->model('Dispatching', 'ach_seamseries');
 
-
-		$table = $this->monitoring->achievement_seam_series($date, $shift)->result_array();
-
+		$table = $this->ach_seamseries->achievement_seam_series($date, $shift)->result_array();
+	
+		$rom	  	= $this->Crud->search('table_enum', array('type' => 'rom'))->result_array();
+		$pos		= $this->Crud->search('table_enum', array('type' => 'area'))->result_array();
+		$shift_code	= $this->Crud->search('table_enum', array('type' => 'shift'))->result_array();
 		
+		$data  = array(
+			'hour'			=> $result['hour'],
+			'shift' 		=> $result['shift'],
+			'table'			=> $table,
+			'shift_code'	=> $shift_code,
+			'rom'			=> $rom,
+			'jam'			=> $jam,
+			'limit'			=> $limit,
+			'pos'			=> $pos,
+			'date'  		=> $date,
+			'shift'  		=> $shift,
+			'hour'  		=> $hour,
+		);
+
+		$this->load->view('framework/header', array('title' => 'Achievement Seam Series'));
+		$this->load->view('framework/sidebar');
+		$this->load->view('pages/dispatching/achievement_seam_series',$data);
+		$this->load->view('framework/footer');
+	}
+
+	public function rtk_rom()
+	{
+		$result = get_date_shift();
+
+		$shift 	= $this->input->get('shift') == '' ? $result['shift'] : $this->input->get('shift');
+		if ($shift == 1) {
+			$jam = 4;
+			$limit = 12;
+		} else {
+			$jam = 16;
+			$limit = 12;
+		}
+		
+		$date 	= $this->input->get('date') == '' ? $result['date'] : date('Y-m-d', strtotime($this->input->get('date')));
+		$hour 	= $this->input->get('time') == '' ? date('H') : $this->input->get('time');
+		$this->load->model('Dispatching', 'ach_seamseries');
+		$this->load->model('Dispatching', 'ach_romatk');
+
+		$table = $this->ach_seamseries->achievement_seam_series($date, $shift)->result_array();
+
 		$rom	  	= $this->Crud->search('table_enum', array('type' => 'rom'))->result_array();
 		$pos		= $this->Crud->search('table_enum', array('type' => 'area'))->result_array();
 		$shift_code	= $this->Crud->search('table_enum', array('type' => 'shift'))->result_array();
@@ -182,62 +223,12 @@ class Dash extends CI_Controller {
 			'shift'  		=> $shift,
 			'hour'  		=> $hour,
 
-
-		);
-
-		$this->load->view('framework/header', array('title' => 'Achievement Seam Series'));
-		$this->load->view('framework/sidebar');
-		$this->load->view('pages/dispatching/achievement_seam_series',$data);
-		$this->load->view('framework/footer');
-	}
-
-	public function rtk_rom()
-	{
-		$result = get_date_shift();
-		$date 	= $this->input->get('date') == '' ? $result['date'] : date('Y-m-d', strtotime($this->input->get('date')));
-		$shift 	= $this->input->get('shift') == '' ? $result['shift'] : $this->input->get('shift');
-		$hour 	= $this->input->get('time') == '' ? date('H') : $this->input->get('time');
-		$this->load->model('Monitoring_model', 'monitoring');
-		$this->load->model('Shift_operations', 'shift_ops');
-
-		$table = $this->monitoring->achievement_seam_series($date, $shift)->result_array();
-
-		if ($shift == 1) {
-			$jam = 4;
-			$limit = 12;
-		} else {
-			$jam = 16;
-			$limit = 12;
-		}
-
-		$rom	  	= $this->Crud->search('table_enum', array('type' => 'rom'))->result_array();
-		$pos		= $this->Crud->search('table_enum', array('type' => 'area'))->result_array();
-		$shift_code	= $this->Crud->search('table_enum', array('type' => 'shift'))->result_array();
-		
-		$data  = array(
-			'hour'			=> $result['hour'],
-			'shift' 		=> $result['shift'],
-			'table'			=> $table,
-			'shift_code'	=> $shift_code,
-			'rom'			=> $rom,
-			'jam'			=> $jam,
-			'limit'			=> $limit,
-			'pos'			=> $pos,
-			'date'  		=> $date,
-			'shift'  		=> $shift,
-			'jam'  			=> $hour,
-
 		);
 		
 		$this->load->view('framework/header', array('title' => 'Dashoard RTK ROM'));
 		$this->load->view('framework/sidebar');
 		$this->load->view('pages/dispatching/rtk_rom',$data);
 		$this->load->view('framework/footer');
-	}
-
-	public function report_production()
-	{
-		# code...
 	}
 
 	public function post_34_muatan()
@@ -247,11 +238,9 @@ class Dash extends CI_Controller {
 		$date  				= $result['date'];
 		$position			= $this->Crud->search('table_enum', array('type' => 'position'))->result_array();
 		$code_standby		= $this->Crud->search('table_enum', array('type' => 'code_standby'))->result_array();	
-	
-
-		$this->load->model('Monitoring_operations', 'operations');
+		$this->load->model('Post', 'pos_34_muatan');
 		
-		$data = $this->operations->monitoring_operations_34_muatan()->result_array();
+		$data = $this->pos_34_muatan->monitoring_operations_34_muatan()->result_array();
 		
 		$data 		= array (
 			'dateid' 			=> $result['date'],
@@ -266,14 +255,14 @@ class Dash extends CI_Controller {
 		$this->load->view('framework/footer');
 	}
 
-	public function post_34_standby()
+	public function post_34_standby($code = '')
 	{
-		$this->load->model('Monitoring_operations', 'operations');
+		$this->load->model('Post', 'operations');
 		
-		$data = $this->operations->monitoring_operations_34_standby()->result_array();
+		$data = $this->operations->monitoring_operations_34_standby($code)->result_array();
 
 		$data 		= array (
-			'data'				=> $data
+			'data'		=> $data
 		);
 
 		$this->load->view('framework/header', array('title' => 'Post KM 34 Standby'));
@@ -315,7 +304,7 @@ class Dash extends CI_Controller {
 		$data = $this->operations->monitoring_operations_65_standby($code)->result_array();
 
 		$data 		= array (
-			'data'				=> $data
+			'data'	=> $data
 		);
 
 		$this->load->view('framework/header', array('title' => 'Post KM 65 Standby'));
@@ -442,8 +431,8 @@ class Dash extends CI_Controller {
 		$rom	  			= $this->Crud->search('table_enum', array('type' => 'rom'))->result_array();
 		$by_rom				= $by_rom == '' ?$this->session->userdata('rom') : $by_rom;
 
-		$this->load->model('Shift_operations', 'operations');
-		$data = $this->operations->rom_monitoring_shift_operations($by_rom)->result_array();
+		$this->load->model('Rom', 'record_rom');
+		$data = $this->record_rom->rom_monitoring_shift_operations($by_rom)->result_array();
 
 		$data 		= array (
 			'dateid' 			=> $result['date'],
@@ -465,7 +454,7 @@ class Dash extends CI_Controller {
 		$by_rom				= $by_rom == '' ?$this->session->userdata('rom') : $by_rom;
 		$rom	  			= $this->Crud->search('table_enum', array('type' => 'rom'))->result_array();
 		$date = $this->input->get('date') == '' ? $result['date'] : date('Y-m-d', strtotime($this->input->get('date')));
-		$this->load->model('Shift_operations', 'operations');
+		$this->load->model('Rom', 'operations');
 		$data = $this->operations->report_rom_monitoring_shift_operations($by_rom)->result_array();
 
 		$data 		= array (

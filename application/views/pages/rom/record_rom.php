@@ -39,12 +39,16 @@
         </div>
       </div>
       <div class="col-md-12">
+      <?=$this->session->flashdata('msg');?>
+      </div>
+      <div class="col-md-12">
         <div class="box">
           <div class="box-body">
             <div class="table-responsive">
               <table id="example1" class="table table-bordered table-striped">
                 <thead style="background-color: #2e86de ; color: #ffffff ; font-size: 12px;">
                   <tr>
+                    <!-- <th style="text-align: center;">#</th> -->
                     <th style="text-align: center;">No</th>
                     <th style="text-align: center;">C/N</th>
                     <th style="text-align: center;">Cargo Muatan</th>
@@ -59,6 +63,10 @@
                       $no++; 
                       $color = explode(',', $value['color']);
                       echo '<tr style="text-align: center;">';
+                        // echo '<td nowrap class="text-center">
+                        //         <a href="#" class="btn btn-xs btn-primary" data-target="#editdata" id="edit" data-id="'.$value['id'].'" data-original-title="Edit" data-toggle="tooltip"><i class="fa fa-edit"></i>
+                        //         </a>
+                        //       </td>';
                         echo '<td>'.$no.'</td>
                               <td>'.$value['cn_unit'].'</td>
                               <td style="background-color:'. $color[0] . ';color:'.@$color[1].'" >'.$value['cargo'].'</td>
@@ -98,7 +106,26 @@
   </section>
 </div>
 <!-- Modal edit rom -->
-
+<div class="modal fade" id="modal-edit" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+      <form action="<?= base_url('Edit/');?>" method="post" enctype="multipart/form-data" class="form-horizontal">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title" id="mediumModalLabel">Edit Data</h4>
+        </div>
+        <div class="modal-body" id="modal-body-edit">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Confirm</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 
 <script type="text/javascript">
   
@@ -143,7 +170,7 @@
     var id = $(this).attr('data-id');
       $.ajax({
     type: "GET",
-    url: "<?php echo base_url('Save/rom_operations/');?>" + id , 
+    url: "<?php echo base_url('Save/rom_in/');?>" + id , 
       success: function(response) {
         window.location.reload();
       } 
@@ -154,11 +181,17 @@
     var id = $(this).attr('data-id');
       $.ajax({
     type: "GET",
-    url: "<?php echo base_url('Edit/rom_operations/');?>" + id , 
+    url: "<?php echo base_url('Edit/rom_out/');?>" + id , 
       success: function(response) {
         window.location.reload();
       } 
     });
+  });
+
+  $(document).on('click','#edit', function() {
+    var id = $(this).attr('data-id');
+      $("#modal-body-edit").load("<?= base_url('view/edit//');?>" + id);
+      $('#modal-edit').modal('toggle');
   });
 
 

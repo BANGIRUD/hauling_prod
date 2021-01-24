@@ -70,36 +70,39 @@
                 <tbody>
                   <?php $no=0;
                     foreach ($data as $value) {
+                      print_r($value);
                       $no++;
                       $color = explode(',', $value['color']);
                       echo '<tr style="text-align: center; font-size: 12px;">';
                       if($this->session->userdata('level') != 'dispatcher'):
                         echo '<td>
-                                <a href="" class="btn btn-xs btn-warning" id="up" data-id="" data-column="cancel" data-text=" " data-original-title="Up" data-toggle="tooltip">
-                                  <i class="fa fa-arrow-up"></i>
-                                </a> 
-                                <a href="" class="btn btn-xs btn-warning" id="down" data-id="" data-column="cancel" data-text=" " data-original-title="Down" data-toggle="tooltip">
-                                  <i class="fa fa-arrow-down"></i>
-                                </a>
                                 <a href="#" class="btn btn-xs btn-primary" data-target="#editdata" id="edit" data-id="'.$value['id'].'" data-original-title="Edit" data-toggle="tooltip">
                                   <i class="fa fa-edit"></i>
-                                </a>
-                              </td>';
+                                </a>';
+                      if($value['operation'] == 0 && strtolower($value['code_stby']) != 'l') : 
+                        echo ' <a href="#" class="btn btn-xs btn-success" id="ready" data-id="'.$value['id'].'" data-value="'.$value['operation'].'"data-original-title="Ready" data-toggle="tooltip"><i class="fa fa-check"></i>
+                              </a>';
+                      else: 
+                        echo ' <a href="#" class="btn btn-xs btn-warning" id="ready" data-id="'.$value['id'].'" data-value="'.$value['operation'].'" data-original-title="Cancel" data-toggle="tooltip"><i class="fa fa-remove"></i>
+                                </a>';
+                      endif;
+                        echo  '</td>'; 
                       else :
                          echo '<td>
-                                <a href="" class="btn btn-xs btn-warning disabled" id="up" data-id="" data-column="cancel" data-text=" " data-original-title="Up" data-toggle="tooltip">
-                                  <i class="fa fa-arrow-up"></i>
-                                </a> 
-                                <a href="" class="btn btn-xs btn-warning disabled" id="down" data-id="" data-column="cancel" data-text=" " data-original-title="Down" data-toggle="tooltip">
-                                  <i class="fa fa-arrow-down"></i>
-                                </a>
                                 <a href="#" class="btn btn-xs btn-primary disabled" data-target="#editdata" id="edit" data-id="'.$value['id'].'" data-original-title="Edit" data-toggle="tooltip">
                                   <i class="fa fa-edit"></i>
-                                </a>
-                              </td>';
+                                </a>';
+                       if($value['operation'] == 0 && strtolower($value['code_stby']) != 'l') : 
+                        echo ' <a href="#" class="btn btn-xs btn-success disabled" id="ready" data-id="'.$value['id'].'" data-value="'.$value['operation'].'"data-original-title="Ready" data-toggle="tooltip"><i class="fa fa-check"></i>
+                              </a>';
+                      else: 
+                        echo ' <a href="#" class="btn btn-xs btn-warning disabled" id="ready" data-id="'.$value['id'].'" data-value="'.$value['operation'].'" data-original-title="Cancel" data-toggle="tooltip"><i class="fa fa-remove"></i>
+                                </a>';
+                      endif;
+                         echo  '</td>'; 
                         endif;
                         echo '<td>'.$no.'</td>
-                              <td>10/08/2020</td>
+                              <td>'.$value['date'].'</td>
                               <td>'.date('H:i',strtotime($value['time_in'])).'</td>';
                               if (strtolower($value['code_stby']) == 'l') {
                                       $timeout = date('H:i',strtotime($value['time_out']));
@@ -120,23 +123,9 @@
                               <td style="text-align: center; background-color: '. colors_setting_unit(strtolower($value['register']))['bg'] .'; color: '. colors_setting_unit(strtolower($value['register']))['color'].'">'.$value['register'].'</td>';
                         echo '<td>';
                         if($this->session->userdata('level') != 'dispatcher'):
-                          if($value['operation'] == 0 && strtolower($value['code_stby']) != 'l') : 
-                            echo '<a href="#" class="btn btn-xs btn-success" id="ready" data-id="'.$value['id'].'" data-value="'.$value['operation'].'"data-original-title="Ready" data-toggle="tooltip"><i class="fa fa-check"></i>
-                                  </a>';
-                          else: 
-                            echo '<a href="#" class="btn btn-xs btn-warning" id="ready" data-id="'.$value['id'].'" data-value="'.$value['operation'].'" data-original-title="Cancel" data-toggle="tooltip"><i class="fa fa-remove"></i>
-                                    </a>';
-                          endif;
-                            echo ' <a href="#" class="btn btn-xs btn-danger" data-target="#deletedata" id="delete" data-id="" data-original-title="delete" data-toggle="tooltip"><i class="fa fa-trash"></i>
+                            echo ' <a href="#" class="btn btn-xs btn-danger" data-target="#deletedata" id="delete" data-id="'.$value['id'].'" data-original-title="delete" data-toggle="tooltip"><i class="fa fa-trash"></i>
                                 </a>';  
                         else :
-                           if($value['operation'] == 0 && strtolower($value['code_stby']) != 'l') : 
-                            echo '<a href="#" class="btn btn-xs btn-success disabled" id="ready" data-id="'.$value['id'].'" data-value="'.$value['operation'].'"data-original-title="Ready" data-toggle="tooltip"><i class="fa fa-check"></i>
-                                  </a>';
-                          else: 
-                            echo '<a href="#" class="btn btn-xs btn-warning disabled" id="ready" data-id="'.$value['id'].'" data-value="'.$value['operation'].'" data-original-title="Cancel" data-toggle="tooltip"><i class="fa fa-remove"></i>
-                                    </a>';
-                          endif;
                             echo ' <a href="#" class="btn btn-xs btn-danger disabled" data-target="#deletedata" id="delete" data-id="" data-original-title="delete" data-toggle="tooltip"><i class="fa fa-trash"></i>
                                 </a>'; 
                         endif;                                       
@@ -227,7 +216,7 @@
 <!-- End Modal Add Unit -->
 <!-- Modal Edit Unit -->
 <div class="modal fade " id="modal-edit" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
+  <div class="modal-dialog modal-md" role="document">
     <div class="modal-content">
       <form action="<?= base_url('Edit/post_65_standby');?>" method="post" enctype="multipart/form-data" class="form-horizontal">
         <div class="modal-header">
@@ -273,7 +262,7 @@ autoclose: true
 
 $(document).on('click','#edit', function() {
   var id = $(this).attr('data-id');
-    $("#modal-body-edit").load("<?= base_url('View/edit/monitoring_operations_65_standby/');?>" + id);
+    $("#modal-body-edit").load("<?= base_url('view/edit/monitoring_operations_65_standby/');?>" + id);
     $('#modal-edit').modal('toggle');
 });
 
@@ -282,7 +271,7 @@ $(document).on('click', '#delete', function() {
   $.ajax({
     type: "POST",
     data:'del=' + ai,
-    url: "<?php echo base_url('Delete/add_unit');?>",
+    url: "<?php echo base_url('Delete/post_65_standby');?>",
     success: function(response) {
       location.reload();
     },
@@ -305,3 +294,18 @@ $(document).on('click','#ready', function() {
 });
 
 </script>
+
+
+<!-- <a href="" class="btn btn-xs btn-warning" id="up" data-id="" data-column="cancel" data-text=" " data-original-title="Up" data-toggle="tooltip">
+<i class="fa fa-arrow-up"></i>
+</a> 
+<a href="" class="btn btn-xs btn-warning" id="down" data-id="" data-column="cancel" data-text=" " data-original-title="Down" data-toggle="tooltip">
+<i class="fa fa-arrow-down"></i>
+</a>
+
+<a href="" class="btn btn-xs btn-warning disabled" id="up" data-id="" data-column="cancel" data-text=" " data-original-title="Up" data-toggle="tooltip">
+<i class="fa fa-arrow-up"></i>
+</a> 
+<a href="" class="btn btn-xs btn-warning disabled" id="down" data-id="" data-column="cancel" data-text=" " data-original-title="Down" data-toggle="tooltip">
+<i class="fa fa-arrow-down"></i>
+</a> -->

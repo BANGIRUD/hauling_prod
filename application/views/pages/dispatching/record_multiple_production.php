@@ -22,6 +22,9 @@
         </div>
       </div>
       <div class="col-md-12">
+        <?=$this->session->flashdata('msg');?>
+      </div>
+      <div class="col-md-12">
         <div class="box">
           <div class="box-body">
              <form method="POST" action="<?php echo base_url('Save/bulk_shift_operation');?>">
@@ -38,7 +41,7 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td><input type="text" name="id_unit[]" class="form-control" value="" placeholder="Enter Id Unit Here..." required  autofocus></td>
+                      <td><input type="text" name="id_unit[]" class="form-control id_unit" value="" placeholder="Enter Id Unit Here..." required  autofocus onchange="history(this)"></td>
                       <td>
                         <select class="form-control select2" name="cargo_muatan[]" id="cargo_muatan">
                           <?php foreach ($cargo_muatan as $value) {
@@ -58,8 +61,10 @@
                       <td><input type="text" name="time[]" class="form-control" id="input-time" value="<?php echo date('H:i');?>" placeholder="HH:MM" ></td>
                       <td><button type="button" class="btn btn-primary" id="add"><i class="fa fa-plus"></i></button></td>
                     </tr>
+                    
                   </tbody>
                   </table>
+                  <div id="history_unit"></div>
                 </div>
                 <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Simpan Semua</button>
              </form>
@@ -73,7 +78,7 @@
 <script type="text/javascript">
   function append(time='') {
     $('#shiftOperation').append('<tr>' +
-        '<td><input type="text" name="id_unit[]" class="form-control" value="" required  autofocus placeholder="Enter Id Unit Here..."></td>' +
+        '<td><input type="text" name="id_unit[]" class="form-control" value="" required  autofocus placeholder="Enter Id Unit Here..." onchange="history(this)"></td>' +
         '<td>' +
           '<select class="form-control select2" name="cargo_muatan[]" id="cargo_muatan">' +
             <?php foreach ($cargo_muatan as $value) {
@@ -120,6 +125,22 @@
 
     $('.select2').select2();
 
+    // $(document).on('change', '.id_unit', function(e){
+    // e.preventDefault();
+    // var unit = $(this).val();
+    // $.ajax({
+    //     type: "POST",
+    //     data:'unit=' + unit,
+    //     url: "<?php echo base_url('Ajax/history_unit');?>",
+    //     success: function(response) {
+    //       $("#history_unit").html(response);
+    //     },
+    //     error: function () {
+    //       console.log("errr");
+    //     }
+    //   });
+    // });
+
    // $(document).on('change','#position', function() {
    //  var val = $(this).val();
    //  if(val == "K") {
@@ -131,4 +152,20 @@
    // });
 
   });
+
+
+  function history(value) {
+    var unit = $(value).val();
+    $.ajax({
+      type: "POST",
+      data:'unit=' + unit,
+      url: "<?php echo base_url('Ajax/history_unit');?>",
+      success: function(response) {
+        $("#history_unit").html(response);
+      },
+      error: function () {
+        console.log("errr");
+      }
+    });
+  }
 </script>

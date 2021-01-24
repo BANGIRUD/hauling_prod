@@ -73,7 +73,7 @@
                               <td>'.$value['cn_unit'].'</td>
                               <td style="background-color:'. $color[0] . ';color:'.@$color[1].'" >'.$value['cargo'].'</td>  
                               <td>'.$value['rom_name'].'</td>
-                              <td>'. date('Y-m-d H:i',strtotime($value['time'])).'</td>';
+                              <td>'. $value['date'].' '.date('H:i',strtotime($value['time'])).'</td>';
                         // echo '<td nowrap>';
 
                         // $btn_disabled = $no == 1 ? ' disabled' : '';
@@ -161,7 +161,7 @@
 </div>
 
 <div class="modal fade" id="modal-edit" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
+  <div class="modal-dialog modal-md" role="document">
     <div class="modal-content">
       <form action="<?= base_url('Edit/shift_operation');?>" method="post" enctype="multipart/form-data" class="form-horizontal">
         <div class="modal-header">
@@ -181,7 +181,7 @@
   </div>
 </div>
 
-<div class="modal fade" id="upload-addunit" tabindex="-1">
+<!-- <div class="modal fade" id="upload-addunit" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
       <form method="post" enctype="multipart/form-data" action="<?php echo base_url('Upload/');?>">
@@ -204,9 +204,9 @@
       </form>
     </div>
   </div>
-</div>
+</div> -->
 
-<div class="modal fade" id="upload-validateunit" tabindex="-1">
+<!-- <div class="modal fade" id="upload-validateunit" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
       <form method="post" enctype="multipart/form-data" action="<?php echo base_url('Upload/');?>">
@@ -229,7 +229,7 @@
       </form>
     </div>
   </div>
-</div>
+</div> -->
 
 <script type="text/javascript">
 
@@ -269,7 +269,7 @@
 
   $(document).on('click','#edit', function() {
     var id = $(this).attr('data-id');
-      $("#modal-body-edit").load("<?= base_url('View/edit/shift_operations/');?>" + id);
+      $("#modal-body-edit").load("<?= base_url('view/edit/shift_operations/');?>" + id);
       $('#modal-edit').modal('toggle');
   });
 
@@ -311,3 +311,7 @@
   });
 
 </script>
+
+
+
+<!-- <td>'. date('Y-m-d H:i',strtotime($value['time'])).'</td>'; -->

@@ -39,9 +39,9 @@
               <table class="table table-hover">
                 <tbody>
                   <tr style=" background-color: #2ecc71; color:  #ffffff;">
-                    <th>ID</th>
-                    <th>CN UNIT</th>
-                    <th>MATERIAL</th>
+                    <th style="text-align: center;">ID</th>
+                    <th style="text-align: center;">CN UNIT</th>
+                    <th style="text-align: center;">MATERIAL</th>
                   </tr>
                   <?php $no=0;foreach ($csa_69->result_array() as $value) :$no++;
                      $color = explode(',', $value['color']);
@@ -49,7 +49,11 @@
                   <tr style="text-align: center;">
                     <td><?= $no;?></td>
                     <td><?= $value['cn_unit'];?></td>
-                    <?php echo '<td style="background-color:'. $color[0] . ';color:'.@$color[1].'">'. $value['cargo_awal'] . '</td>';?>
+                    <?php if ($value['cargo_awal'] == "Kosongan"): ?>
+                      <td><?=$value['cargo_awal'];?></td>
+                    <?php else :?>
+                    <td style="background-color:<?= $color[0];?>;color:<?=@$color[1];?>"><?=$value['cargo_awal'];?></td>
+                    <?php endif ?>
                   </tr>
                   <?php endforeach;?>
                 </tbody>
@@ -96,7 +100,11 @@
                   <tr style="text-align: center;">
                     <td><?= $no;?></td>
                     <td><?= $value['cn_unit'];?></td>
-                    <?php echo '<td style="background-color:'. $color[0] . ';color:'.@$color[1].'">'. $value['cargo_awal'] . '</td>';?>
+                    <?php if ($value['cargo_awal'] == "Kosongan"): ?>
+                      <td><?=$value['cargo_awal'];?></td>
+                    <?php else :?>
+                    <td style="background-color:<?= $color[0];?>;color:<?=@$color[1];?>"><?=$value['cargo_awal'];?></td>
+                    <?php endif ?>
                   </tr>
                   <?php endforeach;?>
                 </tbody>
@@ -144,7 +152,11 @@
                   <tr style="text-align: center;">
                     <td><?= $no;?></td>
                     <td><?= $value['cn_unit'];?></td>
-                    <?php echo '<td style="background-color:'. $color[0] . ';color:'.@$color[1].'">'. $value['cargo_awal'] . '</td>';?>
+                    <?php if ($value['cargo_awal'] == "Kosongan"): ?>
+                      <td><?=$value['cargo_awal'];?></td>
+                    <?php else :?>
+                    <td style="background-color:<?= $color[0];?>;color:<?=@$color[1];?>"><?=$value['cargo_awal'];?></td>
+                    <?php endif ?>
                     <td><?= date('H', strtotime($value['time_passing']));?></td>
                   </tr>
                   <?php endforeach;?>
@@ -301,3 +313,5 @@
           </div>
         </div>
       </div> -->
+
+                    <!-- <?php echo '<td style="background-color:'. $color[0] . ';color:'.@$color[1].'">'. $value['cargo_awal'] . '</td>';?> -->

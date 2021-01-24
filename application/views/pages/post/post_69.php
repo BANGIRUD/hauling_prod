@@ -69,19 +69,13 @@
                 </thead>
                 <tbody>
                   <?php $no=0;
-                    print_r($data);
+                    // print_r($data);
                     foreach ($data as $value) {
                       $no++;
                       $color = explode(',', $value['color']);
                       echo '<tr style="text-align: center; font-size: 12px;" if>';
                         if($by_level != 'dispatcher'&& $by_level != 'administrator') :
                         echo '<td>
-                                <a href="" class="btn btn-xs btn-warning" id="up" data-id="" data-column="cancel" data-text=" " data-original-title="Up" data-toggle="tooltip">
-                                  <i class="fa fa-arrow-up"></i>
-                                </a> 
-                                <a href="" class="btn btn-xs btn-warning" id="down" data-id="" data-column="cancel" data-text=" " data-original-title="Down" data-toggle="tooltip">
-                                  <i class="fa fa-arrow-down"></i>
-                                </a>
                                 <a href="#" class="btn btn-xs btn-primary" data-target="#editdata" id="edit" data-id="'.$value['id'].'" data-original-title="Edit" data-toggle="tooltip">
                                   <i class="fa fa-edit"></i>
                                 </a> ';
@@ -95,12 +89,6 @@
                         echo '</td>';
                         else:
                           echo '<td>
-                                <a href="" class="btn btn-xs btn-warning disabled" id="up" data-id="" data-column="cancel" data-text=" " data-original-title="Up" data-toggle="tooltip">
-                                  <i class="fa fa-arrow-up"></i>
-                                </a> 
-                                <a href="" class="btn btn-xs btn-warning disabled" id="down" data-id="" data-column="cancel" data-text=" " data-original-title="Down" data-toggle="tooltip">
-                                  <i class="fa fa-arrow-down"></i>
-                                </a>
                                 <a href="#" class="btn btn-xs btn-primary disabled" data-target="#editdata" id="edit" data-id="'.$value['id'].'" data-original-title="Edit" data-toggle="tooltip">
                                   <i class="fa fa-edit"></i>
                                 </a> ';
@@ -125,14 +113,18 @@
                                $timestb = $value['operation'] == 0 ? '-' : date('H:i',strtotime(selisih_hour($value['time_in'],$value['time_out'])));
                         echo '<td>'.$timestb.'</td>
                               <td>'.$value['cn_unit'].'</td>
-                              <td>'.$value['position'].'</td>
-                              <td style="background-color:'. $color[0] . ';color:'.@$color[1].'" >'.$value['cargo_awal'].'</td>';
+                              <td>'.$value['position'].'</td>';
+                      if ($value['cargo_awal'] == "Kosongan") {
+                        echo '<td>'.$value['cargo_awal'].'</td>';
+                      }else{
+                        echo '<td style="background-color:'. $color[0] . ';color:'.@$color[1].'" >'.$value['cargo_awal'].'</td>';
+                      }                           
                                // $timepassing = $value['operation'] == 0 ? '-' : date('H',strtotime($value['time_passing']));
                         echo  '<td>'.$value['code_stby'].'</td>
                               <td>'.$value['remark'].'</td>
                               <td>'.$value['csa'].'</td>
                               <td>'.$value['time'].'</td>
-                              <td>'.$value['time'].'</td>';
+                              <td style="text-align: center; background-color: '. colors_setting_unit(strtolower($value['register']))['bg'] .'; color: '. colors_setting_unit(strtolower($value['register']))['color'].'">'.$value['register'].'</td>';
                         echo '<td>';
                           if($by_level != 'dispatcher'&& $by_level != 'administrator') :
                           echo' <a href="#" class="btn btn-xs btn-danger" data-target="#deletedata" id="delete" data-id="'.$value['id'].'" data-original-title="delete" data-toggle="tooltip">
@@ -213,9 +205,9 @@
 
 <!-- Modal Edit Unit -->
 <div class="modal fade " id="modal-edit" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
+  <div class="modal-dialog modal-md" role="document">
     <div class="modal-content">
-      <form action="<?= base_url('Edit/');?>" method="post" enctype="multipart/form-data" class="form-horizontal">
+      <form action="<?= base_url('Edit/pos_69');?>" method="post" enctype="multipart/form-data" class="form-horizontal">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -253,7 +245,7 @@
 
   $(document).on('click','#edit', function() {
   var id = $(this).attr('data-id');
-    $("#modal-body-edit").load("<?= base_url('View/edit/monitoring_operations_69/');?>" + id);
+    $("#modal-body-edit").load("<?= base_url('view/edit/monitoring_operations_69/');?>" + id);
     $('#modal-edit').modal('toggle');
   });
 
@@ -293,3 +285,20 @@
   });
   
 </script>
+
+
+
+<!-- <a href="" class="btn btn-xs btn-warning" id="up" data-id="" data-column="cancel" data-text=" " data-original-title="Up" data-toggle="tooltip">
+<i class="fa fa-arrow-up"></i>
+</a> 
+<a href="" class="btn btn-xs btn-warning" id="down" data-id="" data-column="cancel" data-text=" " data-original-title="Down" data-toggle="tooltip">
+<i class="fa fa-arrow-down"></i>
+</a> -->
+
+
+<!-- <a href="" class="btn btn-xs btn-warning disabled" id="up" data-id="" data-column="cancel" data-text=" " data-original-title="Up" data-toggle="tooltip">
+<i class="fa fa-arrow-up"></i>
+</a> 
+<a href="" class="btn btn-xs btn-warning disabled" id="down" data-id="" data-column="cancel" data-text=" " data-original-title="Down" data-toggle="tooltip">
+<i class="fa fa-arrow-down"></i>
+</a> -->
