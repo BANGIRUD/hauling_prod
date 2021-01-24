@@ -17,7 +17,7 @@
             <label>Select Date :</label>
           <div class="input-group date">
                       <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                      <input  type="text" name="date" class="form-control datepicker" value=" <?= date('m/d/Y');?>">
+                      <input style="padding: 0;" type="date" name="date" class="form-control" value="<?= date('Y-m-d');?>">
                     </div>
           </div>
         </div>

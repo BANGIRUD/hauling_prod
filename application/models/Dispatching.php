@@ -1,6 +1,7 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed');
 
-class Dispatching extends CI_Model {
+class Dispatching extends CI_Model 
+{
 
 	public function record_production()
 	{
@@ -157,6 +158,5 @@ class Dispatching extends CI_Model {
 		$this->db->group_by('table_shiftoperations.to_rom');
 		return $this->db->get();
 	}
-
-
 }
+?>

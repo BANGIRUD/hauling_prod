@@ -260,6 +260,226 @@ class Save extends CI_Controller {
 		// redirect($_SERVER['HTTP_REFERER']);
 	}
 
+	public function monitoring_operations_65_kosongan()
+	{
+		$result 			= get_date_shift();	
+		// Variable
+		$date 				= date('Y-m-d', strtotime($result['date']));
+		$shift 				= $result['shift'];
+		$id_unit 			= $this->input->post('id_unit');
+		$position 			= $this->input->post('position');
+		$code_standby 		= $this->input->post('code_standby');
+		$remark 			= $this->input->post('remark');
+
+		$this->form_validation->set_rules('id_unit','id_unit','required');
+		$this->form_validation->set_rules('position','position','required');
+		$this->form_validation->set_rules('code_standby','code_standby','required');
+
+		if( $this->form_validation->run() != false ) {
+			$data = array(
+					'ref_id'			=> 0,
+					'created_at' 		=> date('Y-m-d H:i:s'),
+					'updated_at' 		=> date('Y-m-d H:i:s'),
+					'deleted_at' 		=> NULL,
+					'date'				=> $date,
+					'shift'				=> $shift,
+					'time_in'			=> date('Y-m-d H:i:s'),
+					'time_out'			=> NULL,
+					'cn_unit' 			=> $id_unit,
+					'position' 			=> $position,
+					'cargo' 			=> "Kosongan",
+					'code_stby' 		=> $code_standby,
+					'time_passing'		=> NULL,
+					'remark'			=> $remark,
+					'operation' 		=> 0,
+					'by_ordered'		=> 0,
+					'by_area'			=> $this->by_area,
+					'by_user'			=> $this->by_user
+				);
+
+				$this->Crud->insert('table_monitoringoperations', $data);
+
+				$this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissible" role="alert">
+	            <span class="badge badge-pill badge-success">Success</span> <b>Data</b> has been added.
+	            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	                <span aria-hidden="true">&times;</span>
+	            </button>
+	        </div>');
+
+
+		} else {
+			$this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissible" role="alert">
+            <span class="badge badge-pill badge-danger">Error</span> ' . validation_errors() . '
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>');
+		}
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
+	public function monitoring_operations_muatan_in_csa65()
+	{
+		$result 			= get_date_shift();	
+		// Variable
+		$date 				= date('Y-m-d', strtotime($result['date']));
+		$shift 				= $result['shift'];
+		$id 				= $this->input->post('id');
+		$code_standby 		= $this->input->post('code_standby');
+		$remark 			= trim($this->input->post('remark'));
+
+		$this->load->model('Post', 'operation');
+		$row 				= $this->operation->data_shift_operation_to_monitoring_65($id);
+		if ($row->num_rows() > 0) {
+			$row 					= $row->row_array();
+			$data = array(
+				'created_at' 		=> date('Y-m-d H:i:s'),
+				'updated_at' 		=> date('Y-m-d H:i:s'),
+				'ref_id'			=> $id,
+				'deleted_at' 		=> NULL,
+				'date'				=> $date,
+				'shift'				=> $shift,
+				'time_in'			=> date('Y-m-d H:i:s'),
+				'time_out'			=> NULL,
+				'cn_unit' 			=> $row['cn_unit'],
+				'position' 			=> $row['position'],
+				'cargo'				=> $row['cargo'],
+				'code_stby'			=> $code_standby,
+				'time_passing'		=> NULL,
+				'remark'			=> $remark,
+				'by_area'			=> $this->by_area,
+				'by_user'			=> $this->by_user
+			);
+
+			$this->db->insert('table_monitoringoperations', $data);
+
+			$this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissible" role="alert">
+	            <span class="badge badge-pill badge-success">Success</span> <b>Data</b> has been added.
+	            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	                <span aria-hidden="true">&times;</span>
+	            </button>
+	        </div>');
+		}else{
+			$this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissible">
+		        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+		        <h4><i class="icon fa fa-check"></i> Error!</h4>
+		        Check kembali data anda!.
+		      </div>');
+		}
+
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
+	public function bypass_monitoring_operations_65($id = 1) 
+	{
+		$result 			= get_date_shift();	
+		// Variable
+		$date 				= date('Y-m-d', strtotime($result['date']));
+		$shift 				= $result['shift'];
+		$this->load->model('Post', 'operations');
+
+		$row 	= $this->operations->data_shift_operation_to_monitoring_65($id);
+		if ($row->num_rows() > 0) {
+			$row 					= $row->row_array();
+			$time_passing 			= date('i') > 50 ? date('H:00:00', strtotime('+1 Hour')) : date('H:00:00');
+
+			$data = array(
+				'ref_id'			=> $id,
+				'created_at' 		=> date('Y-m-d H:i:s'),
+				'updated_at' 		=> date('Y-m-d H:i:s'),
+				'deleted_at' 		=> NULL,
+				'date'				=> $date,
+				'shift'				=> $shift,
+				'time_in'			=> date('Y-m-d H:i:s'),
+				'time_out'			=> date('Y-m-d H:i:s'),
+				'cn_unit' 			=> $row['cn_unit'],
+				'position' 			=> $row['position'],
+				'cargo'				=> $row['cargo'],
+				'code_stby'			=> "L",
+				'time_passing'		=> $time_passing,
+				'operation'			=> 1,
+				'remark'			=> NULL,
+				'by_area'			=> $this->by_area,
+				'by_user'			=> $this->by_user
+			);
+
+			$this->db->insert('table_monitoringoperations', $data);
+
+			$this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissible fade show" role="alert">
+	            <span class="badge badge-pill badge-success">Success</span> <b>Data</b> has been added.
+	            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	                <span aria-hidden="true">&times;</span>
+	            </button>
+	        </div>');
+		}else{
+			$this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissible">
+		        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+		        <h4><i class="icon fa fa-check"></i> Error!</h4>
+		        Check kembali data anda!.
+		      </div>');
+		}
+
+		// redirect($_SERVER['HTTP_REFERER']);
+	}
+
+	public function monitoring_operations_69() 
+	{
+		$result 			= get_date_shift();	
+		// Variable
+		$date 				= date('Y-m-d', strtotime($result['date']));
+		$shift 				= $result['shift'];
+		$id_unit 			= $this->input->post('id_unit');
+		$position 			= $this->input->post('position');
+		$code_standby 		= $this->input->post('code_standby');
+		$remark 			= $this->input->post('remark');
+
+		$this->form_validation->set_rules('id_unit','id_unit','required');
+		$this->form_validation->set_rules('position','position','required');
+		$this->form_validation->set_rules('code_standby','code_standby','required');
+
+		if( $this->form_validation->run() != false ) {
+			$data = array(
+					'ref_id'			=> 0,
+					'created_at' 		=> date('Y-m-d H:i:s'),
+					'updated_at' 		=> date('Y-m-d H:i:s'),
+					'deleted_at' 		=> NULL,
+					'date' 				=> $date,
+					'shift' 			=> $shift,
+					'time_in'			=> date('Y-m-d H:i:s'),
+					'time_out'			=> NULL,
+					'cn_unit' 			=> $id_unit,
+					'position' 			=> $position,
+					'cargo' 			=> NULL,
+					'code_stby' 		=> $code_standby,
+					'time_passing'		=> NULL,
+					'remark'			=> $remark,
+					'operation' 		=> 0,
+					'by_ordered'		=> 0,
+					'by_area'			=> $this->by_area,
+					'by_user'			=> $this->by_user
+				);
+
+				$this->Crud->insert('table_monitoringoperations', $data);
+
+				$this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissible" role="alert">
+	            <span class="badge badge-pill badge-success">Success</span> <b>Data</b> has been added.
+	            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	                <span aria-hidden="true">&times;</span>
+	            </button>
+	        </div>');
+
+
+		} else {
+			$this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissible" role="alert">
+            <span class="badge badge-pill badge-danger">Error</span> ' . validation_errors() . '
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>');
+		}
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
 	public function rom_in($id)
 	{
 		// $check 					= $this->rom->detail_ref_rom_operations($id);
@@ -308,6 +528,139 @@ class Save extends CI_Controller {
 		}
 
 		redirect($_SERVER['HTTP_REFERER']);
+	}
+
+	public function people() 
+	{
+		$username = trim($this->input->post('username'));
+		$name = trim($this->input->post('full_name'));
+		$password = password_hash(trim($this->input->post('pass')), PASSWORD_DEFAULT);
+		$description = trim($this->input->post('description'));
+		$level = trim($this->input->post('level'));
+		$src = $this->Crud->search('table_users', array('username' => $username))->num_rows();
+		if ( preg_match('/[^A-Za-z0-9]/',$username)) {
+			$this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissible fade-alert">
+	                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+	                <h4><i class="icon fa fa-ban"></i> Alert!</h4>
+	                Insert error, username only allowed number and alfabet!
+	              </div>');
+		} else {
+			if ($src > 0) {
+				$this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissible fade-alert">
+	                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+	                <h4><i class="icon fa fa-ban"></i> Alert!</h4>
+	                Username <b>"' . $username . '"</b> is already on database!
+	              </div>');
+			} else {
+				$src = $this->Crud->search('table_enum', array('id' => $level, 'type' => 'level'))->num_rows();
+				if ($src > 0) {
+					$data = array(
+						'created_at'	=> date('Y-m-d H:i:s'),
+						'updated_at'	=> date('Y-m-d H:i:s'),
+						'nrp'			=> $username,
+						'username' 		=> $username,
+						'full_name'		=> $name,
+						'password' 		=> $password,
+						'description' 	=> $description,
+						'level' 		=> $level,
+					);
+					$this->Crud->insert('table_users', $data);
+					$this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissible fade-alert">
+		                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+		                <h4><i class="icon fa fa-check"></i> Success!</h4>
+		                <b>"' . $name . '"</b> is added on database!
+		              </div>');
+				} else {
+					$this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissible fade-alert">
+	                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+	                <h4><i class="icon fa fa-ban"></i> Alert!</h4>
+	                Insert error, please check your data again!
+	              </div>');				
+				}
+			}
+		}
+		
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
+	public function cargo_muatan()
+	{
+		$by_user			= $this->session->userdata('id');
+
+		$code_sis 	= trim($this->input->post('name'));
+		$color 	 	= trim($this->input->post('description'));
+
+		$src = $this->Crud->search('table_enum', array(
+			'name' 			=> $code_sis, 
+			'description' 	=> $color, 
+			'deleted_at' 	=> NULL))->num_rows();
+		if ($src > 0) {
+			$this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h4><i class="icon fa fa-ban"></i> Alert!</h4>
+                Name <b>"' . $code_ai . '"</b> is already on ' . $code_sis .'!
+              </div>');
+		} else {
+			$data = array(
+				'created_at'			=> date('Y-m-d H:i:s'),
+				'updated_at'			=> date('Y-m-d H:i:s'),
+				'name' 					=> $code_sis, 
+				'description' 			=> $color,
+				'type' 					=> 'cargo_muatan',
+				'by_user' 				=> $by_user
+			);
+			$this->Crud->insert('table_enum', $data);
+			$this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h4><i class="icon fa fa-check"></i> Success!</h4>
+                <b>"' . $code_ai . '"</b> is added on ' . $code_sis .'!
+              </div>');
+		}
+
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
+	public function quality()
+	{
+		// $result 	= get_date_shift();	
+		$by_user	= $this->session->userdata('id');
+
+		$this->form_validation->set_rules('date','date','required');
+		$this->form_validation->set_rules('series','series','required');
+		if( $this->form_validation->run() != false ) {			
+				$data = array(
+					'created_at' 		=> date('Y-m-d H:i:s'),
+					'updated_at' 		=> date('Y-m-d H:i:s'),
+					'deleted_at' 		=> NULL,
+					'date' 				=> date('Y-m-d'),
+					'series' 		 	=> trim($this->input->post('series')),
+					'tm' 				=> trim($this->input->post('tm')),
+					'im' 				=> trim($this->input->post('im')),					
+					'ash_ar' 			=> trim($this->input->post('ash_ar')),
+					'ts_ar' 			=> trim($this->input->post('ts_ar')),
+					'cv_ar' 			=> trim($this->input->post('cv_ar')),
+					'hgi' 				=> trim($this->input->post('hgi')),
+					'by_user'			=> $by_user
+				);
+
+
+				$this->Crud->insert('table_quality', $data);
+
+				$this->session->set_flashdata('msg', '<div class="alert  alert-success alert-dismissible fade show" role="alert">
+	            <span class="badge badge-pill badge-success">Success</span> <b>"' . $this->input->post('series') . '"</b> has been added.
+	            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	                <span aria-hidden="true">&times;</span>
+	            </button>
+	        </div>');
+		} else {
+			$this->session->set_flashdata('msg', '<div class="alert  alert-danger alert-dismissible fade show" role="alert">
+            <span class="badge badge-pill badge-danger">Error</span> ' . validation_errors() . '
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>');
+		 }
+		 redirect($_SERVER['HTTP_REFERER']);
 	}
 
 }

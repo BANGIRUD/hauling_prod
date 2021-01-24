@@ -280,7 +280,7 @@ class Dash extends CI_Controller {
 		$code_standby		= $this->Crud->search('table_enum', array('type' => 'code_standby'))->result_array();	
 	
 
-		$this->load->model('Monitoring_operations', 'operations');
+		$this->load->model('Post', 'operations');
 		
 		$data = $this->operations->monitoring_operations_65_muatan()->result_array();
 		
@@ -299,7 +299,7 @@ class Dash extends CI_Controller {
 
 	public function post_65_standby($code = '')
 	{
-		$this->load->model('Monitoring_operations', 'operations');
+		$this->load->model('Post', 'operations');
 		
 		$data = $this->operations->monitoring_operations_65_standby($code)->result_array();
 
@@ -318,7 +318,7 @@ class Dash extends CI_Controller {
 		$position	  	= $this->Crud->search('table_enum', array('type' => 'position'))->result_array();
 		$code_standby	= $this->Crud->search('table_enum', array('type' => 'code_standby'))->result_array();
 
-		$this->load->model('Monitoring_operations', 'operations');
+		$this->load->model('Post', 'operations');
 		
 		$data = $this->operations->monitoring_operations_69($code)->result_array();
 
@@ -351,7 +351,7 @@ class Dash extends CI_Controller {
 		$pos	= $this->Crud->search('table_enum', array('type' => 'area'));
 		$shift_code	  	= $this->Crud->search('table_enum', array('type' => 'shift'))->result_array();
 
-		$model_monitoring = $this->load->model('Monitoring_model', 'monitoring');
+		$model_monitoring = $this->load->model('Post', 'monitoring');
 
 		$data = array(
 			'shift' 		=> $shift,
@@ -377,7 +377,7 @@ class Dash extends CI_Controller {
 		$pos	= $this->Crud->search('table_enum', array('type' => 'area'))->result_array();
 		$shift_code	  	= $this->Crud->search('table_enum', array('type' => 'shift'))->result_array();
 
-		$this->load->model('Monitoring_model', 'monitoring');
+		$this->load->model('Post', 'monitoring');
 
 		$data = $this->monitoring->supplay_passing()->result_array();
 
@@ -400,16 +400,18 @@ class Dash extends CI_Controller {
 		$date  			= $result['date'];
 		$shift  		= $result['shift'];
 		$pos			= $this->Crud->search('table_enum', array('type' => 'area'))->result_array();
+		$shift_code	  	= $this->Crud->search('table_enum', array('type' => 'shift'))->result_array();
 
 		$status_passing	= $this->Crud->search('table_enum', array('type' => 'status_passing'))->result_array();
 
-		$this->load->model('Monitoring_model', 'monitoring');
+		$this->load->model('Post', 'monitoring');
 
 		$data = $this->monitoring->hour_supplay_passing()->result_array();
 
 		$data = array(
 			'date' 				=> $date,
 			'shift' 			=> $shift,
+			'shift_code'		=> $shift_code,
 			'status_passing'	=> $status_passing,
 			'pos'				=> $pos,
 			'rows' 				=> $data
@@ -474,7 +476,7 @@ class Dash extends CI_Controller {
 	{
 		$level = $this->Crud->search('table_enum', array('type' => 'level'))->result_array();
 		
-		$this->load->model('Account_control', 'user');
+		$this->load->model('Administrator', 'user');
 		$data = $this->user->detail_user()->result_array();
 
 		$data = array(

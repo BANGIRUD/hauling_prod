@@ -262,7 +262,7 @@
   var val = $(this).attr('data-value') == 0 ? '1' : '0';
     $.ajax({
       type: "GET",
-      url: "<?php echo base_url('Edit/ready_to_operation_69/');?>" + id + "/" + val, 
+      url: "<?php echo base_url('Edit/ready_to_opt_69/');?>" + id + "/" + val, 
       success: function(response) {
       window.location.reload();
       } 
@@ -274,7 +274,7 @@
       $.ajax({
         type: "POST",
         data:'del=' + ai,
-        url: "<?php echo base_url('Delete/post_69');?>",
+        url: "<?php echo base_url('Delete/monitoring_operation_69');?>",
         success: function(response) {
           location.reload();
         },

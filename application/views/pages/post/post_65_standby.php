@@ -70,7 +70,7 @@
                 <tbody>
                   <?php $no=0;
                     foreach ($data as $value) {
-                      print_r($value);
+                      // print_r($value);
                       $no++;
                       $color = explode(',', $value['color']);
                       echo '<tr style="text-align: center; font-size: 12px;">';
@@ -218,7 +218,7 @@
 <div class="modal fade " id="modal-edit" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-md" role="document">
     <div class="modal-content">
-      <form action="<?= base_url('Edit/post_65_standby');?>" method="post" enctype="multipart/form-data" class="form-horizontal">
+      <form action="<?= base_url('Edit/monitoring_operations_standby_csa65');?>" method="post" enctype="multipart/form-data" class="form-horizontal">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -271,7 +271,7 @@ $(document).on('click', '#delete', function() {
   $.ajax({
     type: "POST",
     data:'del=' + ai,
-    url: "<?php echo base_url('Delete/post_65_standby');?>",
+    url: "<?php echo base_url('Delete/monitoring_operation_65_standby');?>",
     success: function(response) {
       location.reload();
     },
@@ -286,7 +286,7 @@ $(document).on('click','#ready', function() {
   var val = $(this).attr('data-value') == 0 ? '1' : '0';
     $.ajax({
       type: "GET",
-      url: "<?php echo base_url('Edit/ready_to_operation_65/');?>" + id + "/" + val, 
+      url: "<?php echo base_url('Edit/ready_to_opt_65/');?>" + id + "/" + val, 
       success: function(response) {
       window.location.reload();
       } 

@@ -1,13 +1,7 @@
-<?php
-defined('BASEPATH') or exit('No direct script access allowed');
+<?php defined('BASEPATH') or exit('No direct script access allowed'); 
 
-/**
-* 
-*/
-class Account_control extends CI_Model
-{
-	private $table = 'table_users';
-	
+class Administrator extends CI_Model
+{	
 	public function detail_user()
 	{
 		$this->db->select('table_users.*, table_enum.name  as level');
@@ -17,7 +11,6 @@ class Account_control extends CI_Model
 		$this->db->order_by('table_users.username asc');
 		return $this->db->get();
 	}
-
 	
 }
 ?>

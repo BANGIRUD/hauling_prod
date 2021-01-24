@@ -73,6 +73,7 @@
                       $no++;
                       $color = explode(',', $value['color']);
                       echo '<tr style="text-align: center; font-size: 12px;">';
+                      if ($level != 'dispatcher') {
                         echo '<td>
                                 <a href="#" class="btn btn-xs btn-primary" data-target="#editdata" id="edit" data-id="'.$value['id'].'" data-original-title="Edit" data-toggle="tooltip">
                                   <i class="fa fa-edit"></i>
@@ -85,10 +86,25 @@
                                   </a>';
                         endif;
                         echo '</td>';
+                      }else{
+                        echo '<td>
+                                <a href="#" class="btn btn-xs btn-primary disabled" data-target="#editdata" id="edit" data-id="'.$value['id'].'" data-original-title="Edit" data-toggle="tooltip">
+                                  <i class="fa fa-edit"></i>
+                                </a>';
+                        if($value['operation'] == 0 && strtolower($value['code_stby']) != 'l') : 
+                          echo ' <a href="#" class="btn btn-xs btn-success disabled" id="ready" data-id="'.$value['id'].'" data-value="'.$value['operation'].'"data-original-title="Ready" data-toggle="tooltip"><i class="fa fa-check"></i>
+                                </a>';
+                        else: 
+                          echo ' <a href="#" class="btn btn-xs btn-warning disabled" id="ready" data-id="'.$value['id'].'" data-value="'.$value['operation'].'" data-original-title="Cancel" data-toggle="tooltip"><i class="fa fa-remove"></i>
+                                  </a>';
+                        endif;
+                        echo '</td>';
+
+                      }
                         echo '<td>'.$no.'</td>
                               <td>10/08/2020</td>
                               <td>'.date('H:i',strtotime($value['time_in'])).'</td>';
-                              if (strtolower($value['code_stby']) == 'l') {
+                                    if (strtolower($value['code_stby']) == 'l') {
                                       $timeout = date('H:i',strtotime($value['time_out']));
                                     } else {
                                       $timeout = $value['operation'] == 0 ? '-' : date('H:i',strtotime($value['time_out']));
@@ -106,10 +122,17 @@
                               <td>'.$value['csa'].'</td>
                               <td>'.$value['time'].'</td>
                               <td style="text-align: center; background-color: '. colors_setting_unit(strtolower($value['register']))['bg'] .'; color: '. colors_setting_unit(strtolower($value['register']))['color'].'">'.$value['register'].'</td>';
-                        echo '<td>';
+                        if ($level != 'dispatcher') {
+                          echo '<td>';
                           echo ' <a href="#" class="btn btn-xs btn-danger" data-target="#deletedata" id="delete" data-id="'.$value['id'].'" data-original-title="delete" data-toggle="tooltip"><i class="fa fa-trash"></i>
                                 </a>';                                        
                         echo '</td>';
+                        }else{
+                        echo '<td>';
+                          echo ' <a href="#" class="btn btn-xs btn-danger disabled" data-target="#deletedata" id="delete" data-id="'.$value['id'].'" data-original-title="delete" data-toggle="tooltip"><i class="fa fa-trash"></i>
+                                </a>';                                        
+                        echo '</td>';                          
+                        }
                       echo '</tr>';
                     }
                   ?>  
@@ -198,7 +221,7 @@
 <div class="modal fade " id="modal-edit" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
-      <form action="<?= base_url('Edit/post_34_standby');?>" method="post" enctype="multipart/form-data" class="form-horizontal">
+      <form action="<?= base_url('Edit/monitoring_operations_standby_csa34');?>" method="post" enctype="multipart/form-data" class="form-horizontal">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -261,7 +284,7 @@ $(document).on('click','#ready', function() {
   var val = $(this).attr('data-value') == 0 ? '1' : '0';
     $.ajax({
       type: "GET",
-      url: "<?php echo base_url('Edit/ready_to_operation_34/');?>" + id + "/" + val, 
+      url: "<?php echo base_url('Edit/ready_to_opt_34/');?>" + id + "/" + val, 
       success: function(response) {
       window.location.reload();
       } 
