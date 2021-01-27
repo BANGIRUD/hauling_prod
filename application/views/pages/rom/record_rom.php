@@ -60,6 +60,7 @@
                   <?php 
                     $no = 0;
                     foreach ($data as $value) {
+                      print_r($value);
                       $no++; 
                       $color = explode(',', $value['color']);
                       echo '<tr style="text-align: center;">';
@@ -72,7 +73,7 @@
                               <td style="background-color:'. $color[0] . ';color:'.@$color[1].'" >'.$value['cargo'].'</td>
                               <td>'.$value['rom_name'].'</td>';
                         echo '<td nowrap>';
-                        if($by_level != 'dispatcher'&& $by_level != 'administrator') :
+                        if($by_level != 'dispatcher') :
                           $time_in = $value['time_in'];
                           $time_out = $value['time_out'];
                           $btn_in = " disabled";

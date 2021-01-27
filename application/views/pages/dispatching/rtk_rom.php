@@ -103,7 +103,7 @@
                 <tbody>
                   <?php 
                   $no = 0;
-                  for ($a=($hour-2) ,$i=1; $i <= 12; $i++, $a++) :
+                  for ($a=($jam),$i=1; $i <= $limit; $i++, $a++) :
                     if ($a >= 24) {
                       $a = $a - 24;
                     }

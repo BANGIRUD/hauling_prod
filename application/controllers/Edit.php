@@ -3,6 +3,7 @@
 class Edit extends CI_Controller {
 	function __construct() {
 		parent::__construct();	
+		$this->by_level 		= $this->session->userdata('level'); 
 		$this->by_area			= $this->session->userdata('area');
 		$this->by_user			= $this->session->userdata('id');
 		if (!$this->by_user) {
@@ -160,9 +161,15 @@ class Edit extends CI_Controller {
 
 	public function ready_to_opt_34($id, $val)
 	{
-		$time_out = $val == 0 ? '' : date('Y-m-d H:i:s');
-		$this->db->where('id', $id);
-		$this->db->update('table_monitoringoperations', array('operation' => $val, 'time_out' => $time_out , 'by_area' => $this->by_area, 'by_user' => $this->by_user));
+		if ($this->by_level == 'administrator') {
+			$time_out = $val == 0 ? '' : date('Y-m-d H:i:s');
+			$this->db->where('id', $id);
+			$this->db->update('table_monitoringoperations', array('operation' => $val, 'time_out' => $time_out , 'by_area' => '10', 'by_user' => $this->by_user));# code...
+		}else{
+			$time_out = $val == 0 ? '' : date('Y-m-d H:i:s');
+			$this->db->where('id', $id);
+			$this->db->update('table_monitoringoperations', array('operation' => $val, 'time_out' => $time_out , 'by_area' => $this->by_area, 'by_user' => $this->by_user));
+		}
 	}
 
 	public function monitoring_operations_standby_csa65()
@@ -221,9 +228,16 @@ class Edit extends CI_Controller {
 
 	public function ready_to_opt_65($id, $val)
 	{
-		$time_out = $val == 0 ? '' : date('Y-m-d H:i:s');
-		$this->db->where('id', $id);
-		$this->db->update('table_monitoringoperations', array('operation' => $val, 'time_out' => $time_out , 'by_area' => $this->by_area, 'by_user' => $this->by_user));
+		if ($this->by_level == 'administrator') {
+			$time_out = $val == 0 ? '' : date('Y-m-d H:i:s');
+			$this->db->where('id', $id);
+			$this->db->update('table_monitoringoperations', array('operation' => $val, 'time_out' => $time_out , 'by_area' => '11', 'by_user' => $this->by_user));# code...
+		}else{
+			$time_out = $val == 0 ? '' : date('Y-m-d H:i:s');
+			$this->db->where('id', $id);
+			$this->db->update('table_monitoringoperations', array('operation' => $val, 'time_out' => $time_out , 'by_area' => $this->by_area, 'by_user' => $this->by_user));
+		}
+			
 	}
 
 	public function ready_to_opt_69($id, $val)

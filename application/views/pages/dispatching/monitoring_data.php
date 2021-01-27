@@ -263,7 +263,7 @@
                         <td rowspan="2" style="text-align: center; <?=$warna;?>"><?=$hasil;?></td>
                       </tr>
                       <tr> 
-                        <td>Actual</td>
+                        <td>ACTUAL</td>
                         <td><?= number_format($actual,0);?></td>
                       </tr>
                     </tbody>

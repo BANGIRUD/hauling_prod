@@ -31,7 +31,7 @@ class Dash extends CI_Controller {
 		$total_csa_65 = $this->monitoring->total_monitoring(11)->row_array();
 		$total_csa_34 = $this->monitoring->total_monitoring(10)->row_array();
 
-		// print_r($_SESSION);
+		print_r($_SESSION);
 
 		$data = array(
 			'csa_69' 		=> $csa_69,
@@ -201,6 +201,14 @@ class Dash extends CI_Controller {
 		
 		$date 	= $this->input->get('date') == '' ? $result['date'] : date('Y-m-d', strtotime($this->input->get('date')));
 		$hour 	= $this->input->get('time') == '' ? date('H') : $this->input->get('time');
+
+		$loop_limit = 1;
+		for ($a=$jam,$i=1; $i <= 12; $i++, $a++) { 
+			if ($a == $this->input->get('time')) {
+				$loop_limit = $i;
+			}
+		}
+		$limit = $this->input->get('time') == '' ? 12 : $loop_limit;
 		$this->load->model('Dispatching', 'ach_seamseries');
 		$this->load->model('Dispatching', 'ach_romatk');
 
@@ -469,7 +477,6 @@ class Dash extends CI_Controller {
 		$this->load->view('framework/sidebar');
 		$this->load->view('pages/rom/report_rom',$data);
 		$this->load->view('framework/footer');
-
 	}
 
 	public function user()
