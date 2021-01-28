@@ -236,8 +236,7 @@ class Edit extends CI_Controller {
 			$time_out = $val == 0 ? '' : date('Y-m-d H:i:s');
 			$this->db->where('id', $id);
 			$this->db->update('table_monitoringoperations', array('operation' => $val, 'time_out' => $time_out , 'by_area' => $this->by_area, 'by_user' => $this->by_user));
-		}
-			
+		}		
 	}
 
 	public function ready_to_opt_69($id, $val)

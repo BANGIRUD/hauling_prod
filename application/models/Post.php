@@ -73,7 +73,7 @@ class Post extends CI_Model {
 	public function monitoring_operations_65_muatan()
 	{
 		$result = get_date_shift();
-		$this->db->select('atable_shiftoperations.*, cargo.description as color, rom.name as name_rom');
+		$this->db->select('table_shiftoperations.*, cargo.description as color, rom.name as name_rom');
 		$this->db->from('table_romoperations');
 		$this->db->join('table_shiftoperations','table_romoperations.ref_id = table_shiftoperations.id','LEFT');
 		$this->db->join('table_enum as cargo','table_shiftoperations.cargo = cargo.name','LEFT');

@@ -674,8 +674,7 @@ class Save extends CI_Controller {
 			      </div>');
 			}
 			redirect($_SERVER['HTTP_REFERER']);	
-		}
-			
+		}			
 	}
 
 	public function bypass_monitoring_operations_65($id = 1) 
