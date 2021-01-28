@@ -11,46 +11,9 @@ class Save extends CI_Controller {
 
 	public function shift_operation() 
 	{
-		if ($this->by_level == 'administrator') {
-			$result 			= get_date_shift();	
-			// Variable
-			$date 				= date('Y-m-d', strtotime($result['date']));
-			$shift 				= $result['shift'];
-			$time 				= $this->input->post('time');
-			$id_unit 			= $this->input->post('id_unit');
-			$position 			= "K";
-			$cargo_muatan 		= $this->input->post('cargo_muatan');
-			$to_rom				= $this->input->post('rom');
-
-			$this->form_validation->set_rules('id_unit','id_unit','required');
-			$this->form_validation->set_rules('cargo_muatan','cargo_muatan','required');
-			$this->form_validation->set_rules('rom','by rom','required');
-
-			if( $this->form_validation->run() != false ) {
-				$data = array(
-						'created_at' 		=> date('Y-m-d H:i:s'),
-						'updated_at' 		=> date('Y-m-d H:i:s'),
-						'deleted_at' 		=> NULL,
-						'date' 				=> $date,
-						'time'				=> $time,
-						'shift' 			=> $shift,
-						'cn_unit' 			=> $id_unit,
-						'position' 			=> $position,
-						'cargo' 			=> $cargo_muatan,
-						'remark'			=> NULL,
-						'to_rom'			=> $to_rom,
-						'by_area'			=> '107',
-						'by_user'			=> $this->by_user
-					);
-
-				$this->Crud->insert('table_shiftoperations', $data);
-				$this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissible" role="alert"><span class="badge badge-pill badge-success">Success</span> <b>Data</b> has been added.<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-			}else {
-				$this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissible" role="alert"><span class="badge badge-pill badge-danger">Error</span> ' . validation_errors() . '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-			}
-		redirect($_SERVER['HTTP_REFERER']);
-		}else{
-			$result 			= get_date_shift();	
+		$this->by_area  = $this->by_level == 'administrator' ? '107' : $this->by_area;
+		
+		$result 			= get_date_shift();	
 		// Variable
 		$date 				= date('Y-m-d', strtotime($result['date']));
 		$shift 				= $result['shift'];
@@ -87,7 +50,6 @@ class Save extends CI_Controller {
 				$this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissible" role="alert"><span class="badge badge-pill badge-danger">Error</span> ' . validation_errors() . '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 			}
 		redirect($_SERVER['HTTP_REFERER']);
-		}
 		
 	}
 

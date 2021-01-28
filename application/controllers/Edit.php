@@ -107,38 +107,41 @@ class Edit extends CI_Controller {
 
 	public function monitoring_operations_standby_csa34()
 	{	
-		// $timepassing = $this->input->post('time_passing') == '' ? '' : date('H:i',strtotime($this->input->post('time_passing').':00'));
-  		//       $dateout = date('Y-m-d H:i:s', strtotime($this->input->post('date_out').' '.$this->input->post('time_out'))); == '' ? '' : date('Y-m-d H:i:s', strtotime($this->input->post('date_out').' '.$this->input->post('time_out')));
+		$timepassing = $this->input->post('time_passing') == '' ? NULL : date('H:i',strtotime($this->input->post('time_passing').':00'));
+		$dateout = $this->input->post('date_out') == '' || $this->input->post('time_out') == '' ? NULL : date('Y-m-d H:i:s', strtotime($this->input->post('date_out').' '.$this->input->post('time_out')));
+
+		// $this->by_area
         
 
 		$id 			= $this->input->post('id');
 		$date			= $this->input->post('date');
 		$shift			= $this->input->post('shift');		
 		$date_in		= date('Y-m-d H:i:s', strtotime($this->input->post('date_in').' '.$this->input->post('time_in')));
-		$date_out		= date('Y-m-d H:i:s', strtotime($this->input->post('date_out').' '.$this->input->post('time_out')));
+		// $date_out		= date('Y-m-d H:i:s', strtotime($this->input->post('date_out').' '.$this->input->post('time_out')));
 		$unit 			= trim($this->input->post('unit'));
 		$position 		= trim($this->input->post('position'));
 		$cargo 			= $this->input->post('cargo_muatan');
 		$code_standby 	= $this->input->post('code_standby');
-		$time_passing 	= date('H:i',strtotime($this->input->post('time_passing').':00'));
+		// $time_passing 	= date('H:i',strtotime($this->input->post('time_passing').':00'));
 		$remark 		= $this->input->post('remark');
 
 		$src 	= $this->Crud->search('table_monitoringoperations', array('id' => $id))->num_rows();
 		if ($src > 0) {
+
 			$data = array(
 				'updated_at' 	=> date('Y-m-d H:i:s'),
 				'deleted_at' 	=> NULL,
 				'date'			=> $date,
 				'shift'			=> $shift,
 				'time_in'		=> $date_in,
-				'time_out'		=> $date_out,
+				'time_out'		=> $dateout,
 				'cn_unit' 		=> $unit,
 				'position'		=> $position,
 				'cargo' 		=> $cargo,
 				'code_stby'		=> $code_standby,
-				'time_passing'	=> $time_passing,
+				'time_passing'	=> $timepassing,
 				'remark'		=> $remark,
-				'by_area'		=> $this->by_area,
+				// 'by_area'		=> $this->by_area,
 				'by_user'		=> $this->by_user
 			);
 			$this->db->where('id', $id);
@@ -156,20 +159,15 @@ class Edit extends CI_Controller {
 		      </div>');
 		}
 
-		// redirect($_SERVER['HTTP_REFERER']);
+		redirect($_SERVER['HTTP_REFERER']);
 	}
 
 	public function ready_to_opt_34($id, $val)
 	{
-		if ($this->by_level == 'administrator') {
-			$time_out = $val == 0 ? '' : date('Y-m-d H:i:s');
-			$this->db->where('id', $id);
-			$this->db->update('table_monitoringoperations', array('operation' => $val, 'time_out' => $time_out , 'by_area' => '10', 'by_user' => $this->by_user));# code...
-		}else{
-			$time_out = $val == 0 ? '' : date('Y-m-d H:i:s');
-			$this->db->where('id', $id);
-			$this->db->update('table_monitoringoperations', array('operation' => $val, 'time_out' => $time_out , 'by_area' => $this->by_area, 'by_user' => $this->by_user));
-		}
+		$time_out = $val == 0 ? NULL : date('Y-m-d H:i:s');
+		$time_passing = $val == 0 ? NULL : date('H:i:s');
+		$this->db->where('id', $id);
+		$this->db->update('table_monitoringoperations', array('operation' => $val, 'time_out' => $time_out , 'time_passing' => $time_passing, 'by_user' => $this->by_user));
 	}
 
 	public function monitoring_operations_standby_csa65()

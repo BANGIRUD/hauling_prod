@@ -268,6 +268,7 @@ class Dash extends CI_Controller {
 		$this->load->model('Post', 'operations');
 		
 		$data = $this->operations->monitoring_operations_34_standby($code)->result_array();
+		$data = $this->security->xss_clean($data);
 
 		$data 		= array (
 			'data'		=> $data
