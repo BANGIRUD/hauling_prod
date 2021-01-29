@@ -74,6 +74,11 @@
 <!-- DataTables -->
 <script src="<?php echo base_url('___/bower_components/datatables.net/js/jquery.dataTables.min.js');?>"></script>
 <script src="<?php echo base_url('___/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js');?>"></script>
+<script src="<?php echo base_url('___/bower_components/datatables.net/js/dataTables.buttons.min.js');?>"></script>
+<script src="<?php echo base_url('___/bower_components/datatables.net/js/buttons.html5.min.js');?>" crossorigin="anonymous"></script>
+<script src="<?php echo base_url('___/bower_components/datatables.net/js/jszip.min.js');?>" crossorigin="anonymous"></script>
+
+
 <!-- FastClick -->
 <script src="<?php echo base_url('___/bower_components/fastclick/lib/fastclick.js');?>"></script>
 <!-- AdminLTE App -->
