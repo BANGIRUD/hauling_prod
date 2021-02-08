@@ -21,7 +21,7 @@
           <div class="box-header with-border">
             <div class="row">
               <div class="col-xs-6">
-              <?php if($by_level != 'dispatcher'&& $by_level != 'administrator') :?>
+              <?php if($by_level != 'dispatcher') :?>
                 <button class="btn btn-success  " data-toggle="modal" id="add-unit">
                   <i class="fa fa-plus"> Add Unit</i>
                 </button>
@@ -237,8 +237,12 @@
       'ordering'    : false,
       'info'        : true,
       'autoWidth'   : false,
+       dom: 'Bfrtip',
         buttons: [
-      'print'
+        'copyHtml5',
+        'excelHtml5',
+        'csvHtml5',
+        'pdfHtml5'
         ]
     })
   });

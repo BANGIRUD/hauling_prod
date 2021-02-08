@@ -353,4 +353,168 @@ class Edit extends CI_Controller {
 		}
 	}
 
+	public function record_rom() 
+	{
+		// print_r($_POST);
+		$this->load->model('Rom', 'rom');
+
+		$out_without_save = trim( $this->input->post('out_without_save') );
+		$out_with_save = trim( $this->input->post('out_with_save') );
+		$id = trim( $this->input->post('id') );
+		$unit = trim( $this->input->post('unit') );
+		$cargo_muatan = trim( $this->input->post('cargo_muatan') );
+
+
+		if ($out_without_save) {
+			$row = $this->rom->detail_ref_rom_operations($id);
+			
+			if ($row->num_rows() > 0) {
+				$row 			= $row->row_array();
+				// $time_passing 	= date('i') > 55 ? date('H:00:00', strtotime('+1 Hour')) : date('H:00:00');
+
+				$data = array(
+					'updated_at' 		=> date('Y-m-d H:i:s'),
+					'time_out'			=> date('Y-m-d H:i:s'),
+				);
+
+				$this->db->where('ref_id', $id);
+				$this->db->update('table_romoperations', $data);
+
+				// UBAH KE MUATAN OTOMATIS
+
+				$data = array(
+					'updated_at' 		=> date('Y-m-d H:i:s'),
+					'position'			=> "M",
+				);
+				$this->db->where('id', $id);
+				$this->db->update('table_shiftoperations', $data);
+
+				$this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissible" role="alert">
+		            <span class="badge badge-pill badge-success">Success</span> <b>Data</b> has been added.
+		            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		                <span aria-hidden="true">&times;</span>
+		            </button>
+		        </div>');
+			}else{
+				$this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissible">
+			        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+			        <h4><i class="icon fa fa-check"></i> Error!</h4>
+			        Check kembali data anda!.
+			      </div>');
+			}
+			redirect($_SERVER['HTTP_REFERER']);
+		}
+
+		elseif ($out_with_save) {
+
+
+		  	$string = ['cargo_muatan' => $cargo_muatan];
+		  	$string = json_encode($string);
+
+		  	$row = $this->rom->detail_ref_rom_operations($id);
+			
+			if ($row->num_rows() > 0) {
+				$row 			= $row->row_array();
+				// $time_passing 	= date('i') > 55 ? date('H:00:00', strtotime('+1 Hour')) : date('H:00:00');
+
+			  	$data = array(
+					'updated_at' 		=> date('Y-m-d H:i:s'),
+					'time_out'			=> date('Y-m-d H:i:s'),
+					'remark'			=> $string,
+				);
+
+				$this->db->where('ref_id', $id);
+				$this->db->update('table_romoperations', $data);
+
+			// UBAH KE MUATAN OTOMATIS
+
+				$data = array(
+					'updated_at' 		=> date('Y-m-d H:i:s'),
+					'position'			=> "M",
+				);
+				$this->db->where('id', $id);
+				$this->db->update('table_shiftoperations', $data);
+
+				$this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissible" role="alert">
+		            <span class="badge badge-pill badge-success">Success</span> <b>Data</b> has been added.
+		            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		                <span aria-hidden="true">&times;</span>
+		            </button>
+		        </div>');
+
+
+		  	
+				echo '
+				<script src="http://'.$_SERVER['SERVER_NAME'] .':9518/socket.io/socket.io.js"></script>
+				<script type="text/javascript">';
+
+				echo 'var socket = io.connect(\'http://'.$_SERVER['SERVER_NAME'] .':9518\');
+			  	socket.emit(\'change_out_rom\', { unit: \''.$unit.'\', cargo: \''.$cargo_muatan.'\' , id: \''.$id.'\' }); 
+			  	window.history.go(-1);
+			  	</script>';
+	        }else{
+				$this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissible">
+			        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+			        <h4><i class="icon fa fa-check"></i> Error!</h4>
+			        Check kembali data anda!.
+			      </div>');
+				redirect($_SERVER['HTTP_REFERER']);
+			}
+		}
+
+		// redirect($_SERVER['HTTP_REFERER']);
+	}
+
+
+	public function confirm_cargo_muatan() 
+	{
+		$this->load->model('Rom', 'rom');
+
+		$id = trim( $this->input->post('id') );
+		$unit = trim( $this->input->post('unit') );
+		$cargo_muatan = trim( $this->input->post('cargo_muatan') );
+		$cancel = trim( $this->input->post('cancel') );
+
+
+		$row = $this->rom->detail_ref_rom_operations($id);
+		
+		if ($row->num_rows() > 0) {
+			$row 			= $row->row_array();
+			// $time_passing 	= date('i') > 55 ? date('H:00:00', strtotime('+1 Hour')) : date('H:00:00');
+
+			$data = array(
+				'updated_at' 		=> date('Y-m-d H:i:s'),
+				'remark'			=> NULL,
+			);
+
+			$this->db->where('ref_id', $id);
+			$this->db->update('table_romoperations', $data);
+
+			// UBAH KE MUATAN OTOMATIS
+			if (!$cancel) {
+				$data = array(
+					'updated_at' 		=> date('Y-m-d H:i:s'),
+					'cargo'				=> $cargo_muatan,
+				);
+				$this->db->where('id', $id);
+				$this->db->update('table_shiftoperations', $data);
+			}
+			
+
+			$this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissible" role="alert">
+	            <span class="badge badge-pill badge-success">Success</span> <b>Data</b> has been added.
+	            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+	                <span aria-hidden="true">&times;</span>
+	            </button>
+	        </div>');
+		}else{
+			$this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissible">
+		        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+		        <h4><i class="icon fa fa-check"></i> Error!</h4>
+		        Check kembali data anda!.
+		      </div>');
+		}
+
+		redirect($_SERVER['HTTP_REFERER']);
+	}
 }

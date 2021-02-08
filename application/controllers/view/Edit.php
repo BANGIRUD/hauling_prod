@@ -513,4 +513,44 @@ class Edit extends CI_Controller {
         <?php
 	}
 
+	public function record_rom($id = 1)
+	{
+		$this->load->model('Dispatching', 'record_prod');
+
+		$cargo_muatan	= $this->Crud->search('table_enum', array('type' => 'cargo_muatan'))->result_array();
+		$data 			= $this->record_prod->edit_record_production($id)->result();
+		$data 			= $data[0];
+		// print_r($data);
+		?>
+		<input type="hidden" class="form-control pull-right" name="id" value="<?=$data->id ;?>">
+		<div class="modal-body">
+          	<div class="form-group">
+            	<div class="form-body">
+            		<div class="row">
+            			<div class="col-xs-6">
+                			<label>ID Unit</label> 
+		            		<input class="form-control" type="text" name="unit" placeholder="Enter Id Unit Here" id="id_unit" value="<?= $data->cn_unit ;?>" readonly>
+              			</div>
+	              		<div class="col-xs-6">
+		                	<label>Cargo Muatan</label> 
+		                  	<select class="form-control" name="cargo_muatan" id="cargo_muatan">
+								<?php foreach ($cargo_muatan as $value) {
+									$selected = $data->cargo == $value['name'] ? ' selected' : '';
+									echo '<option value="'.$value['name'].'"'.$selected.'>'.$value['name'].'</option>';
+								}?>
+							</select>                
+	              		</div>
+            		</div>
+            	</div>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+				$('.datepicker').datepicker({
+				      autoclose: true
+				    })
+			</script>
+		<?php 
+	}
+
 }

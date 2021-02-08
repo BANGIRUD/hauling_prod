@@ -436,8 +436,8 @@ class Dash extends CI_Controller {
 	public function record_rom($by_rom = "")
 	{
 		$result 			= get_date_shift();
-		
-		$date  				= $result['date'];
+	
+		$date = $this->input->get('date') == '' ? $result['date'] : date('Y-m-d', strtotime($this->input->get('date')));
 		$cargo_muatan		= $this->Crud->search('table_enum', array('type' => 'cargo_muatan'))->result_array();
 		$rom	  			= $this->Crud->search('table_enum', array('type' => 'rom'))->result_array();
 		$by_rom				= $by_rom == '' ?$this->session->userdata('rom') : $by_rom;
@@ -447,6 +447,7 @@ class Dash extends CI_Controller {
 
 		$data 		= array (
 			'dateid' 			=> $result['date'],
+			'date'				=> $date,
 			'cargo_muatan'		=> $cargo_muatan,
 			'rom'				=> $rom,
 			'data'				=> $data,
@@ -465,11 +466,16 @@ class Dash extends CI_Controller {
 		$by_rom				= $by_rom == '' ?$this->session->userdata('rom') : $by_rom;
 		$rom	  			= $this->Crud->search('table_enum', array('type' => 'rom'))->result_array();
 		$date = $this->input->get('date') == '' ? $result['date'] : date('Y-m-d', strtotime($this->input->get('date')));
+		$by_rom_id = $this->input->get('by_rom') == '' ? $by_rom : $this->input->get('by_rom');
 		$this->load->model('Rom', 'operations');
-		$data = $this->operations->report_rom_monitoring_shift_operations($by_rom)->result_array();
+
+
+
+		$data = $this->operations->report_rom_monitoring_shift_operations($date,$by_rom_id)->result_array();
 
 		$data 		= array (
 			'rom'			=> $rom,
+			'by_rom_id'		=> $by_rom_id,
 			'date'			=> $date,
 			'data'			=> $data,
 		);

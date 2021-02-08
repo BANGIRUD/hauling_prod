@@ -248,9 +248,13 @@ $(function () {
       'ordering'    : false,
       'info'        : true,
       'autoWidth'   : false,
-      buttons: [
-    'print'
-      ]
+      dom: 'Bfrtip',
+        buttons: [
+        'copyHtml5',
+        'excelHtml5',
+        'csvHtml5',
+        'pdfHtml5'
+        ]
   })
 });
 

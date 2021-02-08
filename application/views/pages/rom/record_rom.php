@@ -60,7 +60,6 @@
                   <?php 
                     $no = 0;
                     foreach ($data as $value) {
-                      print_r($value);
                       $no++; 
                       $color = explode(',', $value['color']);
                       echo '<tr style="text-align: center;">';
@@ -85,12 +84,12 @@
                           $btn_out = " disabled";
                           if($time_in != NULL && $time_out == NULL)
                             $btn_out = "";
-                          echo ' <a href="#" class="btn btn-xs btn-danger'.$btn_out.'"  id="edit_out_rom" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit keluar ROM" data-toggle="tooltip"><i class="fa  fa-share"> Out</i>  
+                          echo ' <a href="#" class="btn btn-xs btn-danger'.$btn_out.'"  id="edit" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit keluar ROM" data-toggle="tooltip"><i class="fa  fa-share"> Out</i>  
                               </a>';
                         else :
                           echo '<a href="#" class="btn btn-xs btn-success disabled"  id="edit_in_rom" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit masuk ROM" data-toggle="tooltip"><i class="fa  fa-reply"> In</i>
                                 </a>';
-                          echo ' <a href="#" class="btn btn-xs btn-danger disabled"  id="edit_out_rom" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit keluar ROM" data-toggle="tooltip"><i class="fa  fa-share"> Out</i>  
+                          echo ' <a href="#" class="btn btn-xs btn-danger disabled"  id="edit" data-id="'.$value['id'].'" data-original-title="Tekan ini jika unit keluar ROM" data-toggle="tooltip"><i class="fa  fa-share"> Out</i>  
                               </a>';
                         endif;
                         echo '</td>';
@@ -106,27 +105,29 @@
     </div>
   </section>
 </div>
-<!-- Modal edit rom -->
+
 <div class="modal fade" id="modal-edit" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-md" role="document">
     <div class="modal-content">
-      <form action="<?= base_url('Edit/');?>" method="post" enctype="multipart/form-data" class="form-horizontal">
+      <form action="<?= base_url('Edit/record_rom');?>" method="post" enctype="multipart/form-data" class="form-horizontal">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
-          <h4 class="modal-title" id="mediumModalLabel">Edit Data</h4>
+          <h4 class="modal-title" id="mediumModalLabel">Confirm Data Data</h4>
         </div>
         <div class="modal-body" id="modal-body-edit">
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-          <button type="submit" class="btn btn-primary">Confirm</button>
+          <input type="submit" name="out_with_save" class="btn btn-danger" value="Simpan dengan Perubahan" />
+          <input type="submit" name="out_without_save" class="btn btn-primary" value="Simpan Tanpa Perubahan" />
         </div>
       </form>
     </div>
   </div>
 </div>
+
 
 <script type="text/javascript">
   
@@ -139,9 +140,13 @@
       'ordering'    : true,
       'info'        : true,
       'autoWidth'   : true,
+      dom: 'Bfrtip',
         buttons: [
-      'print'
-        ],
+            'copyHtml5',
+            'excelHtml5',
+            'csvHtml5',
+            'pdfHtml5'
+        ]
       // "ajax": '<?= base_url('Ajax/record_rom/' . $by_rom);?>'
     });
 
@@ -191,7 +196,7 @@
 
   $(document).on('click','#edit', function() {
     var id = $(this).attr('data-id');
-      $("#modal-body-edit").load("<?= base_url('view/edit//');?>" + id);
+      $("#modal-body-edit").load("<?= base_url('view/edit/record_rom/');?>" + id);
       $('#modal-edit').modal('toggle');
   });
 

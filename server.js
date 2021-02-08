@@ -18,6 +18,11 @@ io.on('connection',function(socket){
     io.emit('reload_65', data);
   });
 
+  socket.on('change_out_rom', function(data) {
+    console.log('WOW');
+    io.emit('confirm_out_rom', data);
+  });
+
 
 });
 

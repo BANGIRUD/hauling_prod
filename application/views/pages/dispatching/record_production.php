@@ -46,6 +46,8 @@
       <div class="col-md-12">
       <?=$this->session->flashdata('msg');?>
       </div>
+
+      
       <div class="col-md-12">
         <div class="box">
           <div class="box-body">
@@ -181,6 +183,45 @@
   </div>
 </div>
 
+<div class="modal fade" id="modal-danger">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <form method="post" enctype="multipart/form-data" action="<?php echo base_url('Edit/confirm_cargo_muatan');?>">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span></button>
+        <h4 class="modal-title">Confirm Cargo Muatan</h4>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" name="id" id="confirm_id" value="ID" readonly>
+        <div class="form-group">
+          <div class="form-body">
+            <div class="row">
+              <div class="col-xs-6">
+                  <label>ID Unit</label> 
+                <input class="form-control" type="text" name="unit" placeholder="Enter Id Unit Here" id="confirm_id_unit" value="UNIT" readonly>
+                </div>
+                <div class="col-xs-6">
+                  <label>Cargo Muatan</label> 
+                  <input class="form-control" type="text" name="cargo_muatan" placeholder="Enter Id Unit Here" id="confirm_cargo" value="CARGO MUATAN" readonly>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+        <input class="btn btn-danger" type="submit" name="cancel" value="Reject" readonly>
+        <button type="submit" class="btn btn-primary">Confirm</button>
+      </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
 <!-- <div class="modal fade" id="upload-addunit" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -235,6 +276,15 @@
 
   socket.emit('request_record_rom');
 
+
+
+    socket.on('confirm_out_rom', function(e) {
+      $("#confirm_id_unit").val(e.unit);
+      $("#confirm_cargo").val(e.cargo);
+      $("#confirm_id").val(e.id);
+      $("#modal-danger").modal('show');
+    });
+
   $(function () {
     $('#example1').DataTable({
       'paging'      : false,
@@ -243,9 +293,7 @@
       'ordering'    : true,
       'info'        : true,
       'autoWidth'   : true,
-        buttons: [
-      'print'
-        ]
+      
     })
   });
 

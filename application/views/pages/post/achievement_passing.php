@@ -100,7 +100,7 @@
                         $sum_plan = @array_sum($total_plan);
                         $sum_actual = @array_sum($total_act);
                         $sum_percent = $sum_plan != 0 || $sum_actual != 0? $sum_actual/$sum_plan*100 : 0;
-                    echo '<tr>';
+                    echo '<tr  style="text-align:center;">';
                       echo '<td>'.$c.'</td>';
                       echo '<td>'.$row['jam_'.$no].'</td>';
                       echo '<td>'.$row['actual'] .'</td>';
@@ -121,7 +121,7 @@
                     echo '</tr>';
                     }
                   ?>
-                          <tr style="background-color: #74b9ff; font-weight: bolder;">
+                          <tr style="background-color: #74b9ff; font-weight: bolder;text-align: center;">
                             <td>Total</td>
                             <td><?=$sum_plan;?></td>
                             <td><?=$sum_actual;?></td>

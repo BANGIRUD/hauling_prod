@@ -25,9 +25,11 @@ class Rom extends CI_Model {
 		return $this->db->get();
 	}
 
-	public function report_rom_monitoring_shift_operations($by_rom)
+	public function report_rom_monitoring_shift_operations($date,$by_rom)
 	{
-		$result 		= get_date_shift();	
+		// $result 	= get_date_shift();	
+		// $date 		= $date == '' ? $result['date'] : $date;
+		// $by_rom 	= $by_rom == '' ? $by_rom;
 		$this->db->select('table_shiftoperations.*, cargo.description as color, rom.name as rom_name, a.time_in, a.time_out');
 		$this->db->from('table_shiftoperations');
 		$this->db->join('table_enum as cargo','table_shiftoperations.cargo = cargo.name','LEFT');
@@ -36,11 +38,11 @@ class Rom extends CI_Model {
 			LEFT JOIN table_romoperations ON table_romoperations.id = a.id
 			WHERE deleted_at IS NULL) as a','table_shiftoperations.id = a.ref_id ','LEFT');
 		$this->db->where('table_shiftoperations.deleted_at', NULL);
-
 		if ($by_rom) {
 			$this->db->where('table_shiftoperations.to_rom', $by_rom);
 		}
-		$this->db->where('table_shiftoperations.date',$result['date']);
+		
+		$this->db->where('table_shiftoperations.date',$date);
 		$this->db->order_by('table_shiftoperations.id asc');
 		$this->db->group_by('table_shiftoperations.id');
 		return $this->db->get();
